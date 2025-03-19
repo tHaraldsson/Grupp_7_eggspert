@@ -19,7 +19,7 @@ export class ContinuousTimerButtonComponent {
   ngOnInit(){
     this.timeLeft.update((value) => 0 );
   }
-
+// todo: async await for angular
   startTimer() {
     this.interval = setInterval(async () => {
       if (this.timeLeft() < this.time2 ) {
