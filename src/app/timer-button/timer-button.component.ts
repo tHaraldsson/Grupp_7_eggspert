@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { timestamp } from 'rxjs';
 
 @Component({
@@ -8,16 +8,22 @@ import { timestamp } from 'rxjs';
   styleUrl: './timer-button.component.css',
 })
 export class TimerButtonComponent {
-  timeLeft: number = 5;
+  @Input() time!: number;
+  @Input() message!: string;
+
+  timeLeft = signal(0);
   interval: any;
+  ngOnInit(){
+    this.timeLeft.update((value) => this.time);
+  }
 
   startTimer() {
     this.interval = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
-      } else {
-        alert("TIMES UP!!!!!")
-        this.timeLeft = 60;
+      if (this.timeLeft() > 0) {
+        this.timeLeft.update((value) => value - 1);
+      }else{
+        alert("Times up!!!!!!!!!!!!!")
+        this.timeLeft.update((value)=> this.time)
         clearInterval(this.interval)
       }
     }, 1000);

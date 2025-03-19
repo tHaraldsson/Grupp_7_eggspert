@@ -1,7 +1,9 @@
 
 <div>
+  <h3>{{message}}</h3>
   <button (click)="startTimer()">Start Timer</button>
   <button (click)="pauseTimer()">Pause</button>
 
-  <p>{{ timeLeft }} Seconds left....</p>
+  <p>{{timeLeft()}} Seconds left....</p>
+ 
 </div>
