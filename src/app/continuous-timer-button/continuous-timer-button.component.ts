@@ -1,4 +1,6 @@
+import { SourceMapV3 } from './../../../../Lektion10/node_modules/@jridgewell/gen-mapping/dist/types/types.d';
 import { Component, Input, signal } from '@angular/core';
+
 
 @Component({
   selector: 'app-continuous-timer-button',
@@ -9,8 +11,8 @@ import { Component, Input, signal } from '@angular/core';
 export class ContinuousTimerButtonComponent {
  @Input() time!: number;
  @Input() time1!: number;
- @Input() timeer!: number;
-  
+ @Input() time2!: number;
+
 
   timeLeft = signal(0);
   interval: any;
@@ -19,22 +21,23 @@ export class ContinuousTimerButtonComponent {
   }
 
   startTimer() {
-    this.interval = setInterval(() => {
-      if (this.timeLeft() < this.time ) {
+    this.interval = setInterval(async () => {
+      if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
       }else{
-        alert("HARD BOILIED")
+        this.playSound()
+        alert("HARD BOILED")
         this.timeLeft.update((value)=> 0 )
         clearInterval(this.interval)
       }
-      if (this.timeLeft() === this.time1 ) {
-
-        alert ("SOFT BOILIED")
+      if (this.timeLeft() === this.time ) {
+        await this.playSound()
+        alert ("SOFT BOILED")
       }
 
-      if (this.timeLeft() === this.timeer ) {
-
-        alert ("MEDIUM BOILIED")
+      if (this.timeLeft() === this.time1 ) {
+        this.playSound()
+        alert ("MEDIUM BOILED")
       }
 
     }, 1000);
@@ -43,5 +46,16 @@ export class ContinuousTimerButtonComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
+  }
+
+   playSound() {
+    const audio = new Audio();
+    audio.src = "chicSound.wav"
+    audio.load();
+    audio.play()
+    
+    .catch((error) => {
+      console.error("Ljudet kunde inte spelas:", error);
+    });
   }
 }
