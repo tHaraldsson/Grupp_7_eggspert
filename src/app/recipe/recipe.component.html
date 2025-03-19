@@ -1,1 +1,16 @@
-<p>recipe works!</p>
+<div *ngIf="eggRecipes.length > 0; else noRecipes">
+    <h1>Egg Recipes</h1>
+    <ul>
+      <li *ngFor="let recipe of eggRecipes">
+        <h2>{{ recipe.title }}</h2>
+        <img [src]="recipe.image" alt="{{ recipe.title }}" width="200">
+        <p>{{ recipe.summary }}...</p>
+        <a [href]="'https://spoonacular.com/recipes/' + recipe.id" target="_blank">View Recipe</a>
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noRecipes>
+    <p>No recipes found. Try again later!</p>
+  </ng-template>
+  

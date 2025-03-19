@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-recipe',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.css'
 })
@@ -28,14 +29,18 @@ export class RecipeComponent {
 
     this.httpClient
     .get<any>(this.apiUrl, { params })
-    .subscribe(
-      (response) => {
-        this.eggRecipes = response.results;
+    .subscribe({
+      next: (response) => {
+        console.log('API response:', response);
+        this.eggRecipes = response.results || [];
+        console.log(this.eggRecipes);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching recipes:', error);
+      },
+      complete: () => {
+        console.log('API call completed');
       }
-    );
+    });
   }
-
 }
