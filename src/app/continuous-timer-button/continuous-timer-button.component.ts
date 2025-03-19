@@ -9,7 +9,7 @@ import { Component, Input, signal } from '@angular/core';
 export class ContinuousTimerButtonComponent {
  @Input() time!: number;
  @Input() time1!: number;
- @Input() timeer!: number;
+ @Input() time2!: number;
   
 
   timeLeft = signal(0);
@@ -20,23 +20,18 @@ export class ContinuousTimerButtonComponent {
 
   startTimer() {
     this.interval = setInterval(() => {
-      if (this.timeLeft() < this.time ) {
+      if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
-      }else{
-        alert("HARD BOILIED")
-        this.timeLeft.update((value)=> 0 )
+      }if (this.timeLeft() === this.time2){
+        alert("HARD BOILED")
         clearInterval(this.interval)
       }
-      if (this.timeLeft() === this.time1 ) {
-
+      else if (this.timeLeft() === this.time1 ) {
+        alert ("MEDIUM BOILED")
+      }
+      else if (this.timeLeft() === this.time ) {
         alert ("SOFT BOILIED")
       }
-
-      if (this.timeLeft() === this.timeer ) {
-
-        alert ("MEDIUM BOILIED")
-      }
-
     }, 1000);
 
   }
