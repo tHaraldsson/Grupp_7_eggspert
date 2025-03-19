@@ -1,0 +1,6 @@
+div{
+    display: flexbox;
+    border: 1px solid;
+    width: 10rem;
+    background-color: rgb(234, 241, 6);
+}
