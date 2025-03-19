@@ -1,9 +1,9 @@
-<app-timer-button message="soft boiled" [time]="10" />
-<app-timer-button message="medium boiled" [time]="20" />
-<app-timer-button message="hard boiled" [time]="30" />
+<header>
+  <a routerLink="">Basic timer</a>
+  <a routerLink="continuous">Continuous timer</a>
+  <a routerLink="recipe">Recipe</a>
+</header>
+<main>
+  <router-outlet />
+</main>
 
-<app-continuous-timer-button [time]="10" [time1]="20" [time2]="30"/>
-
-
-
-<router-outlet />
