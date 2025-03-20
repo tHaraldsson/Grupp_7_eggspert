@@ -22,15 +22,19 @@ export class ContinuousTimerButtonComponent {
     this.interval = setInterval(() => {
       if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
-      }if (this.timeLeft() === this.time2){
-        alert("HARD BOILED")
-        clearInterval(this.interval)
+      }
+      if (this.timeLeft() === this.time2){
+        this.playSound();
+        //alert("HARD BOILED")
+        clearInterval(this.interval) 
       }
       else if (this.timeLeft() === this.time1 ) {
-        alert ("MEDIUM BOILED")
+        this.playSound();
+        //alert ("MEDIUM BOILED")
       }
       else if (this.timeLeft() === this.time ) {
-        alert ("SOFT BOILIED")
+        this.playSound();
+        //alert ("SOFT BOILIED")
       }
     }, 1000);
 
@@ -38,5 +42,15 @@ export class ContinuousTimerButtonComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
+  }
+
+  resetTimer(){
+    this.timeLeft.update((value) => 0 )
+    clearInterval(this.interval)
+  }
+
+  playSound() {
+    const audio = new Audio('/audio/chicSound.mp3'); 
+    audio.play();
   }
 }

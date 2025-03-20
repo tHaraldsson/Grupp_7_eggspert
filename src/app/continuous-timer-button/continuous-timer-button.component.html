@@ -1,9 +1,11 @@
-<div>
-    <h3></h3>
+<section>
+  <div>
+    <p class="timeleft">{{ timeLeft() }}</p>
+    <img src="/pictures/egg.jpg" />
+  </div>
+  <div class="buttons">
     <button (click)="startTimer()">Start Timer</button>
     <button (click)="pauseTimer()">Pause</button>
-  
-    <p>{{timeLeft()}} Seconds left....</p>
-   
+    <button (click)="resetTimer()">Reset</button>
   </div>
-  
+</section>
