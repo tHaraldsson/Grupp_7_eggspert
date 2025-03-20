@@ -33,6 +33,11 @@ export class TimerButtonComponent {
     clearInterval(this.interval);
   }
 
+  resetTimer(){
+    this.timeLeft.update((value) => this.time)
+    clearInterval(this.interval)
+  }
+
   playSound() {
     const audio = new Audio('/audio/chicSound.mp3'); 
     audio.play();
