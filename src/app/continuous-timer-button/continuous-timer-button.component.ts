@@ -22,9 +22,10 @@ export class ContinuousTimerButtonComponent {
     this.interval = setInterval(() => {
       if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
-      }if (this.timeLeft() === this.time2){
+      }
+      if (this.timeLeft() === this.time2){
         alert("HARD BOILED")
-        clearInterval(this.interval)
+        clearInterval(this.interval) 
       }
       else if (this.timeLeft() === this.time1 ) {
         alert ("MEDIUM BOILED")
