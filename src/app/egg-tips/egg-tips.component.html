@@ -1,0 +1,16 @@
+<div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
+  <div *ngIf="eggTips.length > 0">
+    <ul>
+      <li *ngFor="let tip of eggTips">
+        {{ tip.tip }}  <!-- Här kan du anpassa hur du visar varje äggtips baserat på vad din API skickar tillbaka -->
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="eggTips.length === 0 && !errorMessage">
+    <p>Inga äggtips tillgängliga just nu.</p>
+  </div>
+  
