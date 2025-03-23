@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EggTipsService {
-  private apiUrl = 'http://localhost:3000/tips';  // API:ets URL
+  private apiUrl = 'https://grupp-7-api-egg-tips.onrender.com/tips'; // API:ets URL
 
   constructor(private http: HttpClient) {}
 
@@ -15,4 +15,3 @@ export class EggTipsService {
     return this.http.get<any>(this.apiUrl);
   }
 }
-
