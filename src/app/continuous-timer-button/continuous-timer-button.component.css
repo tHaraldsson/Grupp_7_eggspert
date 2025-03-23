@@ -1,6 +1,20 @@
-div{
-    display: flexbox;
-    border: 1px solid;
-    width: 10rem;
-    background-color: rgb(234, 241, 6);
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+.buttons {
+  flex-direction: row;
+  padding: 2rem;
+  gap: 1rem;
+}
+p {
+  font-size: 2rem;
+  color: rgb(161, 161, 98);
+}
+img {
+  width: auto;
+  height: 200px;
 }
