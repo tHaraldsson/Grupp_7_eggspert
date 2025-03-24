@@ -1,7 +1,8 @@
 <section>
   <div>
-    <p class="timeleft">{{ timeLeft() }}</p>
-    <img src="/pictures/egg.jpg" />
+    <p class="timeleft">{{ formatTime(timeLeft()) }}</p>
+    <p>{{statusMessage()}}</p>
+    <img src="/pictures/egg.jpg">
   </div>
   <div class="buttons">
     <button (click)="startTimer()">Start Timer</button>
