@@ -1,12 +1,24 @@
 <section>
   <div>
     <p class="timeleft">{{ formatTime(timeLeft()) }}</p>
-    <p>{{statusMessage()}}</p>
-    <img src="/pictures/egg.jpg">
+    <p>{{ statusMessage() }}</p>
+    <div class="egg-container">
+      <img
+        class="hen"
+        [style.transform]="henPosition()"
+        src="/pictures/hen.jpg"
+      />
+      <img class="egg" src="/pictures/egg.jpg" />
+    </div>
   </div>
   <div class="buttons">
-    <button (click)="startTimer()">Start Timer</button>
-    <button (click)="pauseTimer()">Pause</button>
-    <button (click)="resetTimer()">Reset</button>
+    <button
+      (click)="toggleTimer()"
+      [class.btn-pause]="timerisRunning"
+      class="btn-start"
+    >
+      {{ timerisRunning ? "Pausa" : "Starta" }}
+    </button>
+    <button (click)="resetTimer()" class="btn-reset">Återställ</button>
   </div>
 </section>

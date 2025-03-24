@@ -3,7 +3,6 @@ div {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 2rem;
 }
 .buttons {
   flex-direction: row;
@@ -13,8 +12,64 @@ div {
 p {
   font-size: 2rem;
   color: rgb(161, 161, 98);
+  margin-bottom: 0%;
 }
 img {
   width: auto;
   height: 200px;
+}
+
+.btn-start {
+  background-color: rgb(161, 161, 98);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-start:hover {
+ background-color: rgb(147, 147, 90);
+}
+
+.btn-pause {
+  background-color: rgb(161, 161, 98);
+}
+
+.btn-reset {
+  background-color: rgb(161, 161, 98);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+ background-color: rgb(147, 147, 90);
+}
+
+/* hen animation */
+.egg-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+}
+
+.egg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 200px;
+}
+
+.hen {
+  position: absolute;
+  left: 37%;
+  top: 45%;
+  height: 50px;
+  transform-origin: center; /* Rotation sker runt mitten */
+  transition: transform 0.5s linear;
+  transform: rotate(-90deg) translateX(100px) rotate(90deg);
 }
