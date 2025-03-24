@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-timer-button',
