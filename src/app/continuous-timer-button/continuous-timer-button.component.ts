@@ -1,17 +1,15 @@
-import { Component, Input, signal } from '@angular/core';
-
+import { Component, computed, Input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-continuous-timer-button',
   imports: [],
   templateUrl: './continuous-timer-button.component.html',
-  styleUrl: './continuous-timer-button.component.css'
+  styleUrl: './continuous-timer-button.component.css',
 })
 export class ContinuousTimerButtonComponent {
- @Input() time!: number;
- @Input() time1!: number;
- @Input() time2!: number;
-
+  @Input() time!: number;
+  @Input() time1!: number;
+  @Input() time2!: number;
 
   timeLeft = signal(0);
   statusMessage = signal('');
@@ -26,10 +24,13 @@ export class ContinuousTimerButtonComponent {
   startTimer() {
     clearInterval(this.interval) 
     this.interval = setInterval(async () => {
-      if (this.timeLeft() < this.time2 ) {
+      if (this.timeLeft() < this.time2) {
         this.timeLeft.update((value) => value + 1);
+        console.log('Time left:', this.timeLeft()); // Logga timeLeft
+        console.log('Hen position:', this.henPosition()); // Logga henPosition
+        this.updateHenPosition(); // Uppdatera positionen varje gång timern går
       }
-      if (this.timeLeft() === this.time2){
+      if (this.timeLeft() === this.time2) {
         this.playSound();
         this.statusMessage.set('HARD BOILED')
         clearInterval(this.interval) 
@@ -43,7 +44,6 @@ export class ContinuousTimerButtonComponent {
         this.statusMessage.set('SOFT BOILED')
       }
     }, 1000);
-
   }
 
   pauseTimer() {
@@ -57,7 +57,7 @@ export class ContinuousTimerButtonComponent {
   }
 
   playSound() {
-    const audio = new Audio('/audio/chicSound.mp3'); 
+    const audio = new Audio('/audio/chicSound.mp3');
     audio.play();
   }
   formatTime(seconds: number): string {
@@ -70,4 +70,21 @@ export class ContinuousTimerButtonComponent {
   
     return `${formattedMinutes}:${formattedSeconds}`;
   }
+
+  henPosition = computed(() => {
+    const progress = this.timeLeft() / this.time2;
+    const angle = progress * 360;
+    console.log('Angle:', angle); // LOGGA ANGLE
+    const radius = 120; // Justera för önskad cirkelbana
+    return `rotate(${angle}deg) translateX(${radius}px) rotate(-${angle}deg)`;
+  });
+
+  // Metod för att uppdatera hönans position direkt
+  updateHenPosition() {
+    const henElement = document.querySelector('.hen') as HTMLElement;
+    if (henElement) {
+      henElement.style.transform = this.henPosition();
+    }
+  }
 }
+

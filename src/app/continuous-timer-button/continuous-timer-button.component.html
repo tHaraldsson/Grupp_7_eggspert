@@ -3,6 +3,11 @@
     <p class="timeleft">{{ formatTime(timeLeft()) }}</p>
     <p>{{statusMessage()}}</p>
     <img src="/pictures/egg.jpg">
+    <p class="timeleft">{{ timeLeft() }}</p>
+    <div class="egg-container">
+      <img class="hen" [style.transform]="henPosition()" src="/pictures/hen.jpg" />
+      <img class="egg" src="/pictures/egg.jpg" />
+    </div>
   </div>
   <div class="buttons">
     <button (click)="startTimer()">Start Timer</button>

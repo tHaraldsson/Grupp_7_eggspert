@@ -18,3 +18,29 @@ img {
   width: auto;
   height: 200px;
 }
+
+/* testing hen animation */
+.egg-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+}
+
+.egg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 200px;
+}
+
+.hen {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 50px;
+  transform-origin: center; /* Rotation sker runt mitten */
+  transition: transform 0.5s linear;
+  transform: rotate(-90deg) translateX(100px) rotate(90deg);
+}
