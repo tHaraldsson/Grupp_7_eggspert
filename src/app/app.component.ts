@@ -6,7 +6,7 @@ import { HamburgerMenuComponent } from "./hamburger-menu/hamburger-menu.componen
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, HamburgerMenuComponent],
+  imports: [RouterOutlet, HamburgerMenuComponent],
 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css',]
