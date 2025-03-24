@@ -2,7 +2,14 @@
   <div>
     <p class="timeleft">{{ formatTime(timeLeft()) }}</p>
     <p>{{ statusMessage() }}</p>
-    <img src="/pictures/egg.jpg" />
+    <div class="egg-container">
+      <img
+        class="hen"
+        [style.transform]="henPosition()"
+        src="/pictures/hen.jpg"
+      />
+      <img class="egg" src="/pictures/egg.jpg" />
+    </div>
   </div>
   <div class="buttons">
     <button
