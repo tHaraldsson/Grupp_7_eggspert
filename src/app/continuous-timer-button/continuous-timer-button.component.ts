@@ -18,6 +18,7 @@ export class ContinuousTimerButtonComponent {
   ngOnInit(){
     this.timeLeft.update((value) => 0 );
   }
+
 // todo: async await for angular
   startTimer() {
     clearInterval(this.interval) 
@@ -54,5 +55,15 @@ export class ContinuousTimerButtonComponent {
   playSound() {
     const audio = new Audio('/audio/chicSound.mp3'); 
     audio.play();
+  }
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60); // Hitta antalet minuter
+    const remainingSeconds = seconds % 60; // Hitta de återstående sekunderna
+  
+    // Formatera minuter och sekunder så att de alltid är två siffror
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 }
