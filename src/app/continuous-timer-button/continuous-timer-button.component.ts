@@ -20,6 +20,7 @@ export class ContinuousTimerButtonComponent {
   }
 // todo: async await for angular
   startTimer() {
+    clearInterval(this.interval) 
     this.interval = setInterval(async () => {
       if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);

@@ -17,6 +17,7 @@ export class TimerButtonComponent {
   }
 
   startTimer() {
+    clearInterval(this.interval)
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
         this.timeLeft.update((value) => value - 1);
