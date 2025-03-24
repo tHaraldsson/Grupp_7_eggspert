@@ -13,4 +13,5 @@ import { HamburgerMenuComponent } from "./hamburger-menu/hamburger-menu.componen
 })
 export class AppComponent {
   title = 'eggspert';
+
 }

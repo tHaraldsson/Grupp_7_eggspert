@@ -17,6 +17,7 @@ export class TimerButtonComponent {
   }
 
   startTimer() {
+    clearInterval(this.interval)
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
         this.timeLeft.update((value) => value - 1);
@@ -41,6 +42,15 @@ export class TimerButtonComponent {
   playSound() {
     const audio = new Audio('/audio/chicSound.mp3'); 
     audio.play();
+  }
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 
 }
