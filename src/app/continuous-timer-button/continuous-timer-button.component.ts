@@ -1,5 +1,6 @@
 import { Component, Input, signal } from '@angular/core';
 
+
 @Component({
   selector: 'app-continuous-timer-button',
   imports: [],
@@ -10,7 +11,7 @@ export class ContinuousTimerButtonComponent {
  @Input() time!: number;
  @Input() time1!: number;
  @Input() time2!: number;
-  
+
 
   timeLeft = signal(0);
   interval: any;
@@ -18,8 +19,10 @@ export class ContinuousTimerButtonComponent {
     this.timeLeft.update((value) => 0 );
   }
 
+// todo: async await for angular
   startTimer() {
-    this.interval = setInterval(() => {
+    clearInterval(this.interval) 
+    this.interval = setInterval(async () => {
       if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
       }
@@ -52,5 +55,15 @@ export class ContinuousTimerButtonComponent {
   playSound() {
     const audio = new Audio('/audio/chicSound.mp3'); 
     audio.play();
+  }
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60); // Hitta antalet minuter
+    const remainingSeconds = seconds % 60; // Hitta de återstående sekunderna
+  
+    // Formatera minuter och sekunder så att de alltid är två siffror
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 }
