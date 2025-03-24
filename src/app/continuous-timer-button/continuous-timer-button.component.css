@@ -18,3 +18,25 @@ img {
   width: auto;
   height: 200px;
 }
+
+.btn-start {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-pause {
+  background-color: #dc3545;
+}
+
+.btn-reset {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

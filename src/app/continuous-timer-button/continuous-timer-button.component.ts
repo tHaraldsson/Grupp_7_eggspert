@@ -16,21 +16,34 @@ export class ContinuousTimerButtonComponent {
   timeLeft = signal(0);
   statusMessage = signal('');
   interval: any;
+  timerisRunning = false;
+
   ngOnInit(){
     this.timeLeft.update((value) => 0 );
     this.statusMessage.set('');
+  }
 
+  toggleTimer() {
+    this.timerisRunning = !this.timerisRunning;
+    if (this.timerisRunning) {
+      this.startTimer();
+    } else {
+      this.pauseTimer();
+    }
   }
 
 // todo: async await for angular
   startTimer() {
     clearInterval(this.interval) 
+    this.statusMessage.set('')
+
     this.interval = setInterval(async () => {
       if (this.timeLeft() < this.time2 ) {
         this.timeLeft.update((value) => value + 1);
       }
       if (this.timeLeft() === this.time2){
         this.playSound();
+        this.timerisRunning = false;
         this.statusMessage.set('HARD BOILED')
         clearInterval(this.interval) 
       }
@@ -54,6 +67,7 @@ export class ContinuousTimerButtonComponent {
     this.timeLeft.update((value) => 0 )
     clearInterval(this.interval)
     this.statusMessage.set('');
+    this.timerisRunning = false;
   }
 
   playSound() {
