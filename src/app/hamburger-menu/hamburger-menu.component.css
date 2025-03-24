@@ -1,0 +1,43 @@
+.menu-container {
+    position: relative;
+    text-align: center;
+  }
+  
+  .hamburger-btn {
+    font-size: 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .menu-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .menu-content a {
+    display: block;
+    color: black;
+    font-size: 1.5rem;
+    text-decoration: none;
+    margin: 15px 0;
+  }
+  
+  .menu-content a:hover {
+    text-decoration: underline;
+  }
+  
