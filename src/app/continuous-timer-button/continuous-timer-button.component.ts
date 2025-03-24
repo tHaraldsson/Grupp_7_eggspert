@@ -14,9 +14,12 @@ export class ContinuousTimerButtonComponent {
 
 
   timeLeft = signal(0);
+  statusMessage = signal('');
   interval: any;
   ngOnInit(){
     this.timeLeft.update((value) => 0 );
+    this.statusMessage.set('');
+
   }
 
 // todo: async await for angular
@@ -28,16 +31,16 @@ export class ContinuousTimerButtonComponent {
       }
       if (this.timeLeft() === this.time2){
         this.playSound();
-        //alert("HARD BOILED")
+        this.statusMessage.set('HARD BOILED')
         clearInterval(this.interval) 
       }
       else if (this.timeLeft() === this.time1 ) {
         this.playSound();
-        //alert ("MEDIUM BOILED")
+        this.statusMessage.set('MEDIUM BOILED')
       }
       else if (this.timeLeft() === this.time ) {
         this.playSound();
-        //alert ("SOFT BOILIED")
+        this.statusMessage.set('SOFT BOILED')
       }
     }, 1000);
 
@@ -50,6 +53,7 @@ export class ContinuousTimerButtonComponent {
   resetTimer(){
     this.timeLeft.update((value) => 0 )
     clearInterval(this.interval)
+    this.statusMessage.set('');
   }
 
   playSound() {
