@@ -20,7 +20,7 @@ img {
 }
 
 .btn-start {
-  background-color: #28a745;
+  background-color: rgb(161, 161, 98);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -29,11 +29,11 @@ img {
 }
 
 .btn-pause {
-  background-color: #dc3545;
+  background-color: rgb(161, 161, 98);
 }
 
 .btn-reset {
-  background-color: #007bff;
+  background-color: rgb(161, 161, 98);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
