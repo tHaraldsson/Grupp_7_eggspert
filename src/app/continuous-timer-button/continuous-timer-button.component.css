@@ -37,8 +37,8 @@ img {
 
 .hen {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 40%;
+  top: 45%;
   height: 50px;
   transform-origin: center; /* Rotation sker runt mitten */
   transition: transform 0.5s linear;
