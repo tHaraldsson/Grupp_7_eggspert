@@ -80,3 +80,22 @@ export class TimerButtonComponent {
 
 
 
+  eggQation(mass: number, waterTemp: number, startTempEgg: number, desiredTempEgg: number): number {
+    // Grundläggande tidfaktor baserat på äggets massa
+  let timeFactor = 0.1; // Tid per gram i sekunder för kokning vid rumstemperatur (kan justeras)
+  
+  // Korrigera för skillnaden mellan start- och önskad temperatur
+  let tempDifference = desiredTempEgg - startTempEgg;
+  
+  // Beräkna koktid
+  let time = mass * timeFactor * tempDifference;
+  
+  // Justera baserat på önskad kokgrad (kan vara t.ex. mjukkokt, hårdkokt, etc.)
+  // Exempel: En extra multiplikation kan tillämpas beroende på önskad kokgrad
+  if (desiredTempEgg > 70) {
+    time *= 1.2; // För hårdkokta ägg, lägg till mer tid
+  }
+
+  return time; // Tid i sekunder
+}
+}
