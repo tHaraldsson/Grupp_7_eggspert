@@ -1,13 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { TimerButtonComponent } from "./timer-button/timer-button.component";
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { HamburgerMenuComponent } from "./hamburger-menu/hamburger-menu.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TimerButtonComponent],
+  standalone: true,
+  imports: [RouterOutlet, HamburgerMenuComponent],
+
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css',]
 })
 export class AppComponent {
   title = 'eggspert';
+
 }
