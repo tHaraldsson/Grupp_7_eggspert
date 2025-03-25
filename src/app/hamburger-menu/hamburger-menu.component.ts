@@ -14,6 +14,7 @@ export class HamburgerMenuComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+    console.log("Menu state:", this.menuOpen); 
   }
 
   closeMenu() {
