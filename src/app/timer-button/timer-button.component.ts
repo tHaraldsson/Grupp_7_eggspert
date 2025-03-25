@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { timestamp } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -59,7 +58,7 @@ export class TimerButtonComponent {
   selectedCategory: string | null = null;
   eggCount: number = 1;
 
-  sizes = ['S', 'M', 'L', 'XL'];
+  sizes = ['Small', 'Medium', 'Large', 'XLarge'];
   consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
 
@@ -74,7 +73,75 @@ export class TimerButtonComponent {
   selectEggOption(category: string, option: string) {
     this.selectedOptions[category] = option; // Inga fler typfel!
     this.selectedCategory = null; // Stäng alternativraden efter val
+
+    
+    
+
+    this.calculateCookTime();
     console.log(`Vald ${category}: ${option}`);
+  }
+  calculateCookTime() {
+    // Grundvärden för äggkokning
+    let mass = 53; // För standard äggstorlek (kan göras dynamisk baserat på val av storlek)
+    let startTempEgg =
+      this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
+    let desiredTempEgg = 72; // För hårdkokt ägg
+    let waterTemp = 100; // För kokande vatten
+
+    
+    
+    
+    switch (this.selectedOptions['consistency']) {
+      case 'Löskokt': {
+        desiredTempEgg = 63;
+        break;
+      }
+      case 'Mellankokt': {
+        desiredTempEgg = 68;
+        break;
+      }
+      case 'Hårdkokt': {
+        desiredTempEgg = 75;
+        break;
+      }
+    }
+
+    switch (this.selectedOptions['sizes']) {
+      case 'Small': {
+        mass = 50;
+        break;
+      }
+      case 'Medium': {
+        mass = 58;
+        break;
+      }
+      case 'Large': {
+        mass = 68;
+        break;
+      }
+      case 'XLarge': {
+        mass = 75;
+        break;
+      }
+    }
+
+
+    console.log(this.selectedOptions['temperature']);
+    console.log(this.selectedOptions['consistency']);
+    console.log(this.selectedOptions['sizes']);
+    console.log(mass);
+
+    // Beräkna koktiden i sekunder
+    let cookTime = this.eggQation(
+      mass,
+      waterTemp,
+      startTempEgg,
+      desiredTempEgg
+    );
+
+    // Uppdatera timern med den beräknade tiden
+    this.timeLeft.update((value) => cookTime);
+    console.log(`Beräknad koktid: ${cookTime} sekunder`);
   }
 
   eggQation(
@@ -83,7 +150,6 @@ export class TimerButtonComponent {
     startTempEgg: number,
     desiredTempEgg: number
   ): number {
-    
     // Grundläggande tidfaktor baserat på äggets massa
     let timeFactor = 0.1; // Tid per gram i sekunder för kokning vid rumstemperatur (kan justeras)
 
@@ -99,6 +165,6 @@ export class TimerButtonComponent {
       time *= 1.2; // För hårdkokta ägg, lägg till mer tid
     }
 
-    return time; // Tid i sekunder
+    return Math.round(time); // Tid i sekunder
   }
 }
