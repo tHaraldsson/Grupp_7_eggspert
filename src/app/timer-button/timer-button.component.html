@@ -3,14 +3,14 @@
 
 
   <div class="button-group">
-    <button (click)="toggleSelection('size')">Storlek</button>
+    <button (click)="toggleSelection('sizes')">Storlek</button>
     <button (click)="toggleSelection('consistency')">Konsistens</button>
     <button (click)="toggleSelection('temperature')">Äggtemperatur</button>
   </div>
 
   
-  <div *ngIf="selectedCategory === 'size'" class="options">
-    <button *ngFor="let size of sizes" (click)="selectEggOption('size', size)">{{ size }}</button>
+  <div *ngIf="selectedCategory === 'sizes'" class="options">
+    <button *ngFor="let sizes of sizes" (click)="selectEggOption('sizes', sizes)">{{ sizes }}</button>
   </div>
 
   <div *ngIf="selectedCategory === 'consistency'" class="options">
@@ -30,7 +30,11 @@
     <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" />
   </div>
 
-  <button class="start-button">Start</button>
+  <button (click)="startTimer()" class="start-button">Start</button>
+  <button (click)="pauseTimer()">Pause</button>
+  <button (click)="resetTimer()">Reset</button>
+
+  <p>{{formatTime(timeLeft())}}</p>
 
 </div>
 
