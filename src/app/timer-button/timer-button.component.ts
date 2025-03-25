@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { timestamp } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-timer-button',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './timer-button.component.html',
   styleUrl: './timer-button.component.css',
 })
@@ -53,6 +56,27 @@ export class TimerButtonComponent {
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
+  selectedCategory: string | null = null;
+  eggCount: number = 1;
+
+  sizes = ['S', 'M', 'L', 'XL'];
+  consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
+  temperatures = ['Kylskåpskallt', 'Rumstempererat'];
+
+  // Tillåter dynamiska nycklar i objektet
+  selectedOptions: { [key: string]: string } = {}; 
+
+  toggleSelection(category: string) {
+    this.selectedCategory = this.selectedCategory === category ? null : category;
+  }
+
+  selectEggOption(category: string, option: string) {
+    this.selectedOptions[category] = option; // Inga fler typfel!
+    this.selectedCategory = null; // Stäng alternativraden efter val
+    console.log(`Vald ${category}: ${option}`);
+  }
 }
+
+
 
 

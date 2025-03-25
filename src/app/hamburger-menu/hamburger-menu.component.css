@@ -1,45 +1,52 @@
+/* För att placera hamburgar-menyn på höger sida */
 .menu-container {
-    position: relative;
-    text-align: center;
-  }
-  
-  .hamburger-btn {
-    font-size: 2rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .menu-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1000;
-  }
-  
-  .menu-content a {
-    display: block;
-    color: black;
-    font-size: 1.5rem;
-    text-decoration: none;
-    margin: 15px 0;
-  }
-  
-  .menu-content a:hover {
-    text-decoration: underline;
-  }
+  position: absolute;
+  top: 20px; /* Justera detta för att ändra höjden på menyn */
+  right: 20px; /* Placera knappen till höger på sidan */
+  z-index: 1000; /* Se till att den ligger ovanpå andra element */
+}
+
+.hamburger-btn {
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* För menyn som visas när hamburgerknappen klickas */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0; /* Placera overlayen till höger */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Innehållet i menyn */
+.menu-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+}
+
+/* Länkarna i menyn */
+.menu-content a {
+  display: block;
+  color: black;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.menu-content a:hover {
+  text-decoration: underline;
+}
+
   

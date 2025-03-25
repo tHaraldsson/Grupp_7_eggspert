@@ -1,6 +1,41 @@
-div{
-    display: flexbox;
-    border: 1px solid;
-    width: 10rem;
-    background-color: rgb(234, 241, 6);
-}
+.container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .button-group button {
+    margin: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .options button {
+    margin: 5px;
+    padding: 8px 12px;
+  }
+  
+  .egg-count {
+    margin-top: 20px;
+  }
+  
+  .start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+  }
+  
+  footer {
+    margin-top: 30px;
+    font-size: 14px;
+  }
+  

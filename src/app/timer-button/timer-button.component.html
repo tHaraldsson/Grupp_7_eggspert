@@ -1,4 +1,41 @@
+<div class="container">
+  <h1>Eggspert</h1>
 
+
+  <div class="button-group">
+    <button (click)="toggleSelection('size')">Storlek</button>
+    <button (click)="toggleSelection('consistency')">Konsistens</button>
+    <button (click)="toggleSelection('temperature')">Äggtemperatur</button>
+  </div>
+
+  
+  <div *ngIf="selectedCategory === 'size'" class="options">
+    <button *ngFor="let size of sizes" (click)="selectEggOption('size', size)">{{ size }}</button>
+  </div>
+
+  <div *ngIf="selectedCategory === 'consistency'" class="options">
+    <button *ngFor="let consistency of consistencies" (click)="selectEggOption('consistency', consistency)">
+      {{ consistency }}
+    </button>
+  </div>
+
+  <div *ngIf="selectedCategory === 'temperature'" class="options">
+    <button *ngFor="let temp of temperatures" (click)="selectEggOption('temperature', temp)">
+      {{ temp }}
+    </button>
+  </div>
+
+  <div class="egg-count">
+    <label for="eggCount">Antal ägg:</label>
+    <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" />
+  </div>
+
+  <button class="start-button">Start</button>
+
+</div>
+
+
+  <!-- Alternativ visas under respektive knapp 
 <div>
   <h3>{{message}}</h3>
   <button (click)="startTimer()">Start Timer</button>
@@ -7,4 +44,4 @@
 
   <p>{{formatTime(timeLeft())}}</p>
  
-</div>
+</div> -->
