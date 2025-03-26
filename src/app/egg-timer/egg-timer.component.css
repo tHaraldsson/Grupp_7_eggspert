@@ -1,0 +1,109 @@
+.container {
+    text-align: center;
+    padding: 20px;
+    
+  }
+ 
+  h1 {
+    font-family: 'Barriecito', cursive;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #884D05;
+}
+  
+  .button-group button {
+    margin: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .options button {
+    margin: 5px;
+    padding: 8px 12px;
+  }
+
+
+  .egg-time {
+    position: absolute;
+    top: 65%; /* Centrerar texten vertikalt i förhållande till bilden */
+    left: 50%; /* Centrerar texten horisontellt i förhållande till bilden */
+    transform: translate(-50%, -50%); /* Justerar så att texten blir exakt centrerad */
+    font-family: 'Pompiere', cursive;
+    font-size: 20px;
+    color: rgb(0, 0, 0); /* Eller en annan färg som syns på din bild */
+    z-index: 1; /* Gör så att texten hamnar ovanpå bilden */
+}
+  
+  .egg-count {
+    display: flex;
+    flex-direction: column; /* För att visa innehållet i en vertikal kolumn */
+    align-items: flex-end; /* För att placera det längst till höger */
+    margin-top: 20px;
+    margin-right: 450px; /* Minskar avståndet från högerkanten */
+    font-family: 'Pompiere', cursive;
+  }
+  
+  .start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+  }
+
+  .egg {
+    display: block; /* Säkerställer att bilden kan centreras */
+    margin: 20px auto; /* Auto centrerar horisontellt */
+    max-width: 13%; /* Justera för att minska storleken till 60% av container-bredden */
+    height: auto;
+}
+.bakgrund {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw; /* Täck hela bredden */
+    height: 100vh; /* Täck hela höjden */
+    object-fit: cover; /* Gör att bilden täcker hela skärmen utan att förvrängas */
+    background-color: white; /* Vit bakgrund runt bilden om den inte täcker helt */
+    transform: translate(-50%, -50%); /* Centrera bilden i mitten av skärmen */
+    z-index: -1; /* Lägg den bakom allt annat */
+}
+
+button {
+    font-family: 'Pompiere', cursive;  /* Typsnittet */
+    font-weight: 400;  /* Vikt: 400 */
+    font-size: 20px;  /* Textstorlek: 20px */
+    line-height: 100%;  /* Radhöjd: 100% */
+    letter-spacing: 0;  /* Ingen bokstavsavstånd */
+    
+    border-radius: 25px;  /* Rundade hörn */
+    padding: 10px 20px;  /* Lite inre marginal */
+    
+    background-color: #ece038;  /* Bakgrundsfärg */
+    color: rgb(0, 0, 0);  /* Textfärg */
+    border: none;  /* Ingen kant runt knappen */
+    
+    cursor: pointer;  /* Muspekare ändras när man hovrar över knappen */
+    transition: background-color 0.3s ease;  /* Gör så att bakgrundsfärgen ändras långsamt */
+}
+
+/* För att ändra bakgrundsfärg när man hovrar över knappen */
+button:hover {
+    background-color: #eefe09;  /* Justera färgen vid hover */
+}
+  
+  footer {
+    margin-top: 30px;
+    font-size: 14px;
+  }
+  

@@ -1,32 +1,56 @@
+import { Component, computed, Input, signal } from '@angular/core';
+import { ContinuousTimerButtonComponent } from '../continuous-timer-button/continuous-timer-button.component'; 
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-egg-timer',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './egg-timer.component.html',
-  styleUrl: './egg-timer.component.css'
+  styleUrls: ['./egg-timer.component.css']
 })
 export class EggTimerComponent {
- @Input() time!: number;
+  @Input() time!: number;
   @Input() message!: string;
+  
 
-  timeLeft = signal(0);
-  interval: any;
+  constructor(private router: Router) {} 
+
+   // Flagga för att styra visning av knappar
+   showContinuousTimerComponent = false;
+   timerisRunning = false; // Flagga för att visa om timern är igång eller inte
+   timeLeft = signal(0); // Tiden kvar
+   interval: any;
+
   ngOnInit() {
+    if (isNaN(this.time)) {
+      console.error('Ogiltigt värde för time:', this.time);
+      this.time = 0; // Eller sätt ett standardvärde
+    }
+
     this.timeLeft.update((value) => this.time);
   }
 
+  // Startar eller pausar timern beroende på dess nuvarande status
+  toggleTimer() {
+    if (this.timerisRunning) {
+      this.pauseTimer();
+    } else {
+      this.startTimer();
+    }
+  }
+
   startTimer() {
-    clearInterval(this.interval);
+    this.timerisRunning = true;
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
         this.timeLeft.update((value) => value - 1);
       } else {
         this.playSound();
-        //alert("Times up!!!!!!!!!!!!!")
-        this.timeLeft.update((value) => this.time);
+        this.timeLeft.update((value) => this.time); // Återställ till ursprunglig tid
         clearInterval(this.interval);
       }
     }, 1000);
@@ -34,11 +58,13 @@ export class EggTimerComponent {
 
   pauseTimer() {
     clearInterval(this.interval);
+    this.timerisRunning = false;
   }
 
   resetTimer() {
     this.timeLeft.update((value) => this.time);
     clearInterval(this.interval);
+    this.timerisRunning = false; // Sätt timern till pausläget
   }
 
   playSound() {
@@ -168,5 +194,11 @@ export class EggTimerComponent {
     return Math.round(time); // Tid i sekunder
   }
 
-  
+  navigateToContinuousTimer() {
+    // Detta använder routerLink i HTML för att navigera
+    this.router.navigate(['/continuous-timer']);
+  }
 }
+
+
+
