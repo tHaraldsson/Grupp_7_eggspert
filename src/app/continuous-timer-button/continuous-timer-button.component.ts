@@ -30,7 +30,7 @@ export class ContinuousTimerButtonComponent {
     }
   }
 
-  // todo: async await for angular
+  
   startTimer() {
     clearInterval(this.interval);
     this.interval = setInterval(async () => {

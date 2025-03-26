@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-timer-button',
+  selector: 'app-egg-timer',
   imports: [CommonModule, FormsModule],
-  templateUrl: './timer-button.component.html',
-  styleUrl: './timer-button.component.css',
+  templateUrl: './egg-timer.component.html',
+  styleUrl: './egg-timer.component.css'
 })
-export class TimerButtonComponent {
-  @Input() time!: number;
+export class EggTimerComponent {
+ @Input() time!: number;
   @Input() message!: string;
 
   timeLeft = signal(0);
