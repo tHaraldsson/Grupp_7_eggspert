@@ -4,8 +4,7 @@ import { EggTimerComponent } from "../../egg-timer/egg-timer.component";
 
 @Component({
   selector: 'app-basic-timmer-view',
-  standalone: true, 
-  imports: [TimerButtonComponent, EggTimerComponent],
+  imports: [EggTimerComponent],
   templateUrl: './basic-timmer-view.component.html',
   styleUrl: './basic-timmer-view.component.css'
 })

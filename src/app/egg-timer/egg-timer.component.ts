@@ -10,50 +10,74 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './egg-timer.component.html',
-  styleUrls: ['./egg-timer.component.css']
+  styleUrl: './egg-timer.component.css',
 })
 export class EggTimerComponent {
-  @Input() time!: number;
-  @Input() message!: string;
-  
+  time!: number;
+  time1!: number;
+  time2!: number;
 
-  constructor(private router: Router) {} 
+  timeLeft = signal(0);
+  statusMessage = signal('');
+  interval: any;
+  timerisRunning = false;
 
-   // Flagga för att styra visning av knappar
-   showContinuousTimerComponent = false;
-   timerisRunning = false; // Flagga för att visa om timern är igång eller inte
-   timeLeft = signal(0); // Tiden kvar
-   interval: any;
+  targetTime = 0;
+  checkpoints: { time: number; message: string }[] = [];
+
+  selectedCategory: string | null = null;
+  eggCount: number = 1;
+
+  sizes = ['Small', 'Medium', 'Large', 'XLarge'];
+  consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
+  temperatures = ['Kylskåpskallt', 'Rumstempererat'];
+
+  selectedOptions: { [key: string]: string } = {};
 
   ngOnInit() {
-    if (isNaN(this.time)) {
-      console.error('Ogiltigt värde för time:', this.time);
-      this.time = 0; // Eller sätt ett standardvärde
-    }
-
-    this.timeLeft.update((value) => this.time);
+    this.calculateCookTime();
   }
 
-  // Startar eller pausar timern beroende på dess nuvarande status
-  toggleTimer() {
-    if (this.timerisRunning) {
-      this.pauseTimer();
-    } else {
-      this.startTimer();
-    }
+  onEggCountChange() {
+    this.calculateCookTime();
+    this.resetTimer();
   }
+
 
   startTimer() {
-    this.timerisRunning = true;
+    clearInterval(this.interval);
+    
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
-        this.timeLeft.update((value) => value - 1);
-      } else {
+        this.timeLeft.update(v => v - 1);
+        this.updateHenPosition();
+      }
+
+      if (this.eggCount > 1) {
+        this.checkpoints.forEach(checkpoint => {
+          if (this.timeLeft() === checkpoint.time) {
+            this.playSound();
+            this.statusMessage.set(`Just nu: ${checkpoint.message}`);
+          }
+        });
+      }
+
+      if (this.timeLeft() === 0) {
         this.playSound();
-        this.timeLeft.update((value) => this.time); // Återställ till ursprunglig tid
+        this.timerisRunning = false;
+        this.statusMessage.set(`${this.selectedOptions['consistency'] || 'Hårdkokt'} klar!`);
         clearInterval(this.interval);
       }
     }, 1000);
+  }
+
+  toggleTimer() {
+    this.timerisRunning = !this.timerisRunning;
+    if (this.timerisRunning) {
+      this.startTimer();
+    } else {
+      this.pauseTimer();
+    }
   }
 
   pauseTimer() {
@@ -62,9 +86,9 @@ export class EggTimerComponent {
   }
 
   resetTimer() {
-    this.timeLeft.update((value) => this.time);
+    this.timeLeft.set(this.targetTime);
     clearInterval(this.interval);
-    this.timerisRunning = false; // Sätt timern till pausläget
+    this.statusMessage.set(`Mål: ${this.selectedOptions['consistency'] || 'Hårdkokt'} (${this.formatTime(this.targetTime)})`);
   }
 
   playSound() {
@@ -81,16 +105,6 @@ export class EggTimerComponent {
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
-  selectedCategory: string | null = null;
-  eggCount: number = 1;
-
-  sizes = ['Small', 'Medium', 'Large', 'XLarge'];
-  consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
-  temperatures = ['Kylskåpskallt', 'Rumstempererat'];
-
-  // Tillåter dynamiska nycklar i objektet
-  selectedOptions: { [key: string]: string } = {};
-
   toggleSelection(category: string) {
     this.selectedCategory =
       this.selectedCategory === category ? null : category;
@@ -100,74 +114,71 @@ export class EggTimerComponent {
     this.selectedOptions[category] = option; // Inga fler typfel!
     this.selectedCategory = null; // Stäng alternativraden efter val
 
-    
-    
-
     this.calculateCookTime();
     console.log(`Vald ${category}: ${option}`);
   }
-  calculateCookTime() {
-    // Grundvärden för äggkokning
-    let mass = 53; // För standard äggstorlek (kan göras dynamisk baserat på val av storlek)
-    let startTempEgg =
-      this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
-    let desiredTempEgg = 72; // För hårdkokt ägg
-    let waterTemp = 100; // För kokande vatten
-
-    
-    
-    
-    switch (this.selectedOptions['consistency']) {
-      case 'Löskokt': {
-        desiredTempEgg = 63;
-        break;
-      }
-      case 'Mellankokt': {
-        desiredTempEgg = 68;
-        break;
-      }
-      case 'Hårdkokt': {
-        desiredTempEgg = 75;
-        break;
-      }
-    }
+  calculateCookTime(): number {
+    let mass = 53;
+    const startTempEgg = this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
+    let desiredTempEgg = 75;
 
     switch (this.selectedOptions['sizes']) {
-      case 'Small': {
-        mass = 50;
-        break;
-      }
-      case 'Medium': {
-        mass = 58;
-        break;
-      }
-      case 'Large': {
-        mass = 68;
-        break;
-      }
-      case 'XLarge': {
-        mass = 75;
-        break;
-      }
+      case 'Small': mass = 50; break;
+      case 'Medium': mass = 58; break;
+      case 'Large': mass = 68; break;
+      case 'XLarge': mass = 75; break;
     }
 
+    switch (this.selectedOptions['consistency']) {
+      case 'Löskokt': desiredTempEgg = 63; break;
+      case 'Mellankokt': desiredTempEgg = 68; break;
+      case 'Hårdkokt': desiredTempEgg = 75; break;
+    }
 
-    console.log(this.selectedOptions['temperature']);
-    console.log(this.selectedOptions['consistency']);
-    console.log(this.selectedOptions['sizes']);
-    console.log(mass);
+    this.time = this.eggQation(mass, 100, startTempEgg, 63);
+    this.time1 = this.eggQation(mass, 100, startTempEgg, 68);
+    this.time2 = this.eggQation(mass, 100, startTempEgg, 75);
 
-    // Beräkna koktiden i sekunder
-    let cookTime = this.eggQation(
-      mass,
-      waterTemp,
-      startTempEgg,
-      desiredTempEgg
-    );
+    const selectedConsistency = this.selectedOptions['consistency'] || 'Hårdkokt';
+    this.checkpoints = [];
 
-    // Uppdatera timern med den beräknade tiden
-    this.timeLeft.update((value) => cookTime);
-    console.log(`Beräknad koktid: ${cookTime} sekunder`);
+    // ÄNDRING: Lägg endast till checkpoints om fler än 1 ägg
+    if (this.eggCount > 1) {
+      switch (selectedConsistency) {
+        case 'Hårdkokt':
+          this.targetTime = this.time2;
+          this.checkpoints = [
+            { time: this.targetTime - this.time1, message: 'Mellankokt' },
+            { time: this.targetTime - this.time, message: 'Löskokt' }
+          ];
+          break;
+        
+        case 'Mellankokt':
+          this.targetTime = this.time1;
+          this.checkpoints = [
+            { time: this.targetTime - this.time, message: 'Löskokt' }
+          ];
+          break;
+        
+        case 'Löskokt':
+          this.targetTime = this.time;
+          break;
+      }
+    } else {
+      // ÄNDRING: Hantera targetTime för 1 ägg
+      switch (selectedConsistency) {
+        case 'Hårdkokt': this.targetTime = this.time2; break;
+        case 'Mellankokt': this.targetTime = this.time1; break;
+        case 'Löskokt': this.targetTime = this.time; break;
+      }
+      this.checkpoints = [];
+    }
+
+    this.checkpoints.sort((a, b) => b.time - a.time);
+    this.timeLeft.set(this.targetTime);
+    this.statusMessage.set(`Mål: ${selectedConsistency} (${this.formatTime(this.targetTime)})`);
+
+    return this.targetTime;
   }
 
   eggQation(
@@ -194,9 +205,20 @@ export class EggTimerComponent {
     return Math.round(time); // Tid i sekunder
   }
 
-  navigateToContinuousTimer() {
-    // Detta använder routerLink i HTML för att navigera
-    this.router.navigate(['/continuous-timer']);
+  // HEN ANIMATION
+// Uppdatera beräkningen
+henPosition = computed(() => {
+  const progress = this.timeLeft() / (this.targetTime || 1);
+  const angle = progress * 360;
+  return `rotate(${angle}deg)`; // Returnera en korrekt CSS transform-sträng
+});
+
+  // Metod för att uppdatera hönans position direkt
+  updateHenPosition() {
+    const henElement = document.querySelector('.hen') as HTMLElement;
+    if (henElement) {
+      henElement.style.transform = this.henPosition();
+    }
   }
 }
 

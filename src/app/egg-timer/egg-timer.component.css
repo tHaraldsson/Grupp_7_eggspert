@@ -1,109 +1,119 @@
+/* egg-timer.component.css */
 .container {
-    text-align: center;
-    padding: 20px;
-    
-  }
- 
-  h1 {
-    font-family: 'Barriecito', cursive;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 100%;
-    letter-spacing: 0;
-    color: #884D05;
-}
-  
-  .button-group button {
-    margin: 10px;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .options {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .options button {
-    margin: 5px;
-    padding: 8px 12px;
-  }
-
-
-  .egg-time {
-    position: absolute;
-    top: 65%; /* Centrerar texten vertikalt i förhållande till bilden */
-    left: 50%; /* Centrerar texten horisontellt i förhållande till bilden */
-    transform: translate(-50%, -50%); /* Justerar så att texten blir exakt centrerad */
-    font-family: 'Pompiere', cursive;
-    font-size: 20px;
-    color: rgb(0, 0, 0); /* Eller en annan färg som syns på din bild */
-    z-index: 1; /* Gör så att texten hamnar ovanpå bilden */
-}
-  
-  .egg-count {
-    display: flex;
-    flex-direction: column; /* För att visa innehållet i en vertikal kolumn */
-    align-items: flex-end; /* För att placera det längst till höger */
-    margin-top: 20px;
-    margin-right: 450px; /* Minskar avståndet från högerkanten */
-    font-family: 'Pompiere', cursive;
-  }
-  
-  .start-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #ffcc00;
-    border: none;
-    cursor: pointer;
-  }
-
-  .egg {
-    display: block; /* Säkerställer att bilden kan centreras */
-    margin: 20px auto; /* Auto centrerar horisontellt */
-    max-width: 13%; /* Justera för att minska storleken till 60% av container-bredden */
-    height: auto;
-}
-.bakgrund {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100vw; /* Täck hela bredden */
-    height: 100vh; /* Täck hela höjden */
-    object-fit: cover; /* Gör att bilden täcker hela skärmen utan att förvrängas */
-    background-color: white; /* Vit bakgrund runt bilden om den inte täcker helt */
-    transform: translate(-50%, -50%); /* Centrera bilden i mitten av skärmen */
-    z-index: -1; /* Lägg den bakom allt annat */
+  text-align: center;
+  padding: 20px;
 }
 
-button {
-    font-family: 'Pompiere', cursive;  /* Typsnittet */
-    font-weight: 400;  /* Vikt: 400 */
-    font-size: 20px;  /* Textstorlek: 20px */
-    line-height: 100%;  /* Radhöjd: 100% */
-    letter-spacing: 0;  /* Ingen bokstavsavstånd */
-    
-    border-radius: 25px;  /* Rundade hörn */
-    padding: 10px 20px;  /* Lite inre marginal */
-    
-    background-color: #ece038;  /* Bakgrundsfärg */
-    color: rgb(0, 0, 0);  /* Textfärg */
-    border: none;  /* Ingen kant runt knappen */
-    
-    cursor: pointer;  /* Muspekare ändras när man hovrar över knappen */
-    transition: background-color 0.3s ease;  /* Gör så att bakgrundsfärgen ändras långsamt */
+.button-group button {
+  margin: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* För att ändra bakgrundsfärg när man hovrar över knappen */
-button:hover {
-    background-color: #eefe09;  /* Justera färgen vid hover */
+.options {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
-  
-  footer {
-    margin-top: 30px;
-    font-size: 14px;
-  }
-  
+
+.options button {
+  margin: 5px;
+  padding: 8px 12px;
+}
+
+.egg-count {
+  margin-top: 20px;
+}
+
+.egg-count input {
+  margin-left: 10px;
+  padding: 5px;
+  width: 60px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.btn-start {
+  background-color: rgb(161, 161, 98);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-start:hover {
+  background-color: rgb(147, 147, 90);
+}
+
+.btn-pause {
+  background-color: rgb(161, 161, 98);
+}
+
+.btn-reset {
+  background-color: rgb(161, 161, 98);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  background-color: rgb(147, 147, 90);
+}
+
+/* Progressbar runt äggulan */
+.yolk-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+}
+
+.yolk-progress {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: conic-gradient(
+    #ffd700 0deg,
+    #ffd700 calc(var(--progress) * 3.6deg),
+    transparent calc(var(--progress) * 3.6deg)
+  );
+  z-index: 2;
+}
+
+.yolk-hole {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: transparent;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.egg {
+  position: relative;
+  z-index: 1;
+  width: 120px;
+  display: block;
+  margin: 0 auto;
+  top: 38px;
+}
+
+/* Grundlayout för timertext */
+.timer-display {
+  font-size: 2.5em;
+  margin: 20px 0;
+  font-weight: bold;
+}
