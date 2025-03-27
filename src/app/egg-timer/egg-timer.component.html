@@ -6,10 +6,20 @@
   
   
     <div class="button-group">
-      <img class="egg-selection" src="/pictures/eggsize.png" (click)="toggleSelection('sizes')" />
-      <button (click)="toggleSelection('consistency')">Konsistens</button>
-      <button (click)="toggleSelection('temperature')">Äggtemperatur</button>
+        <div class="egg-option">
+            <img class="egg-selectionOne" src="/pictures/eggsize.png" (click)="toggleSelection('sizes')" />
+            <p>Storlek</p>
+        </div>
+        <div class="egg-option">
+            <img class="egg-selectionTwo" src="/pictures/konsistens.png" (click)="toggleSelection('consistency')"/>
+            <p>Konsistens</p>
+        </div>
+        <div class="egg-option">
+            <img class="egg-selectionThree" src="/pictures/temp.png" (click)="toggleSelection('temperature')"/>
+            <p>Äggtemperatur</p>
+        </div>
     </div>
+    
   
     
     <div *ngIf="selectedCategory === 'sizes'" class="options">
