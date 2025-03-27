@@ -43,12 +43,21 @@ export class EggTimerComponent {
     this.resetTimer();
   }
 
-  getSizeImage(size: string): string {
+  getSizeImageName(size: string): string {
     const sizeImages: Record<string, string> = {
-      'Small': '/pictures/smallegg.png',
-      'Medium': '/pictures/mediumegg.png',
-      'Large': '/pictures/largeegg.png',
-      'XLarge': '/pictures/xlegg.png'
+      'Small': 'smallegg.png',
+      'Medium': 'mediumegg.png',
+      'Large': 'largeegg.png',
+      'XLarge': 'xlegg.png'
+    };
+    return sizeImages[size] || 'assets/images/default-egg.png';
+  }
+
+  getConcistencyImageName(size: string): string {
+    const sizeImages: Record<string, string> = {
+      'Löskokt': 'löskokt.png',
+      'Mellankokt': 'mediumkokt.png',
+      'Hårdkokt': 'hårdkokt.png'
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
