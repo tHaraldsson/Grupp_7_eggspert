@@ -23,8 +23,15 @@
   
     
     <div *ngIf="selectedCategory === 'sizes'" class="options">
-      <button *ngFor="let sizes of sizes" (click)="selectEggOption('sizes', sizes)">{{ sizes }}</button>
-    </div>
+        <div *ngFor="let size of sizes" 
+             class="egg-option"
+             (click)="selectEggOption('sizes', size)">
+          <img [src]="'/pictures/' + size.toLowerCase() + '-egg.png'" 
+               [alt]="size"
+               class="egg-selection">
+          <p>{{ size }}</p>
+        </div>
+      </div>
   
     <div *ngIf="selectedCategory === 'consistency'" class="options">
       <button *ngFor="let consistency of consistencies" (click)="selectEggOption('consistency', consistency)">

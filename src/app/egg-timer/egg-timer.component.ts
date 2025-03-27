@@ -43,6 +43,17 @@ export class EggTimerComponent {
     this.resetTimer();
   }
 
+  getSizeImage(size: string): string {
+    const sizeImages: Record<string, string> = {
+      'Small': '/pictures/smallegg.png',
+      'Medium': '/pictures/mediumegg.png',
+      'Large': '/pictures/largeegg.png',
+      'XLarge': '/pictures/xlegg.png'
+    };
+    return sizeImages[size] || 'assets/images/default-egg.png';
+  }
+  
+
 
   startTimer() {
     clearInterval(this.interval);
