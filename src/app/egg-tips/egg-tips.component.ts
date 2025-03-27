@@ -18,9 +18,10 @@ import { __values } from 'tslib';
 export class EggTipsComponent implements OnInit {
   eggTips: any[] = []; // Håller äggtipsen som hämtas från API:et
   errorMessage: string = ''; // För eventuella felmeddelanden
+
   eggTipNumber: number = 0;
-  @ViewChild('nextTipButton') nextTipButton!: HTMLButtonElement;
-  @ViewChild('lastTipButton') lastTipButton!: HTMLButtonElement;
+  lastTipButtonClass: string = 'disabled';
+  nextTipButtonClass: string = '';
 
   constructor(private eggTipsService: EggTipsService) {}
 
@@ -28,10 +29,6 @@ export class EggTipsComponent implements OnInit {
     this.fetchEggTips(); // Hämta äggtips när komponenten laddas
     this.eggTipNumber = 0;
   }
-
- /* ngAfterViewInit(): void {
-    this.uppdateButtonStatus();
-  }*/
 
   fetchEggTips(): void {
     this.eggTipsService.getEggTips().subscribe(
@@ -52,31 +49,19 @@ export class EggTipsComponent implements OnInit {
       this.eggTipNumber = this.eggTipNumber + change;
       console.log(this.eggTipNumber);
     }
-    //this.uppdateButtonStatus();
+    this.uppdateButtonStatus();
   }
 
-  /*uppdateButtonStatus(): void {
-    if (this.lastTipButton && this.nextTipButton) {
-      if (
-        this.eggTipNumber <=
-        0 && this.lastTipButton.classList.contains('disabled')
-      ) {
-        this.lastTipButton.classList.add('disabled');
-        this.lastTipButton.disabled = true;
-      } if(!this.lastTipButton.classList.contains('disabled')) else {
-        this.lastTipButton.disabled = false;
-        this.lastTipButton.classList.remove('disabled');
-      }
-      if (
-        this.eggTipNumber >= this.eggTips.length &&
-        this.nextTipButton.classList.contains('disabled')
-      ) {
-        this.nextTipButton.classList.add('disabled');
-        this.nextTipButton.disabled = true;
-      } else if (!this.nextTipButton.classList.contains('disabled')) {
-        this.nextTipButton.disabled = false;
-        this.nextTipButton.classList.remove('disabled');
-      }
+  uppdateButtonStatus(): void {
+    if (this.eggTipNumber <= 0) {
+      this.lastTipButtonClass = 'disabled';
+    } else {
+      this.lastTipButtonClass = '';
     }
-  }*/
+    if (this.eggTipNumber >= this.eggTips.length - 1) {
+      this.nextTipButtonClass = 'disabled';
+    } else {
+      this.nextTipButtonClass = '';
+    }
+  }
 }

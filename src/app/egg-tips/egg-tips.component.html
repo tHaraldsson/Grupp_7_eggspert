@@ -4,13 +4,23 @@
 
 <div *ngIf="eggTips.length > 0">
   <section class="main_box">
+    <button
+      (click)="eggTipNumberChange(-1)"
+      #lastTipButton
+      class="box tip_Button {{lastTipButtonClass}}"
+    >
+      last
+    </button>
 
-    <button (click)="eggTipNumberChange(-1)" #lastTipButton class="box tip_Button">last</button>
-    
     <p class="box tip_Text">{{ eggTips[eggTipNumber].tip }}</p>
-    
-    <button (click)="eggTipNumberChange(+1)" #nextTipButton class="box tip_Button">next</button>
 
+    <button
+      (click)="eggTipNumberChange(+1)"
+      #nextTipButton
+      class="box tip_Button {{nextTipButtonClass}}"
+    >
+      next
+    </button>
   </section>
 </div>
 
