@@ -5,7 +5,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Pompiere", sans-serif;
+  font-family: "Playpen Sans", cursive;
   text-align: center;
   background-color: white; /* Fallback om bakgrundsbilden inte laddas */
 }
@@ -71,7 +71,7 @@ h1 {
   top: 47%;
   left: 50%;
   transform: translate(-50%, -50%); /* Centrera */
-  font-family: "Pompiere", sans-serif;
+  font-family: "Playpen Sans", cursive;
 }
 
 .button-group {
@@ -116,7 +116,7 @@ h1 {
 }
 
 .egg-option p {
-  font-family: "Pompiere", sans-serif; /* Använd det typsnitt du vill */
+  font-family: "Playpen Sans", cursive; /* Använd det typsnitt du vill */
   font-size: 18px;
   margin-top: 8px;
   color: #333;
