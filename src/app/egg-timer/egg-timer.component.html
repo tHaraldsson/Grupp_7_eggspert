@@ -33,15 +33,15 @@
       <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" (change)="onEggCountChange()" />
     </div>
 
-    <p>{{ statusMessage() }}</p>
-
+    
+    <p class="timeLeft">{{formatTime(timeLeft())}}</p>
     <div class="yolk-container">
         <div class="yolk-progress" 
            [style.--progress]="(1 - (timeLeft() / targetTime)) * 100">
-          <div class="yolk-mask"></div>
         </div>
-  
-    <img class="egg" src="/pictures/äggform.png" />
+        <p class="status-message" [innerHTML]="statusMessage()"></p>
+    <img class="egg" src="/pictures/äggform2.png" />
+    <img class="eggYolk" src="/pictures/eggYolk.png" />
   
     <div class="buttons">
         <button
@@ -54,6 +54,6 @@
         <button (click)="resetTimer()" class="btn-reset">Återställ</button>
       </div>
   
-    <p>{{formatTime(timeLeft())}}</p>
+    
   
   </div> 

@@ -57,7 +57,7 @@ export class EggTimerComponent {
         this.checkpoints.forEach(checkpoint => {
           if (this.timeLeft() === checkpoint.time) {
             this.playSound();
-            this.statusMessage.set(`Just nu: ${checkpoint.message}`);
+            this.statusMessage.set(`Just nu:<br><strong>${checkpoint.message}</strong>`);
           }
         });
       }
@@ -65,7 +65,7 @@ export class EggTimerComponent {
       if (this.timeLeft() === 0) {
         this.playSound();
         this.timerisRunning = false;
-        this.statusMessage.set(`${this.selectedOptions['consistency'] || 'Hårdkokt'} klar!`);
+        this.statusMessage.set(`${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`);
         clearInterval(this.interval);
       }
     }, 1000);
@@ -88,7 +88,7 @@ export class EggTimerComponent {
   resetTimer() {
     this.timeLeft.set(this.targetTime);
     clearInterval(this.interval);
-    this.statusMessage.set(`Mål: ${this.selectedOptions['consistency'] || 'Hårdkokt'} (${this.formatTime(this.targetTime)})`);
+    this.statusMessage.set(`Mål:<br>${this.selectedOptions['consistency'] || 'Hårdkokt'}`);
   }
 
   playSound() {
@@ -176,7 +176,7 @@ export class EggTimerComponent {
 
     this.checkpoints.sort((a, b) => b.time - a.time);
     this.timeLeft.set(this.targetTime);
-    this.statusMessage.set(`Mål: ${selectedConsistency} (${this.formatTime(this.targetTime)})`);
+    this.statusMessage.set(`Mål:<br>${selectedConsistency}`);
 
     return this.targetTime;
   }
