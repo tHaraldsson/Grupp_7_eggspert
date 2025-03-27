@@ -1,0 +1,45 @@
+.main_box {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  flex-wrap: nowrap;
+  border: 0;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.box {
+  display: flex;
+  border: 1px solid;
+  border-color: black;
+  overflow: hidden;
+  justify-content: center;
+}
+@media only screen and (min-width: 600px) {
+  .tip_Button {
+    font-size: 23px;
+    height: 3rem;
+    width: 15rem;
+  }
+  .tip_Text {
+    font-size: 16px;
+    height: 3rem;
+    width: 30rem;
+  }
+}
+@media screen and (max-width: 600px) {
+    .tip_Button {
+      font-size: 20px;
+      height: 3rem;
+      width: 10rem;
+    }
+    .tip_Text {
+      font-size: 15px;
+      height: 3rem;
+      width: 30rem;
+    }
+  }
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
