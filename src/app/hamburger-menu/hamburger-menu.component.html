@@ -1,0 +1,15 @@
+<div class="menu-container">
+    <button class="hamburger-btn" (click)="toggleMenu()">
+      ☰
+    </button>
+    
+  
+    <div class="menu-overlay" *ngIf="menuOpen" (click)="toggleMenu()">
+      <nav class="menu-content" (click)="$event.stopPropagation()">
+        <a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Basic timer</a>
+        <a routerLink="/continuous" routerLinkActive="active" (click)="toggleMenu()">Continuous timer</a>
+        <a routerLink="/recipe" routerLinkActive="active" (click)="toggleMenu()">Recipe</a>
+      </nav>
+    </div>
+  </div>
+  
