@@ -62,6 +62,7 @@ img {
   top: 50%;
   transform: translate(-50%, -50%);
   height: 200px;
+  z-index: -1;
 }
 
 .hen {
@@ -72,4 +73,5 @@ img {
   transform-origin: center; /* Rotation sker runt mitten */
   transition: transform 0.5s linear;
   transform: rotate(-90deg) translateX(100px) rotate(90deg);
+  z-index: 2;
 }

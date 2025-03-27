@@ -1,4 +1,7 @@
 <div class="container">
+
+    <img class="bakgrund" src="/pictures/bakgrund.png" />
+
     <h1>Eggspert</h1>
   
   
@@ -27,14 +30,29 @@
   
     <div class="egg-count">
       <label for="eggCount">Antal ägg:</label>
-      <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" />
+      <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" (change)="onEggCountChange()" />
     </div>
+
+    <p>{{ statusMessage() }}</p>
+
+    <div class="yolk-container">
+        <div class="yolk-progress" 
+           [style.--progress]="(1 - (timeLeft() / targetTime)) * 100">
+          <div class="yolk-mask"></div>
+        </div>
   
-    <img class="egg" src="/pictures/bild.png" />
+    <img class="egg" src="/pictures/eggWithoutYolk.png" />
   
-    <button (click)="startTimer()" class="start-button">Start</button>
-    <button (click)="pauseTimer()">Pause</button>
-    <button (click)="resetTimer()">Reset</button>
+    <div class="buttons">
+        <button
+          (click)="toggleTimer()"
+          [class.btn-pause]="timerisRunning"
+          class="btn-start"
+        >
+          {{ timerisRunning ? "Pausa" : "Starta" }}
+        </button>
+        <button (click)="resetTimer()" class="btn-reset">Återställ</button>
+      </div>
   
     <p>{{formatTime(timeLeft())}}</p>
   
