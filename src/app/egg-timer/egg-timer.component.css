@@ -291,3 +291,123 @@ button {
 
 
 
+
+
+
+
+/* Layout för större skärmar*/
+@media screen and (min-width: 768px) {
+  .egg-timer-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color:rgba(255, 255, 255, 0.3);
+      font-family:'Pompiere', sans-serif;
+  }
+  .container{
+    display: none;
+  }
+
+  /* Vänster sektion: Val av storlek, konsistens och temperatur */
+  .egg-options-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: #fbeec1;
+      padding: 20px;
+      border-radius: 15px;
+      width: 40%;
+  }
+
+  .egg-size-options,
+  .egg-consistency-options,
+  .egg-temperature-options {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      background: #ffe98d;
+      padding: 10px;
+      border-radius: 10px;
+      width: 100%;
+      font-family: Playpen sans-serif;
+  }
+
+  .egg-size,
+  .egg-consistency,
+  .egg-temperature {
+      background: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+  }
+
+  /* Antal ägg */
+  .egg-count-container {
+      margin-top: 10px;
+  }
+
+  .egg-count-select {
+      padding: 5px;
+      font-size: 16px;
+  }
+
+  /* Höger sektion timer och äggbild */
+  .egg-timer-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 55%;
+  }
+
+  .egg-timer-title {
+      font-size: 42px;
+      font-family: 'Barriecito', cursive;
+      color: #884D05;
+  }
+
+  .timer-display {
+      font-size: 32px;
+      font-weight: bold;
+  }
+
+  .egg-timer-visual {
+      position: relative;
+      width: 200px;
+      height: 300px;
+  }
+
+  .egg-image {
+      width: 200px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+  .egg-yolk {
+      width: 90px;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+
+
+
+  .btn-start {
+      background-color: #ffcc00;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+  }
+}

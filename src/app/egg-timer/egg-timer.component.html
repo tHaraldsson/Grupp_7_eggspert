@@ -80,3 +80,61 @@
     
   
   </div> 
+  </div> 
+  
+
+
+
+
+
+
+  <div class="egg-timer-layout">
+    <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
+    <div class="egg-options-panel">
+        <h2>Äggstorlek</h2>
+        <div class="egg-size-options">
+            <button class="egg-size" data-size="S">S</button>
+            <button class="egg-size" data-size="M">M</button>
+            <button class="egg-size" data-size="L">L</button>
+            <button class="egg-size" data-size="XL">XL</button>
+        </div>
+
+        <h2>Äggkonsistens</h2>
+        <div class="egg-consistency-options">
+            <button class="egg-consistency" data-consistency="lös">Löskokt</button>
+            <button class="egg-consistency" data-consistency="mellan">Mellan</button>
+            <button class="egg-consistency" data-consistency="hård">Hårdkokt</button>
+        </div>
+
+        <h2>Äggtemperatur</h2>
+        <div class="egg-temperature-options">
+            <button class="egg-temperature" data-temp="cold">Direkt ur kylskåpet</button>
+            <button class="egg-temperature" data-temp="room">Rumstemperatur</button>
+        </div>
+
+        <div class="egg-count-container">
+            <label for="eggCountSelect">Antal ägg:</label>
+            <select id="eggCountSelect" class="egg-count-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Höger timer och äggbild-->
+    <div class="egg-timer-display">
+        <h1 class="egg-timer-title">Eggspert</h1>
+        <p class="timer-display">01:25</p>
+
+        <div class="egg-timer-visual">
+            <div class="yolk-progress"></div>
+            <img class="egg-image" src="/pictures/äggform2.png" alt="Ägg">
+            <img class="egg-yolk" src="/pictures/eggYolk.png" alt="Äggula">
+        </div>
+
+        <button class="btn-start">Start</button>
+    </div>
+</div>
