@@ -23,30 +23,35 @@
   
     
     <div *ngIf="selectedCategory === 'sizes'" class="options">
-        <div *ngFor="let size of sizes" 
-             class="egg-option"
-             (click)="selectEggOption('sizes', size)">
-          <img [src]="'/pictures/' + size.toLowerCase() + '-egg.png'" 
-               [alt]="size"
-               class="egg-selection">
-          <p>{{ size }}</p>
-        </div>
+      <div *ngFor="let size of sizes" 
+           class="egg-option"
+           (click)="selectEggOption('sizes', size)">
+        <img [src]="'/pictures/' + getSizeImageName(size)" 
+             [alt]="size"
+             class="egg-selection">
       </div>
-  
+    </div>
+      
     <div *ngIf="selectedCategory === 'consistency'" class="options">
-      <button *ngFor="let consistency of consistencies" (click)="selectEggOption('consistency', consistency)">
-        {{ consistency }}
-      </button>
+      <div *ngFor="let consistency of consistencies"
+      (click)="selectEggOption('consistency', consistency)">
+      <img [src]="'/pictures/' + getConcistencyImageName(consistency)" 
+      [alt]="consistencies"
+      class="egg-selection">
+      {{consistency}}
+    </div>
     </div>
   
     <div *ngIf="selectedCategory === 'temperature'" class="options">
-      <button *ngFor="let temp of temperatures" (click)="selectEggOption('temperature', temp)">
+      <button *ngFor="let temp of temperatures"
+      (click)="selectEggOption('temperature', temp)">
         {{ temp }}
-      </button>
+    </button>
     </div>
   
+    
     <div class="egg-count">
-      <label for="eggCount">Antal ägg:</label>
+      <label for="eggCount" class="egg-label">Antal ägg:</label>
       <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" (change)="onEggCountChange()" />
     </div>
 
@@ -70,6 +75,7 @@
         </button>
         <button (click)="resetTimer()" class="btn-reset">Återställ</button>
       </div>
+  
   
     
   
