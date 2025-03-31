@@ -62,20 +62,13 @@
            [style.--progress]="(1 - (timeLeft() / targetTime)) * 100">
         </div>
         <p class="status-message" [innerHTML]="statusMessage()"></p>
+
+        <div class="egg-container" (click)="toggleTimer()">
     <img class="egg" src="/pictures/äggform2.png" />
+    
     <img class="eggYolk" src="/pictures/eggYolk.png" />
-  
-    <div class="buttons">
-        <button
-          (click)="toggleTimer()"
-          [class.btn-pause]="timerisRunning"
-          class="btn-start"
-        >
-          {{ timerisRunning ? "Pausa" : "Starta" }}
-        </button>
-        <button (click)="resetTimer()" class="btn-reset">Återställ</button>
-      </div>
-  
+    <span class="egg-text">{{ timerisRunning ? "Stop" : "Starta" }}</span>
+</div>
   
     
   

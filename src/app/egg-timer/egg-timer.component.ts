@@ -92,11 +92,13 @@ export class EggTimerComponent {
   }
 
   toggleTimer() {
-    this.timerisRunning = !this.timerisRunning;
     if (this.timerisRunning) {
-      this.startTimer();
+      clearInterval(this.interval); // Se till att stoppa intervallet
+      this.resetTimer(); // Återställ timern
+      this.timerisRunning = false; // Sätt timern till stoppad status
     } else {
-      this.pauseTimer();
+      this.startTimer(); // Starta timern
+      this.timerisRunning = true;
     }
   }
 

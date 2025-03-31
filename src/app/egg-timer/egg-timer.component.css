@@ -242,6 +242,19 @@ button {
   transform: translate(-50%, -50%);
   z-index: 3;
 }
+
+.egg-text {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 17px;
+    font-family: 'Playpen Sans', cursive;;
+    color: black;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+    pointer-events: none; /* Förhindrar att texten blockerar klick */
+    z-index: 5;
+}
   
 
 .egg {
