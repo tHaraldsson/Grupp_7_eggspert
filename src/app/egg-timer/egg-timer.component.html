@@ -16,7 +16,7 @@
         </div>
         <div class="egg-option">
             <img class="egg-selectionThree" src="/pictures/temp.png" (click)="toggleSelection('temperature')"/>
-            <p>Äggtemperatur</p>
+            <p>Temperatur</p>
         </div>
     </div>
     
@@ -49,15 +49,13 @@
     </button>
     </div>
   
-    
-    <div class="egg-count">
-      <label for="eggCount" class="egg-label">Antal ägg:</label>
-      <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" (change)="onEggCountChange()" />
-    </div>
-
-    
-    <p class="timeLeft">{{formatTime(timeLeft())}}</p>
     <div class="yolk-container">
+      
+      <p class="timeLeft">{{formatTime(timeLeft())}}</p>
+      <div class="egg-count">
+        <label for="eggCount" class="egg-label">Antal ägg:</label>
+        <input type="number" id="eggCount" [(ngModel)]="eggCount" min="1" max="10" (change)="onEggCountChange()" />
+      </div>
         <div class="yolk-progress" 
            [style.--progress]="(1 - (timeLeft() / targetTime)) * 100">
         </div>
