@@ -1,0 +1,84 @@
+.menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  /* För att placera hamburgar-menyn på höger sida */
+}
+
+.hamburger-btn {
+  font-size: 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0; /* Placera overlayen till höger */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+
+.menu-content a {
+  display: block;
+  color: black;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.menu-content a:hover {
+  text-decoration: underline;
+}
+
+/* Innehållet i menyn */
+.menu-content {
+  display: block;
+  background: rgb(197, 195, 195);
+  height: 300px;
+  width: 250px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  z-index: 1000;
+  position: relative;
+}
+
+.menu-content a:hover {
+  font-weight: bold;
+}
+
+/* Länkarna i menyn */
+.menu-content a {
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  color: black;
+  font-size: 20px;
+  font-weight: 520;
+  padding: 20px;
+  font-family: "Helvetica", sans-serif;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.451);
+}
+.closeButton {
+  position: absolute;
+  top: 15px; /* Placera knappen lite nedanför toppen på menyn */
+  right: 15px; /* Placera knappen på höger sida */
+  font-size: 25px; /* Justera storleken på stängsymbolen */
+  color: rgba(0, 0, 0, 0.719); /* Färg på symbolen */
+  background: none; /* Ingen bakgrundsfärg */
+  border: none; /* Ingen kantlinje */
+  cursor: pointer; /* Pekar med musen när man håller över */
+  z-index: 1010; /* Se till att knappen ligger ovanpå andra element */
+}
+.closeButton:hover {
+  font-weight: bold;
+}

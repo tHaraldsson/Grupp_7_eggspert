@@ -1,9 +1,24 @@
-<div>
-    <h3></h3>
-    <button (click)="startTimer()">Start Timer</button>
-    <button (click)="pauseTimer()">Pause</button>
-  
-    <p>{{timeLeft()}} Seconds left....</p>
-   
+<section>
+  <div>
+    <p class="timeleft">{{ formatTime(timeLeft()) }}</p>
+    <p>{{ statusMessage() }}</p>
+    <div class="egg-container">
+      <img
+        class="hen"
+        [style.transform]="henPosition()"
+        src="/pictures/hen.jpg"
+      />
+      <img class="egg" src="/pictures/bild.png" />
+    </div>
   </div>
-  
+  <div class="buttons">
+    <button
+      (click)="toggleTimer()"
+      [class.btn-pause]="timerisRunning"
+      class="btn-start"
+    >
+      {{ timerisRunning ? "Pausa" : "Starta" }}
+    </button>
+    <button (click)="resetTimer()" class="btn-reset">Återställ</button>
+  </div>
+</section>
