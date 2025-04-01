@@ -3,27 +3,36 @@
 </div>
 
 <div *ngIf="eggTips.length > 0">
-  <section class="main_box">
-    <button
-      (click)="eggTipNumberChange(-1)"
-      #lastTipButton
-      class="box tip_Button {{lastTipButtonClass}}"
-    >
-      last
-    </button>
+  <section class="egg-tips-container">
+    <!-- Rubrik för tips -->
+    <h2 class="tips-title">Tips</h2>
 
-    <p class="box tip_Text">{{ eggTips[eggTipNumber].tip }}</p>
+    <div class="tip-box">
+      <!-- Pil för föregående tips -->
+      <button
+        (click)="eggTipNumberChange(-1)"
+        class="tip-button {{lastTipButtonClass}}"
+        [disabled]="eggTipNumber <= 0"
+      >
+        &#8592; <!-- Vänsterpil -->
+      </button>
 
-    <button
-      (click)="eggTipNumberChange(+1)"
-      #nextTipButton
-      class="box tip_Button {{nextTipButtonClass}}"
-    >
-      next
-    </button>
+      <!-- Tips text -->
+      <p class="tip-text">{{ eggTips[eggTipNumber].tip }}</p>
+
+      <!-- Pil för nästa tips -->
+      <button
+        (click)="eggTipNumberChange(+1)"
+        class="tip-button {{nextTipButtonClass}}"
+        [disabled]="eggTipNumber >= eggTips.length - 1"
+      >
+        &#8594; <!-- Högerpil -->
+      </button>
+    </div>
   </section>
 </div>
 
 <div *ngIf="eggTips.length === 0 && !errorMessage">
   <p>Inga äggtips tillgängliga just nu.</p>
 </div>
+

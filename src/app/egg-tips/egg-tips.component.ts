@@ -7,13 +7,12 @@ import {
 } from '@angular/core';
 import { EggTipsService } from '../services/egg-tips.service';
 import { CommonModule } from '@angular/common';
-import { __values } from 'tslib';
 
 @Component({
   selector: 'app-egg-tips',
   imports: [CommonModule],
   templateUrl: './egg-tips.component.html',
-  styleUrl: './egg-tips.component.css',
+  styleUrls: ['./egg-tips.component.css'],
 })
 export class EggTipsComponent implements OnInit {
   eggTips: any[] = []; // Håller äggtipsen som hämtas från API:et
@@ -49,10 +48,10 @@ export class EggTipsComponent implements OnInit {
       this.eggTipNumber = this.eggTipNumber + change;
       console.log(this.eggTipNumber);
     }
-    this.uppdateButtonStatus();
+    this.updateButtonStatus();
   }
 
-  uppdateButtonStatus(): void {
+  updateButtonStatus(): void {
     if (this.eggTipNumber <= 0) {
       this.lastTipButtonClass = 'disabled';
     } else {
@@ -65,3 +64,4 @@ export class EggTipsComponent implements OnInit {
     }
   }
 }
+
