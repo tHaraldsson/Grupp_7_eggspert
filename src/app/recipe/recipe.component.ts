@@ -11,8 +11,8 @@ import { Component } from '@angular/core';
 export class RecipeComponent {
   eggRecipes: any[] = [];
 
-  private apiUrl = 'https://api.spoonacular.com/recipes/complexSearch';
-  private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';  
+  private apiUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=egg';
+  private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -21,26 +21,32 @@ export class RecipeComponent {
   }
 
   loadEggRecipes(): void {
-    const params = {
-      query: 'egg',  
-      apiKey: this.apiKey,
-      number: '5'
-    };
-
-    this.httpClient
-    .get<any>(this.apiUrl, { params })
-    .subscribe({
+    this.httpClient.get<any>(this.apiUrl).subscribe({
       next: (response) => {
-        console.log('API response:', response);
-        this.eggRecipes = response.results || [];
-        console.log(this.eggRecipes);
+        this.eggRecipes = response.meals || [];
+        // Lägg till flagga för varje recept om det ska visa hela beskrivningen
+        this.eggRecipes.forEach(recipe => {
+          recipe.showFullRecipe = false;  // Starta med att inte visa hela beskrivningen
+        });
       },
       error: (error) => {
         console.error('Error fetching recipes:', error);
       },
-      complete: () => {
-        console.log('API call completed');
-      }
     });
   }
+
+  toggleRecipe(recipe: any): void {
+    recipe.showFullRecipe = !recipe.showFullRecipe; // Växla mellan att visa och dölja full beskrivning
+  }
+
+  getIngredients(recipe: any): string[] {
+    const ingredients = [];
+    for (let i = 1; i <= 20; i++) {
+      if (recipe['strIngredient' + i]) {
+        ingredients.push(recipe['strIngredient' + i] + ' - ' + recipe['strMeasure' + i]);
+      }
+    }
+    return ingredients;
+  }
 }
+

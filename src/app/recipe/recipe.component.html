@@ -1,16 +1,38 @@
 <div *ngIf="eggRecipes.length > 0; else noRecipes">
-    <h1>Egg Recipes</h1>
-    <ul>
-      <li *ngFor="let recipe of eggRecipes">
-        <h2>{{ recipe.title }}</h2>
-        <img [src]="recipe.image" alt="{{ recipe.title }}" width="200">
-        <p>{{ recipe.summary }}...</p>
-        <a [href]="'https://spoonacular.com/recipes/' + recipe.id" target="_blank">View Recipe</a>
-      </li>
-    </ul>
+  <div class="recipe-container">
+    <h1>Veckans Recept</h1>
+    <div *ngFor="let recipe of eggRecipes" class="recipe-card">
+      <div class="recipe-card-header">
+        <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" class="recipe-image" />
+        <div class="recipe-info">
+          <h2>{{ recipe.strMeal }}</h2>
+          <div class="recipe-ingredients">
+            <h3>Ingredienser:</h3>
+            <ul>
+              <li *ngFor="let ingredient of getIngredients(recipe)">
+                {{ ingredient }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="recipe-description">
+        <p *ngIf="!recipe.showFullRecipe">{{ recipe.strInstructions | slice:0:150 }}...</p>
+        <p *ngIf="recipe.showFullRecipe">{{ recipe.strInstructions }}</p>
+        
+        <!-- Pil nedåt, centrerad -->
+        <button (click)="toggleRecipe(recipe)" class="toggle-button">
+          <span *ngIf="!recipe.showFullRecipe">↓</span>
+          <span *ngIf="recipe.showFullRecipe">↑</span>
+        </button>
+      </div>
+    </div>
   </div>
-  
-  <ng-template #noRecipes>
-    <p>No recipes found. Try again later!</p>
-  </ng-template>
+</div>
+
+<ng-template #noRecipes>
+  <p>Inga recept hittades. Försök igen senare!</p>
+</ng-template>
+
   

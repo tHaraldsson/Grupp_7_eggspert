@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Pompiere&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Playpen+Sans:wght@400..700&family=Pompiere&display=swap");
+
+
+/* Stil för hela recept-container */
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: #FFFAEA;
+    max-width: 360px;
+    margin: auto;
+  }
+  
+  /* Stil för varje recept card */
+  .recipe-card {
+    background-color: #FFE98D;
+    padding: 12px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .recipe-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Stil för receptbilden */
+  .recipe-image {
+    width: 110px;  /* Bilden är nu större */
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+    border: 1px solid black;
+  }
+  
+  /* Info om receptet till höger om bilden */
+  .recipe-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .recipe-info {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  h1 {
+    font-family: "Barriecito";
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #884d05;
+  }
+  
+  .recipe-info h2 {
+    font-size: 15px;
+    font-family: "Playpen Sans", sans-serif;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .recipe-ingredients {
+    margin-top: 10px;
+    font-family: "Playpen Sans", sans-serif;
+    font-size: 10px;
+  }
+  
+  .recipe-ingredients h3 {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "Playpen Sans", sans-serif;
+  }
+  
+  .recipe-ingredients ul {
+    padding-left: 20px;
+  }
+  
+  /* Stil för receptbeskrivningen */
+  .recipe-description {
+    margin-top: 15px;
+    font-size: 14px;
+    font-family: "Playpen Sans", sans-serif;
+  }
+  
+  /* Stil för knappen (nedåtpil och uppåtpil) */
+  .toggle-button {
+    background: none;
+    border: none;
+    color: #884d05;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .toggle-button:hover {
+    text-decoration: underline;
+  }
+  
+  .toggle-button span {
+    font-weight: bold;
+  }
+  
