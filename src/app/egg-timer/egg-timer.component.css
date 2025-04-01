@@ -126,6 +126,11 @@ h1 {
   color: #333;
 }
 
+.options .selected img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 .egg-count {
   display: flex;
   flex-direction: column;
@@ -182,6 +187,11 @@ button {
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
+}
+
+.options button.selected,
+.egg-temperature-options button.selected {
+  background-color: #f49d11 !important;
 }
 
 .btn-start:hover,
@@ -243,18 +253,17 @@ button {
 }
 
 .egg-text {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 17px;
-    font-family: 'Playpen Sans', sans-serif;
-    color: black;
-    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
-    pointer-events: none; /* Förhindrar att texten blockerar klick */
-    z-index: 5;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
+  font-family: "Playpen Sans", sans-serif;
+  color: black;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+  pointer-events: none; /* Förhindrar att texten blockerar klick */
+  z-index: 5;
 }
-  
 
 .egg {
   width: 150px; /* Ökar storleken lite */
@@ -310,14 +319,17 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#FFFAEA;
+    background-color: #fffaea;
     background-size: cover;
     height: 100%;
     font-family: "Playpen Sans";
-    
   }
   .container {
     display: none;
+  }
+
+  .egg-temperature-options button.selected {
+    background-color: #f49d11 !important;
   }
 
   /* Vänster sektion: Val av storlek, konsistens och temperatur */
@@ -331,17 +343,39 @@ button {
     width: 10%;
     font-family: "Playpen Sans";
     outline: #333;
-    
+  }
+
+  /* Uppdaterade regler för temperaturknappar */
+  .egg-temperature-options {
+    display: flex;
+    flex-direction: row; /* Ändrat från column till row */
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .egg-temperature-options button {
+    padding: 10px 20px;
+    font-size: 16px;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  /* Justera äggantal-input för desktop */
+  .egg-count-select {
+    width: 60px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
   }
 
   .egg-size-options,
-  .egg-consistency-options,
-  .egg-temperature-options {
+  .egg-consistency-options {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     gap: 50px;
-    background: #F4D68D;
+    background: #f4d68d;
     padding: 20px;
     border-radius: 10px;
     width: auto;
@@ -349,6 +383,18 @@ button {
     font-family: "Playpen Sans";
     outline: 3px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Skugga runt border */
+  }
+
+  /* Uppdaterad regel för temperaturknappar */
+  .egg-temperature-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background: #f4d68d;
+    padding: 20px;
+    border-radius: 10px;
+    outline: 3px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
 
   .egg-size,
@@ -369,8 +415,6 @@ button {
     border-radius: 10px;
     font-size: 20px;
     font-family: "Playpen Sans";
-    
-    
   }
 
   .egg-count-select {
@@ -378,8 +422,6 @@ button {
     font-size: 16px;
     border-radius: 10px;
     font-family: "Playpen Sans";
-
-    
   }
 
   /* Höger sektion timer och äggbild */
@@ -389,7 +431,6 @@ button {
     align-items: center;
     justify-content: center;
     width: 55%;
-    
   }
 
   .egg-timer-title {
@@ -397,7 +438,7 @@ button {
     font-family: "Barriecito", cursive;
     color: #884d05;
   }
-  .egglogo{
+  .egglogo {
     height: 80px;
   }
 
@@ -407,7 +448,6 @@ button {
   }
 
   .btn-start {
-    
     padding: 10px 40px;
     font-size: 18px;
     border-radius: 10px;

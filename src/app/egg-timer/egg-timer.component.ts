@@ -44,22 +44,24 @@ export class EggTimerComponent {
   }
 
   getSizeImageName(size: string): string {
+    const isSelected = this.selectedOptions['sizes'] === size;
     const sizeImages: Record<string, string> = {
-      Small: 'smallegg.png',
-      Medium: 'mediumegg.png',
-      Large: 'largeegg.png',
-      XLarge: 'xlegg.png',
+      Small: isSelected ? 'S_Hoover.png' : 'smallegg.png',
+      Medium: isSelected ? 'M_Hoover.png' : 'mediumegg.png',
+      Large: isSelected ? 'L_Hoover.png' : 'largeegg.png',
+      XLarge: isSelected ? 'XL_Hoover.png' : 'xlegg.png',
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
 
-  getConcistencyImageName(size: string): string {
-    const sizeImages: Record<string, string> = {
-      Löskokt: 'löskokt.png',
-      Mellankokt: 'mediumkokt.png',
-      Hårdkokt: 'hårdkokt.png',
+  getConcistencyImageName(consistency: string): string {
+    const isSelected = this.selectedOptions['consistency'] === consistency;
+    const consistencyImages: Record<string, string> = {
+      Löskokt: isSelected ? 'Löskokt_Pushed in.png' : 'löskokt.png',
+      Mellankokt: isSelected ? 'Mellan_Pushed in.png' : 'mediumkokt.png',
+      Hårdkokt: isSelected ? 'Hårdkokt_Pushed in.png' : 'hårdkokt.png',
     };
-    return sizeImages[size] || 'assets/images/default-egg.png';
+    return consistencyImages[consistency] || 'assets/images/default-egg.png';
   }
 
   startTimer() {
@@ -141,6 +143,7 @@ export class EggTimerComponent {
     this.calculateCookTime();
     console.log(`Vald ${category}: ${option}`);
   }
+
   calculateCookTime(): number {
     let mass = 53;
     const startTempEgg =
