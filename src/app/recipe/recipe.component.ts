@@ -1,45 +1,60 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../services/recipe.service';
+import { forkJoin, Observable } from 'rxjs'; // Importera Observable och forkJoin
+
+interface Recipe {
+  title: string;
+  image: string;
+  summary: string;
+  instructions: string;
+  ingredients: Array<{
+    name: string;
+  }>;
+}
 
 @Component({
   selector: 'app-recipe',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './recipe.component.html',
-  styleUrl: './recipe.component.css'
+  styleUrls: ['./recipe.component.css']
 })
-export class RecipeComponent {
-  eggRecipes: any[] = [];
+export class RecipeComponent implements OnInit {
+  eggRecipes: Recipe[] = []; // Typa eggRecipes som en array av Recipe
 
-  private apiUrl = 'https://api.spoonacular.com/recipes/complexSearch';
-  private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';  
-
-  constructor(private httpClient: HttpClient) {}
+  constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    this.loadEggRecipes();
-  }
+    // Hämta recepten från RecipeService
+    this.recipeService.getWeeklyRecipes().subscribe({
+      next: (data) => {
+        console.log('API-svar:', data);
 
-  loadEggRecipes(): void {
-    const params = {
-      query: 'egg',  
-      apiKey: this.apiKey,
-      number: '5'
-    };
+        // Skapa en array av observables för att hämta detaljer om varje recept
+        const recipeDetailsObservables: Observable<any>[] = data.results.map((recipe: any) => {
+          return this.recipeService.getRecipeDetails(recipe.id);
+        });
 
-    this.httpClient
-    .get<any>(this.apiUrl, { params })
-    .subscribe({
-      next: (response) => {
-        console.log('API response:', response);
-        this.eggRecipes = response.results || [];
-        console.log(this.eggRecipes);
+        // Vänta på att alla observables ska slutföras med hjälp av forkJoin
+        forkJoin(recipeDetailsObservables).subscribe({
+          next: (recipesDetails: any[]) => { // Typa recipesDetails som en array av any
+            // Här använder vi en säker typ, om vi vet att det kommer vara en lista av Recipe
+            this.eggRecipes = recipesDetails.map((recipeDetails) => ({
+              title: recipeDetails.title || 'Ingen rubrik',
+              image: recipeDetails.image || 'default-image-url',
+              summary: recipeDetails.summary || 'Ingen beskrivning tillgänglig',
+              instructions: recipeDetails.instructions || 'Inga instruktioner tillgängliga',
+              ingredients: recipeDetails.extendedIngredients || []
+            }));
+          },
+          error: (error) => {
+            console.error('Fel vid hämtning av receptdetaljer:', error);
+          }
+        });
       },
       error: (error) => {
-        console.error('Error fetching recipes:', error);
-      },
-      complete: () => {
-        console.log('API call completed');
+        console.error('Fel vid hämtning av recept:', error);
       }
     });
   }
