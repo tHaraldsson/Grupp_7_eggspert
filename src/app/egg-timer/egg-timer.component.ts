@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule,RouterModule, EggTipsComponent],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })

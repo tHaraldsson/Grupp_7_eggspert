@@ -1,8 +1,18 @@
 <header>
-<app-hamburger-menu></app-hamburger-menu>
+  <div class="moblie-container">
+    <app-hamburger-menu></app-hamburger-menu>
+  </div>
+  <div class="desktop-container">
+    <div class="loga">
+      <img class="egglogo" src="/pictures/eggsize.png" />
+      <h1 class="egg-timer-title">Eggspert</h1>
+    </div>
+    <div class="links">
+      <a routerLink="recipe">Veckans recept</a>
+      <a routerLink="">Timer</a>
+    </div>
+  </div>
 </header>
 <main>
   <router-outlet />
 </main>
-
-

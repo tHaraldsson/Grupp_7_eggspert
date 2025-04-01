@@ -30,6 +30,8 @@
     </div>
   </div>
 
+        <!-- MOBIL 3 OPTIONS -->
+
   <!-- För storlekar -->
   <div *ngIf="selectedCategory === 'sizes'" class="options">
     <div
@@ -74,6 +76,8 @@
     </button>
   </div>
 
+            <!-- MOBIL SUBOPTIONS -->
+
   <div class="yolk-container">
     <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
     <div class="egg-count">
@@ -102,6 +106,11 @@
   </div>
 </div>
 
+<!-- MOBIL ÄGGBILD -->
+
+  <!-- DESKTOP SIZES OPTIONS -->
+
+    
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
   <div class="egg-options-panel">
@@ -138,20 +147,10 @@
 
     <h2>Äggtemperatur</h2>
     <div class="egg-temperature-options">
-      <button
-        class="egg-temperature"
-        [class.selected]="selectedOptions['temperature'] === 'Kylskåpskallt'"
-        (click)="selectEggOption('temperature', 'Kylskåpskallt')"
-      >
+      <button class="egg-temperature" data-temp="cold">
         Direkt ur kylskåpet
       </button>
-      <button
-        class="egg-temperature"
-        [class.selected]="selectedOptions['temperature'] === 'Rumstempererat'"
-        (click)="selectEggOption('temperature', 'Rumstempererat')"
-      >
-        Rumstemperatur
-      </button>
+      <button class="egg-temperature" data-temp="room">Rumstemperatur</button>
     </div>
 
     <div class="egg-count-container">
@@ -168,13 +167,6 @@
 
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
-    <img
-      class="egglogo"
-      src="/pictures/eggsize.png"
-      (click)="toggleSelection('sizes')"
-    />
-    <h1 class="egg-timer-title">Eggspert</h1>
-
     <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
     <div class="yolk-container">
       <div
@@ -196,5 +188,8 @@
         <button (click)="resetTimer()" class="btn-reset">Återställ</button>
       </div>
     </div>
+  </div>
+  <div class="egg-tips">
+    <app-egg-tips />
   </div>
 </div>

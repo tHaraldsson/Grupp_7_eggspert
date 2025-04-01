@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Pompiere&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Playpen+Sans:wght@400..700&family=Pompiere&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap");
 
 body {
   margin: 0;
@@ -50,13 +51,6 @@ h1 {
   border: 1px solid black;
   padding: 10px;
   margin: 0%;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Avstånd mellan bilderna */
-  margin-bottom: 10px; /* Avstånd mellan bilder och texten under */
 }
 
 .options {
@@ -251,6 +245,14 @@ button {
   transform: translate(-50%, -50%);
   z-index: 3;
 }
+.eggBackround {
+  width: 200px; /* Ökar storleken lite */
+  height: auto;
+  position: relative;
+  display: block;
+  margin: 20px auto; /* Ger avstånd ovanför knapparna */
+  z-index: 0; /* Ser till att den ligger under yolk-progress */
+}
 
 .egg-text {
   position: absolute;
@@ -304,13 +306,6 @@ button {
 .timeLeft {
   font-family: "Playpen Sans", sans-serif;
   font-size: 35px;
-  position: absolute;
-  bottom: 92%; /* Justera detta värde för vertikal placering */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1; /* Högre z-index än ägget */
-  margin: 0;
-  white-space: nowrap; /* Förhindrar radbrytning */
 }
 
 /* Layout för större skärmar*/
@@ -327,6 +322,12 @@ button {
   .container {
     display: none;
   }
+  .egg-tips{
+    display: flex;
+    width: 20rem;
+    height: 50rem;
+    align-items:flex-start;
+  }
 
   .egg-temperature-options button.selected {
     background-color: #f49d11 !important;
@@ -340,7 +341,7 @@ button {
     align-items: flex-start;
     padding: 50px;
     border-radius: 15px;
-    width: 10%;
+    width: 30%;
     font-family: "Playpen Sans";
     outline: #333;
   }
@@ -374,7 +375,7 @@ button {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
     background: #f4d68d;
     padding: 20px;
     border-radius: 10px;
@@ -430,7 +431,13 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 55%;
+    width: 40%;
+    height: 45rem;
+    background-image: url("/pictures/Bakgrund-2.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain;
+    margin: 0;
   }
 
   .egg-timer-title {
