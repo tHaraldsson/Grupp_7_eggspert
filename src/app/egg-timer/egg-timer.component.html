@@ -102,9 +102,6 @@
   </div>
 </div>
 
-
-
-
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
   <div class="egg-options-panel">
@@ -161,7 +158,6 @@
 
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
-  
     <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
     <div class="yolk-container">
       <div
@@ -183,5 +179,8 @@
         <button (click)="resetTimer()" class="btn-reset">Återställ</button>
       </div>
     </div>
+  </div>
+  <div class="egg-tips">
+    <app-egg-tips />
   </div>
 </div>
