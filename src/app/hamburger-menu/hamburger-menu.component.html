@@ -1,15 +1,18 @@
 <div class="menu-container">
-    <button class="hamburger-btn" (click)="toggleMenu()">
-      ☰
-    </button>
-    
-  
-    <div class="menu-overlay" *ngIf="menuOpen" (click)="toggleMenu()">
-      <nav class="menu-content" (click)="$event.stopPropagation()">
-        <a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Basic timer</a>
-        <a routerLink="/continuous" routerLinkActive="active" (click)="toggleMenu()">Continuous timer</a>
-        <a routerLink="/recipe" routerLinkActive="active" (click)="toggleMenu()">Recipe</a>
-      </nav>
-    </div>
+  <button class="hamburger-btn" (click)="toggleMenu()">☰</button>
+
+  <div class="menu-overlay" *ngIf="menuOpen" (click)="closeMenu()">
+    <nav class="menu-content" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeMenu()">×</button>
+      
+      <h2 class="menu-title">Meny</h2>
+      
+      <div class="menu-section">
+        <a routerLink="" (click)="closeMenu()">Timer</a>
+        <div class="menu-divider"></div>
+        <a routerLink="recipe" (click)="closeMenu()">Veckans Recept</a>
+      </div>
+
+    </nav>
   </div>
-  
+</div>
