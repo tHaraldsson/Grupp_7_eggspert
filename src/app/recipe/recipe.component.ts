@@ -1,27 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RecipeService } from '../services/recipe.service';
-import { forkJoin, Observable } from 'rxjs'; // Importera Observable och forkJoin
-
-interface Recipe {
-  title: string;
-  image: string;
-  summary: string;
-  instructions: string;
-  ingredients: Array<{
-    name: string;
-  }>;
-}
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-recipe',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.css']
+  styleUrl: './recipe.component.css'
 })
-export class RecipeComponent implements OnInit {
-  eggRecipes: Recipe[] = []; // Typa eggRecipes som en array av Recipe
+export class RecipeComponent {
+  eggRecipes: any[] = [];
 
   private apiUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=egg';
   private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';
@@ -29,10 +17,8 @@ export class RecipeComponent implements OnInit {
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
-    // Hämta recepten från RecipeService
-    this.recipeService.getWeeklyRecipes().subscribe({
-      next: (data) => {
-        console.log('API-svar:', data);
+    this.loadEggRecipes();
+  }
 
   loadEggRecipes(): void {
     this.httpClient.get<any>(this.apiUrl).subscribe({
@@ -63,4 +49,4 @@ export class RecipeComponent implements OnInit {
     return ingredients;
   }
 }
-
+ 
