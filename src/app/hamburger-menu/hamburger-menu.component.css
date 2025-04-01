@@ -1,10 +1,9 @@
-/* För att placera hamburgar-menyn på höger sida */
 .menu-container {
   position: absolute;
-  top: 20px; /* Justera detta för att ändra höjden på menyn */
-  right: 20px; /* Placera knappen till höger på sidan */
-  z-index: 1000; /* Se till att den ligger ovanpå andra element */
-  
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  /* För att placera hamburgar-menyn på höger sida */
 }
 
 .hamburger-btn {
@@ -14,7 +13,6 @@
   cursor: pointer;
 }
 
-/* För menyn som visas när hamburgerknappen klickas */
 .menu-overlay {
   position: fixed;
   top: 0;
@@ -28,42 +26,47 @@
   z-index: 1000;
 }
 
+
+.menu-content a {
+  display: block;
+  color: black;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.menu-content a:hover {
+  text-decoration: underline;
+}
+
 /* Innehållet i menyn */
 .menu-content {
-  display:block;
+  display: block;
   background: rgb(197, 195, 195);
   height: 300px;
-  width:250px;
+  width: 250px;
   padding: 20px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
   z-index: 1000;
   position: relative;
-  
-  
-
 }
 
-
-.menu-content a:hover{
+.menu-content a:hover {
   font-weight: bold;
-
 }
 
 /* Länkarna i menyn */
 .menu-content a {
   text-decoration: none;
-  display:block;
+  display: block;
   text-align: left;
   color: black;
   font-size: 20px;
   font-weight: 520;
-  padding:20px;
-  font-family: 'Helvetica', sans-serif;
+  padding: 20px;
+  font-family: "Helvetica", sans-serif;
   border-bottom: 2px solid rgba(0, 0, 0, 0.451);
-  
-  
-  
 }
 .closeButton {
   position: absolute;
@@ -76,6 +79,6 @@
   cursor: pointer; /* Pekar med musen när man håller över */
   z-index: 1010; /* Se till att knappen ligger ovanpå andra element */
 }
-.closeButton:hover{
+.closeButton:hover {
   font-weight: bold;
 }

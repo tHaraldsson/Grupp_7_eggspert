@@ -71,3 +71,92 @@
     
   
   </div> 
+  </div> 
+  
+
+
+
+
+
+
+  <div class="egg-timer-layout">
+    <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
+    <div class="egg-options-panel">
+        <h2>Äggstorlek</h2>
+        <div class="egg-size-options">
+        <div *ngFor="let size of sizes" 
+        class="egg-option"
+        (click)="selectEggOption('sizes', size)">
+     <img [src]="'/pictures/' + getSizeImageName(size)" 
+          [alt]="size"
+          class="egg-selection">
+   </div>
+  </div>
+          
+        
+        
+
+        <h2>Äggkonsistens</h2>
+        <div class="egg-consistency-options">
+          <div *ngFor="let consistency of consistencies"
+          (click)="selectEggOption('consistency', consistency)">
+          <img [src]="'/pictures/' + getConcistencyImageName(consistency)" 
+          [alt]="consistencies"
+          class="egg-selection"> <br>
+          {{consistency}}
+          </div>
+        </div>
+
+        <h2>Äggtemperatur</h2>
+        <div class="egg-temperature-options">
+            <button class="egg-temperature" data-temp="cold">Direkt ur kylskåpet</button>
+            <button class="egg-temperature" data-temp="room">Rumstemperatur</button>
+        </div>
+
+        <div class="egg-count-container">
+            <label for="eggCountSelect">Antal ägg:</label>
+            <select id="eggCountSelect" class="egg-count-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Höger timer och äggbild-->
+    <div class="egg-timer-display">
+      <img class="egglogo" src="/pictures/eggsize.png" (click)="toggleSelection('sizes')" />
+        <h1 class="egg-timer-title">Eggspert</h1>
+        
+
+        <p class="timeLeft">{{formatTime(timeLeft())}}</p>
+    <div class="yolk-container">
+        <div class="yolk-progress" 
+           [style.--progress]="(1 - (timeLeft() / targetTime)) * 100">
+        </div>
+        <p class="status-message" [innerHTML]="statusMessage()"></p>
+    <img class="egg" src="/pictures/äggform2.png" />
+    <img class="eggYolk" src="/pictures/eggYolk.png" />
+  
+    <div class="buttons">
+        <button
+          (click)="toggleTimer()"
+          [class.btn-pause]="timerisRunning"
+          class="btn-start"
+        >
+          {{ timerisRunning ? "Pausa" : "Starta" }}
+        </button>
+        <button (click)="resetTimer()" class="btn-reset">Återställ</button>
+      </div>
+  
+  
+    
+  
+  </div> 
+    
+
+        
+    </div>
+</div>

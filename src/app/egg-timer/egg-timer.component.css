@@ -11,6 +11,9 @@ body {
   text-align: center;
   background-color: white; /* Fallback om bakgrundsbilden inte laddas */
 }
+.egg-timer-layout {
+  display: none;
+}
 .container {
   position: relative;
   text-align: center;
@@ -304,4 +307,155 @@ button {
   z-index: 1; /* Högre z-index än ägget */
   margin: 0;
   white-space: nowrap; /* Förhindrar radbrytning */
+}
+
+/* Layout för större skärmar*/
+@media screen and (min-width: 768px) {
+  .egg-timer-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#FFFAEA;
+    background-size: cover;
+    height: 100%;
+    font-family: "Playpen Sans";
+    
+  }
+  .container {
+    display: none;
+  }
+
+  /* Vänster sektion: Val av storlek, konsistens och temperatur */
+  .egg-options-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+    border-radius: 15px;
+    width: 10%;
+    font-family: "Playpen Sans";
+    outline: #333;
+    
+  }
+
+  .egg-size-options,
+  .egg-consistency-options,
+  .egg-temperature-options {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 50px;
+    background: #F4D68D;
+    padding: 20px;
+    border-radius: 10px;
+    width: auto;
+    text-align: center;
+    font-family: "Playpen Sans";
+    outline: 3px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Skugga runt border */
+  }
+
+  .egg-size,
+  .egg-consistency,
+  .egg-temperature {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Playpen Sans";
+    
+    
+    
+  }
+
+  /* Antal ägg */
+  .egg-count-container {
+    margin-top: 10px;
+    outline: #333;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: "Playpen Sans";
+    
+    
+  }
+
+  .egg-count-select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+    font-family: "Playpen Sans";
+
+    
+  }
+
+  /* Höger sektion timer och äggbild */
+  .egg-timer-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    
+  }
+
+  .egg-timer-title {
+    font-size: 50px;
+    font-family: "Barriecito", cursive;
+    color: #884d05;
+  }
+  .egglogo{
+    height: 80px;
+  }
+
+  .timer-display {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .btn-start {
+    
+    padding: 10px 40px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    outline: #333;
+  }
+  .egg {
+    width: 280px; /* Ökar storleken lite */
+    height: 400px;
+    position: relative;
+    display: block;
+    margin: 20px auto; /* Ger avstånd ovanför knapparna */
+    z-index: 1; /* Ser till att den ligger under yolk-progress */
+  }
+  .eggYolk {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    border-radius: 50%;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+  .yolk-progress {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: conic-gradient(
+      #c21414 0deg,
+      #c21414 calc(var(--progress) * 3.6deg),
+      #d9d9d9 calc(var(--progress) * 3.6deg)
+    );
+    z-index: 3;
+  }
+  
 }
