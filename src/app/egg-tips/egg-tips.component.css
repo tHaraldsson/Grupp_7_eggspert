@@ -1,0 +1,81 @@
+/* Importera Barriecito från Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Barriecito&display=swap');
+
+
+
+/* Huvudcontainer för tips */
+.egg-tips-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  background-color: rgb(235, 152, 64);
+  border-radius: 15px;
+}
+
+/* Rubrik för tips */
+.tips-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-family: 'Barriecito',cursive;
+}
+
+/* Huvudcontainer för varje tips */
+.tip-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Knapp (pil) för nästa och föregående */
+.tip-button {
+  font-size: 17px;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: black;
+  transition: background-color 0.3s ease;
+}
+
+.tip-button:disabled {
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+}
+
+/* Texten för tips */
+.tip-text {
+  font-size: 10px;
+  padding: 0;
+  text-align: center;
+  max-width: 60%;
+  word-wrap: break-word;
+  font-weight: 500;
+}
+
+/* Responsiv design */
+@media screen and (max-width: 600px) {
+  .tip-button {
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .tip-text {
+    font-size: 16px;
+    max-width: 80%;
+  }
+}
+
+/* Förbättring av disabled-styling */
+.disabled {
+  background-color: lightgrey;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
