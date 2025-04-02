@@ -9,24 +9,32 @@
           <div class="recipe-ingredients">
             <h3>Ingredienser:</h3>
             <ul>
-              <li *ngFor="let ingredient of getIngredients(recipe)">
+              <!-- Visa endast de första 5 ingredienserna -->
+              <li *ngFor="let ingredient of getShortIngredients(recipe)">
                 {{ ingredient }}
               </li>
             </ul>
           </div>
         </div>
       </div>
-      
-      <div class="recipe-description">
-        <p *ngIf="!recipe.showFullRecipe">{{ recipe.strInstructions | slice:0:150 }}...</p>
-        <p *ngIf="recipe.showFullRecipe">{{ recipe.strInstructions }}</p>
-        
-        <!-- Pil nedåt, centrerad -->
-        <button (click)="toggleRecipe(recipe)" class="toggle-button">
-          <span *ngIf="!recipe.showFullRecipe">↓</span>
-          <span *ngIf="recipe.showFullRecipe">↑</span>
-        </button>
+
+      <!-- Extra ingredienser + instruktioner visas bara när showFullRecipe är true -->
+      <div *ngIf="recipe.showFullRecipe" class="extra-recipe">
+        <ul>
+          <li *ngFor="let ingredient of getExtraIngredients(recipe)">
+            {{ ingredient }}
+          </li>
+        </ul>
+        <div class="recipe-description">
+          <p>{{ recipe.strInstructions }}</p>
+        </div>
       </div>
+
+      <!-- Knapp för att visa mer/mindre -->
+      <button (click)="toggleRecipe(recipe)" class="toggle-button">
+        <span *ngIf="!recipe.showFullRecipe">Visa mer ↓</span>
+        <span *ngIf="recipe.showFullRecipe">Visa mindre ↑</span>
+      </button>
     </div>
   </div>
 </div>
@@ -34,5 +42,6 @@
 <ng-template #noRecipes>
   <p>Inga recept hittades. Försök igen senare!</p>
 </ng-template>
+
 
   

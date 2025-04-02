@@ -70,15 +70,21 @@
   }
   
   .recipe-ingredients {
-    margin-top: 10px;
+    margin-top: 12px;
     font-family: "Playpen Sans", sans-serif;
     font-size: 10px;
   }
   
   .recipe-ingredients h3 {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     font-family: "Playpen Sans", sans-serif;
+  }
+  
+  .extra-recipe {
+    font-size: 12px;
+    font-family: "Playpen Sans", sans-serif;
+    margin-top: 10px;
   }
   
   .recipe-ingredients ul {

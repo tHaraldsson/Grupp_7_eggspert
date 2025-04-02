@@ -48,5 +48,13 @@ export class RecipeComponent {
     }
     return ingredients;
   }
+
+  getShortIngredients(recipe: any): string[] {
+    return this.getIngredients(recipe).slice(0, 4); // Visa de första 5 ingredienserna
+  }
+
+  getExtraIngredients(recipe: any): string[] {
+    return this.getIngredients(recipe).slice(4); // Visa ingredienser från index 5 och framåt
+  }
 }
  
