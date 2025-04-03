@@ -9,7 +9,7 @@ import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule, EggTipsComponent],
+  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })
@@ -27,6 +27,11 @@ export class EggTimerComponent {
   checkpoints: { time: number; message: string }[] = [];
 
   selectedCategory: string | null = null;
+  
+  hoveredSize: string | null = null;
+  hoveredConsistency: string | null = null;
+  hoveredTemp: string | null = null;
+
   eggCount: number = 1;
 
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
@@ -44,26 +49,66 @@ export class EggTimerComponent {
     this.resetTimer();
   }
 
-  getSizeImageName(size: string): string {
-    const isSelected = this.selectedOptions['sizes'] === size;
-    const sizeImages: Record<string, string> = {
-      Small: isSelected ? 'S_Hoover.png' : 'smallegg.png',
-      Medium: isSelected ? 'M_Hoover.png' : 'mediumegg.png',
-      Large: isSelected ? 'L_Hoover.png' : 'largeegg.png',
-      XLarge: isSelected ? 'XL_Hoover.png' : 'xlegg.png',
+  getSizeImageName(size: string, isHovered: boolean = false): string {
+  const isSelected = this.selectedOptions['sizes'] === size;
+  
+  if (isSelected) {
+    // Returnera rätt "pushed in"-bild för varje storlek
+    const selectedImages: Record<string, string> = {
+      Small: 'S_Pushed in.png',
+      Medium: 'M_Pushed in.png',
+      Large: 'L_Pushed in.png',
+      XLarge: 'XL_Pushed in.png'
     };
-    return sizeImages[size] || 'assets/images/default-egg.png';
+    return selectedImages[size] || 'smallegg.png';
   }
+  
+  if (isHovered) {
+    // Returnera hover-bilden för varje storlek
+    const hoverImages: Record<string, string> = {
+      Small: 'S_Hoover.png',
+      Medium: 'M_Hoover.png',
+      Large: 'L_Hoover.png',
+      XLarge: 'XL_Hoover.png'
+    };
+    return hoverImages[size] || 'smallegg.png';
+  }
+  
+  // Standardbild när inte hover eller selected
+  const sizeImages: Record<string, string> = {
+    Small: 'smallegg.png',
+    Medium: 'mediumegg.png',
+    Large: 'largeegg.png',
+    XLarge: 'xlegg.png'
+  };
+  return sizeImages[size] || 'assets/images/default-egg.png';
+}
 
-  getConcistencyImageName(consistency: string): string {
-    const isSelected = this.selectedOptions['consistency'] === consistency;
-    const consistencyImages: Record<string, string> = {
-      Löskokt: isSelected ? 'Löskokt_Pushed in.png' : 'löskokt.png',
-      Mellankokt: isSelected ? 'Mellan_Pushed in.png' : 'mediumkokt.png',
-      Hårdkokt: isSelected ? 'Hårdkokt_Pushed in.png' : 'hårdkokt.png',
-    };
-    return consistencyImages[consistency] || 'assets/images/default-egg.png';
+getConcistencyImageName(consistency: string, isHovered: boolean = false): string {
+  const isSelected = this.selectedOptions['consistency'] === consistency;
+  
+  if (isSelected) {
+    return `${consistency}_Pushed in.png`;
   }
+  
+  if (isHovered) {
+    // Returnera hover-bilden för varje konsistens
+    const hoverImages: Record<string, string> = {
+      Löskokt: 'Lös_Hoover.png',
+      Mellankokt: 'Mellan_Hoover.png',
+      Hårdkokt: 'Hård_Hoover.png'
+    };
+    return hoverImages[consistency] || 'löskokt.png';
+  }
+  
+  // Standardbild när inte hover eller selected
+  const consistencyImages: Record<string, string> = {
+    Löskokt: 'löskokt.png',
+    Mellankokt: 'mellankokt.png',
+    Hårdkokt: 'hårdkokt.png'
+  };
+  return consistencyImages[consistency] || 'assets/images/default-egg.png';
+}
 
   startTimer() {
     clearInterval(this.interval);
