@@ -27,6 +27,10 @@ h1 {
   color: #884d05;
 }
 
+.btn-reset {
+  align-items: center;
+}
+
 .bakgrund {
   position: fixed;
   top: 0;
