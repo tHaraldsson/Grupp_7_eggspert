@@ -3,9 +3,10 @@
     <h1>Veckans Recept</h1>
     <div *ngFor="let recipe of eggRecipes" class="recipe-card">
       <div class="recipe-card-header">
-        <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" class="recipe-image" />
+        <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image" />
         <div class="recipe-info">
-          <h2>{{ recipe.strMeal }}</h2>
+          <h2>{{ recipe.title }}</h2>
+
           <div class="recipe-ingredients">
             <h3>Ingredienser:</h3>
             <ul>
@@ -26,13 +27,13 @@
           </li>
         </ul>
         <div class="recipe-description">
-          <p>{{ recipe.strInstructions }}</p>
+          <!-- Visa instruktionerna, eller ett meddelande om de inte finns -->
+          <p>{{ getInstructions(recipe) }}</p>
         </div>
       </div>
 
       <!-- Knapp för att visa mer/mindre -->
-      <button *ngIf="!recipe.showFullRecipe" (click)="toggleRecipe(recipe)" class="toggle-button">
-
+      <button (click)="toggleRecipe(recipe)" class="toggle-button">
         <span *ngIf="!recipe.showFullRecipe">Visa mer ↓</span>
         <span *ngIf="recipe.showFullRecipe">Visa mindre ↑</span>
       </button>
@@ -43,6 +44,3 @@
 <ng-template #noRecipes>
   <p>Inga recept hittades. Försök igen senare!</p>
 </ng-template>
-
-
-  

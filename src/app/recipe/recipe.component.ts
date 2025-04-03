@@ -1,42 +1,28 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../services/recipe.service';
+import { CommonModule } from '@angular/common';  // Importera CommonModule
 
 @Component({
   selector: 'app-recipe',
-  imports: [CommonModule],
   templateUrl: './recipe.component.html',
-  styleUrl: './recipe.component.css'
+  styleUrls: ['./recipe.component.css'],
+  imports: [CommonModule]  // Lägg till CommonModule här
 })
-export class RecipeComponent {
+export class RecipeComponent implements OnInit {
   eggRecipes: any[] = [];
 
-  private apiUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=egg';
-  private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';
-
-  constructor(private httpClient: HttpClient) {}
+  constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    this.loadEggRecipes();
-    window.addEventListener('resize', () => {
-      const isDesktop = window.innerWidth >= 768;
-      this.eggRecipes.forEach(recipe => {
-        recipe.showFullRecipe = isDesktop;
-      });
-    });
+    this.loadEggRecipes();  // Ladda recepten vid komponentens uppstart
+    window.addEventListener('resize', this.updateRecipeVisibility.bind(this));  // Anpassa visning vid skärmstorlek
   }
-  
-  
 
   loadEggRecipes(): void {
-    this.httpClient.get<any>(this.apiUrl).subscribe({
-      next: (response) => {
-        this.eggRecipes = response.meals || [];
-        const isDesktop = window.innerWidth >= 768; // Kolla om det är desktop
-        // Lägg till flagga för varje recept om det ska visa hela beskrivningen
-        this.eggRecipes.forEach(recipe => {
-          recipe.showFullRecipe = isDesktop; // Visa hela receptet på desktop
-        });
+    this.recipeService.getWeeklyRecipes().subscribe({
+      next: (recipes) => {
+        this.eggRecipes = recipes;
+        this.updateRecipeVisibility();
       },
       error: (error) => {
         console.error('Error fetching recipes:', error);
@@ -44,26 +30,33 @@ export class RecipeComponent {
     });
   }
 
+  updateRecipeVisibility(): void {
+    const isDesktop = window.innerWidth >= 768;  // Kollar om det är en desktop
+    this.eggRecipes.forEach(recipe => {
+      recipe.showFullRecipe = isDesktop;  // Visa fullständigt recept på desktop
+    });
+  }
+
   toggleRecipe(recipe: any): void {
-    recipe.showFullRecipe = !recipe.showFullRecipe; // Växla mellan att visa och dölja full beskrivning
+    recipe.showFullRecipe = !recipe.showFullRecipe;  // Växla visning
   }
 
   getIngredients(recipe: any): string[] {
-    const ingredients = [];
-    for (let i = 1; i <= 20; i++) {
-      if (recipe['strIngredient' + i]) {
-        ingredients.push(recipe['strIngredient' + i] + ' - ' + recipe['strMeasure' + i]);
-      }
-    }
-    return ingredients;
+    return recipe.extendedIngredients
+      ? recipe.extendedIngredients.map((ingredient: any) => `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`)
+      : [];
   }
 
   getShortIngredients(recipe: any): string[] {
-    return this.getIngredients(recipe).slice(0, 4); // Visa de första 5 ingredienserna
+    return this.getIngredients(recipe).slice(0, 4);  // Visa bara de första 4 ingredienserna
   }
 
   getExtraIngredients(recipe: any): string[] {
-    return this.getIngredients(recipe).slice(4); // Visa ingredienser från index 5 och framåt
+    return this.getIngredients(recipe).slice(4);  // Visa ingredienser från index 5 och framåt
+  }
+
+  // Kontrollera om instruktionerna finns och om de är tomma
+  getInstructions(recipe: any): string {
+    return recipe.instructions || 'Inga instruktioner tillgängliga för detta recept.';
   }
 }
- 
