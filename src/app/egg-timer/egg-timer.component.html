@@ -3,6 +3,8 @@
 
   <h1>Eggspert</h1>
 
+  <!-- MOBIL 3 OPTIONS -->
+
   <div class="button-group">
     <div class="egg-option">
       <img
@@ -30,7 +32,7 @@
     </div>
   </div>
 
-        <!-- MOBIL 3 OPTIONS -->
+         <!-- MOBIL SUBOPTIONS -->
 
   <!-- För storlekar -->
   <div *ngIf="selectedCategory === 'sizes'" class="options">
@@ -39,9 +41,11 @@
       class="egg-option"
       [class.selected]="selectedOptions['sizes'] === size"
       (click)="selectEggOption('sizes', size)"
+      (mouseenter)="hoveredSize = size"
+      (mouseleave)="hoveredSize = null"
     >
       <img
-        [src]="'/pictures/' + getSizeImageName(size)"
+        [src]="'/pictures/' + getSizeImageName(size, hoveredSize === size)"
         [alt]="size"
         class="egg-selection"
       />
@@ -55,9 +59,11 @@
       class="egg-option"
       [class.selected]="selectedOptions['consistency'] === consistency"
       (click)="selectEggOption('consistency', consistency)"
+      (mouseenter)="hoveredConsistency = consistency"
+      (mouseleave)="hoveredConsistency = null"
     >
       <img
-        [src]="'/pictures/' + getConcistencyImageName(consistency)"
+        [src]="'/pictures/' + getConcistencyImageName(consistency, hoveredConsistency === consistency)"
         [alt]="consistency"
         class="egg-selection"
       />
@@ -70,13 +76,16 @@
     <button
       *ngFor="let temp of temperatures"
       [class.selected]="selectedOptions['temperature'] === temp"
+      [class.hovered]="hoveredTemp === temp && selectedOptions['temperature'] !== temp"
       (click)="selectEggOption('temperature', temp)"
+      (mouseenter)="hoveredTemp = temp"
+      (mouseleave)="hoveredTemp = null"
     >
       {{ temp }}
     </button>
   </div>
 
-            <!-- MOBIL SUBOPTIONS -->
+      <!-- MOBIL ÄGGCONTAINER -->      
 
   <div class="yolk-container">
     <div class="egg-count">
@@ -106,10 +115,7 @@
   </div>
 </div>
 
-<!-- MOBIL ÄGGBILD -->
-
-  <!-- DESKTOP SIZES OPTIONS -->
-
+<!-- DESKTOP OPTIONS -->
     
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
@@ -119,38 +125,61 @@
       <div
         *ngFor="let size of sizes"
         class="egg-option"
+        [class.selected]="selectedOptions['sizes'] === size"
         (click)="selectEggOption('sizes', size)"
+        (mouseenter)="hoveredSize = size"
+        (mouseleave)="hoveredSize = null"
       >
         <img
-          [src]="'/pictures/' + getSizeImageName(size)"
+          [src]="'/pictures/' + getSizeImageName(size, hoveredSize === size)"
           [alt]="size"
           class="egg-selection"
         />
       </div>
     </div>
 
+
     <h2>Äggkonsistens</h2>
     <div class="egg-consistency-options">
       <div
-        *ngFor="let consistency of consistencies"
-        (click)="selectEggOption('consistency', consistency)"
-      >
-        <img
-          [src]="'/pictures/' + getConcistencyImageName(consistency)"
-          [alt]="consistencies"
-          class="egg-selection"
-        />
-        <br />
-        {{ consistency }}
-      </div>
+      *ngFor="let consistency of consistencies"
+      class="egg-option"
+      [class.selected]="selectedOptions['consistency'] === consistency"
+      (click)="selectEggOption('consistency', consistency)"
+      (mouseenter)="hoveredConsistency = consistency"
+      (mouseleave)="hoveredConsistency = null"
+    >
+      <img
+        [src]="'/pictures/' + getConcistencyImageName(consistency, hoveredConsistency === consistency)"
+        [alt]="consistency"
+        class="egg-selection"
+      />
+      {{ consistency }}
+    </div>
     </div>
 
     <h2>Äggtemperatur</h2>
     <div class="egg-temperature-options">
-      <button class="egg-temperature" data-temp="cold">
+      <button
+        class="egg-temperature"
+        [class.selected]="selectedOptions['temperature'] === 'Kylskåpskallt'"
+        [class.hovered]="hoveredTemp === 'Kylskåpskallt' && selectedOptions['temperature'] !== 'Kylskåpskallt'"
+        (click)="selectEggOption('temperature', 'Kylskåpskallt')"
+        (mouseenter)="hoveredTemp = 'Kylskåpskallt'"
+        (mouseleave)="hoveredTemp = null"
+      >
         Direkt ur kylskåpet
       </button>
-      <button class="egg-temperature" data-temp="room">Rumstemperatur</button>
+      <button
+        class="egg-temperature"
+        [class.selected]="selectedOptions['temperature'] === 'Rumstempererat'"
+        [class.hovered]="hoveredTemp === 'Rumstempererat' && selectedOptions['temperature'] !== 'Rumstempererat'"
+        (click)="selectEggOption('temperature', 'Rumstempererat')"
+        (mouseenter)="hoveredTemp = 'Rumstempererat'"
+        (mouseleave)="hoveredTemp = null"
+      >
+        Rumstemperatur
+      </button>
     </div>
 
     <div class="egg-count-container">
@@ -165,6 +194,8 @@
     </div>
   </div>
 
+  <!-- DESKTOP ÄGGCONTAINER -->
+
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
     <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
@@ -174,6 +205,7 @@
         [style.--progress]="(1 - timeLeft() / targetTime) * 100"
       ></div>
       <p class="status-message" [innerHTML]="statusMessage()"></p>
+      <img class="egg-backround" src="/pictures/Bakgrund-2.png">
       <img class="egg" src="/pictures/äggform2.png" />
       <img class="eggYolk" src="/pictures/eggYolk.png" />
 

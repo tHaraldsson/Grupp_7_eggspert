@@ -9,7 +9,7 @@ import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule, EggTipsComponent],
+  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })
@@ -27,6 +27,11 @@ export class EggTimerComponent {
   checkpoints: { time: number; message: string }[] = [];
 
   selectedCategory: string | null = null;
+
+  hoveredSize: string | null = null;
+  hoveredConsistency: string | null = null;
+  hoveredTemp: string | null = null;
+
   eggCount: number = 1;
 
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
@@ -44,26 +49,66 @@ export class EggTimerComponent {
     this.resetTimer();
   }
 
-  getSizeImageName(size: string): string {
-    const isSelected = this.selectedOptions['sizes'] === size;
-    const sizeImages: Record<string, string> = {
-      Small: isSelected ? 'S_Hoover.png' : 'smallegg.png',
-      Medium: isSelected ? 'M_Hoover.png' : 'mediumegg.png',
-      Large: isSelected ? 'L_Hoover.png' : 'largeegg.png',
-      XLarge: isSelected ? 'XL_Hoover.png' : 'xlegg.png',
+  getSizeImageName(size: string, isHovered: boolean = false): string {
+  const isSelected = this.selectedOptions['sizes'] === size;
+  
+  if (isSelected) {
+    // Returnera rätt "pushed in"-bild för varje storlek
+    const selectedImages: Record<string, string> = {
+      Small: 'S_Pushed in.png',
+      Medium: 'M_Pushed in.png',
+      Large: 'L_Pushed in.png',
+      XLarge: 'XL_Pushed in.png'
     };
-    return sizeImages[size] || 'assets/images/default-egg.png';
+    return selectedImages[size] || 'smallegg.png';
   }
+  
+  if (isHovered) {
+    // Returnera hover-bilden för varje storlek
+    const hoverImages: Record<string, string> = {
+      Small: 'S_Hoover.png',
+      Medium: 'M_Hoover.png',
+      Large: 'L_Hoover.png',
+      XLarge: 'XL_Hoover.png'
+    };
+    return hoverImages[size] || 'smallegg.png';
+  }
+  
+  // Standardbild när inte hover eller selected
+  const sizeImages: Record<string, string> = {
+    Small: 'smallegg.png',
+    Medium: 'mediumegg.png',
+    Large: 'largeegg.png',
+    XLarge: 'xlegg.png'
+  };
+  return sizeImages[size] || 'assets/images/default-egg.png';
+}
 
-  getConcistencyImageName(consistency: string): string {
-    const isSelected = this.selectedOptions['consistency'] === consistency;
-    const consistencyImages: Record<string, string> = {
-      Löskokt: isSelected ? 'Löskokt_Pushed in.png' : 'löskokt.png',
-      Mellankokt: isSelected ? 'Mellan_Pushed in.png' : 'mediumkokt.png',
-      Hårdkokt: isSelected ? 'Hårdkokt_Pushed in.png' : 'hårdkokt.png',
-    };
-    return consistencyImages[consistency] || 'assets/images/default-egg.png';
+getConcistencyImageName(consistency: string, isHovered: boolean = false): string {
+  const isSelected = this.selectedOptions['consistency'] === consistency;
+  
+  if (isSelected) {
+    return `${consistency}_Pushed in.png`;
   }
+  
+  if (isHovered) {
+    // Returnera hover-bilden för varje konsistens
+    const hoverImages: Record<string, string> = {
+      Löskokt: 'Lös_Hoover.png',
+      Mellankokt: 'Mellan_Hoover.png',
+      Hårdkokt: 'Hård_Hoover.png'
+    };
+    return hoverImages[consistency] || 'löskokt.png';
+  }
+  
+  // Standardbild när inte hover eller selected
+  const consistencyImages: Record<string, string> = {
+    Löskokt: 'löskokt.png',
+    Mellankokt: 'mellankokt.png',
+    Hårdkokt: 'hårdkokt.png'
+  };
+  return consistencyImages[consistency] || 'assets/images/default-egg.png';
+}
 
   startTimer() {
     clearInterval(this.interval);
@@ -123,12 +168,13 @@ export class EggTimerComponent {
     audio.play();
   }
   formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-
+    const roundedSeconds = Math.round(seconds); // Se till att vi hanterar ett heltal
+    const minutes = Math.floor(roundedSeconds / 60);
+    const remainingSeconds = roundedSeconds % 60;
+    
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-
+  
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
@@ -146,82 +192,57 @@ export class EggTimerComponent {
   }
 
   calculateCookTime(): number {
-    let mass = 53;
-    const startTempEgg =
-      this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
+    let mass = 60;
+    const startTempEgg = this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
     let desiredTempEgg = 75;
 
     switch (this.selectedOptions['sizes']) {
-      case 'Small':
-        mass = 50;
-        break;
-      case 'Medium':
-        mass = 58;
-        break;
-      case 'Large':
-        mass = 68;
-        break;
-      case 'XLarge':
-        mass = 75;
-        break;
+      case 'Small': mass = 50; break;
+      case 'Medium': mass = 60; break;
+      case 'Large': mass = 70; break;
+      case 'XLarge': mass = 80; break;
     }
 
     switch (this.selectedOptions['consistency']) {
-      case 'Löskokt':
-        desiredTempEgg = 63;
-        break;
-      case 'Mellankokt':
-        desiredTempEgg = 68;
-        break;
-      case 'Hårdkokt':
-        desiredTempEgg = 75;
-        break;
+      case 'Löskokt': desiredTempEgg = 65; break;
+      case 'Mellankokt': desiredTempEgg = 73; break;
+      case 'Hårdkokt': desiredTempEgg = 83; break;
     }
 
-    this.time = this.eggQation(mass, 100, startTempEgg, 63);
-    this.time1 = this.eggQation(mass, 100, startTempEgg, 68);
-    this.time2 = this.eggQation(mass, 100, startTempEgg, 75);
+    this.time = this.eggQation(mass, 100, startTempEgg, 65);
+    this.time1 = this.eggQation(mass, 100, startTempEgg, 73);
+    this.time2 = this.eggQation(mass, 100, startTempEgg, 83);
 
-    const selectedConsistency =
-      this.selectedOptions['consistency'] || 'Hårdkokt';
+    const selectedConsistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
-    // ÄNDRING: Lägg endast till checkpoints om fler än 1 ägg
     if (this.eggCount > 1) {
+      const extraTime = Math.max(0, this.eggCount - 1) * 0.1;
+
       switch (selectedConsistency) {
         case 'Hårdkokt':
-          this.targetTime = this.time2;
+          this.targetTime = this.time2 * (1 + extraTime);
           this.checkpoints = [
             { time: this.targetTime - this.time1, message: 'Mellankokt' },
-            { time: this.targetTime - this.time, message: 'Löskokt' },
+            { time: this.targetTime - this.time, message: 'Löskokt' }
           ];
           break;
-
         case 'Mellankokt':
-          this.targetTime = this.time1;
+          this.targetTime = this.time1 * (1 + extraTime);
           this.checkpoints = [
-            { time: this.targetTime - this.time, message: 'Löskokt' },
+            { time: this.targetTime - this.time, message: 'Löskokt' }
           ];
           break;
-
         case 'Löskokt':
-          this.targetTime = this.time;
+          this.targetTime = this.time * (1 + extraTime);
           break;
       }
     } else {
-      // ÄNDRING: Hantera targetTime för 1 ägg
       switch (selectedConsistency) {
-        case 'Hårdkokt':
-          this.targetTime = this.time2;
-          break;
-        case 'Mellankokt':
-          this.targetTime = this.time1;
-          break;
-        case 'Löskokt':
-          this.targetTime = this.time;
-          break;
+        case 'Hårdkokt': this.targetTime = this.time2; break;
+        case 'Mellankokt': this.targetTime = this.time1; break;
+        case 'Löskokt': this.targetTime = this.time; break;
       }
-      this.checkpoints = [];
     }
 
     this.checkpoints.sort((a, b) => b.time - a.time);
@@ -237,22 +258,32 @@ export class EggTimerComponent {
     startTempEgg: number,
     desiredTempEgg: number
   ): number {
-    // Grundläggande tidfaktor baserat på äggets massa
-    let timeFactor = 0.1; // Tid per gram i sekunder för kokning vid rumstemperatur (kan justeras)
-
-    // Korrigera för skillnaden mellan start- och önskad temperatur
-    let tempDifference = desiredTempEgg - startTempEgg;
-
-    // Beräkna koktid
-    let time = mass * timeFactor * tempDifference;
-
-    // Justera baserat på önskad kokgrad (kan vara t.ex. mjukkokt, hårdkokt, etc.)
-    // Exempel: En extra multiplikation kan tillämpas beroende på önskad kokgrad
-    if (desiredTempEgg > 70) {
-      time *= 1.2; // För hårdkokta ägg, lägg till mer tid
+    // Definiera basetiderna med en typ som explicit tillåter strängindex
+    const baseTimes: Record<string, number> = {
+      '65': 255,   // Löskokt: 4:15
+      '73': 405,   // Mellankokt: 6:45
+      '83': 570    // Hårdkokt: 9:30
+    };
+  
+    // Milder storlekspåverkan
+    const sizeFactor = Math.pow(mass / 60, 0.35);
+  
+    // Mindre temperaturpåverkan
+    const tempAdjustment = 1 + (20 - startTempEgg) * 0.007;
+  
+    // Säker åtkomst till basetiderna
+    const desiredTempKey = desiredTempEgg.toString();
+    const baseTime = baseTimes[desiredTempKey] ?? 300; // Använd nullish coalescing
+  
+    // Beräkna tid
+    let time = baseTime * sizeFactor * tempAdjustment;
+  
+    // Extra justering för hårdkokt
+    if (desiredTempEgg >= 80) {
+      time *= 1.03;
     }
-
-    return Math.round(time); // Tid i sekunder
+  
+    return Math.round(time);
   }
 
   // HEN ANIMATION
