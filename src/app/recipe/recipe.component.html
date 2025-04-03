@@ -9,7 +9,7 @@
           <h2>{{ recipe.strMeal }}</h2>
 
           <div class="recipe-ingredients">
-            <h3>Ingredienser:</h3>
+            <h3>Ingredients:</h3>
             <ul>
               <li *ngFor="let ingredient of getShortIngredients(recipe)">
                 {{ ingredient }}
@@ -31,10 +31,9 @@
         </div>
       </div>
 
-      <!-- Knapp för att visa mer/mindre -->
-      <button (click)="toggleRecipe(recipe)" class="toggle-button">
-        <span *ngIf="!recipe.showFullRecipe">Visa mer ↓</span>
-        <span *ngIf="recipe.showFullRecipe">Visa mindre ↑</span>
+      <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
+      <button *ngIf="screenIsMobile" (click)="toggleRecipe(recipe)" class="toggle-button">
+        {{ recipe.showFullRecipe ? 'Visa mindre ↑' : 'Visa mer ↓' }}
       </button>
     </div>
   </div>

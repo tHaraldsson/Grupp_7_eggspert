@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class RecipeComponent implements OnInit {
   eggRecipes: any[] = [];  // Lista för att lagra recepten
+  screenIsMobile = window.innerWidth < 768;  // Kolla om det är mobil
 
   constructor(private recipeService: RecipeService) {}
 
@@ -41,7 +42,9 @@ export class RecipeComponent implements OnInit {
 
   // Anpassa visningen beroende på skärmstorlek
   updateRecipeVisibility(): void {
-    const isDesktop = window.innerWidth >= 768;  // Kollar om det är en desktop
+    this.screenIsMobile = window.innerWidth < 768;  // Uppdatera mobilstatus
+    const isDesktop = !this.screenIsMobile;
+    
     this.eggRecipes.forEach(recipe => {
       recipe.showFullRecipe = isDesktop;  // Visa fullständigt recept på desktop
     });

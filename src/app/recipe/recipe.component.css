@@ -19,7 +19,12 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 280px;
-    transition: transform 0.3s ease-in-out;
+    min-height: auto; /* Anpassa höjden efter innehållet */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Låt kortet växa beroende på innehållet */
+    margin-bottom: 20px; /* Mellanrum under varje kort */
+    min-height: 0; /* Ta bort eventuella tvingande höjder */
 }
 
 /* Stil för receptbilden */
@@ -89,6 +94,11 @@ h1 {
     margin-top: 15px;
     font-size: 14px;
     font-family: "Playpen Sans", sans-serif;
+    overflow: visible; /* Låt hela texten vara synlig */
+    text-overflow: unset;
+    flex-grow: 1; /* Gör så att kortet växer om beskrivningen är längre */
+    height: auto; /* Se till att beskrivningen får flexibelt utrymme */
+    max-height: none; /* Ta bort max-höjd så att kortet kan anpassas */
 }
 
 /* Stil för knappen (nedåtpil och uppåtpil) */
@@ -129,6 +139,7 @@ h1 {
 
 .recipe-card {
     width: 260px;
+    min-height: auto;
 }
 
 .recipe-image {
@@ -174,17 +185,11 @@ h1 {
 
 /* Recipe card layout som är flexibel och anpassar sig till innehållet */
 .recipe-card {
-    width: 100%;
-    max-width: 320px; /* Maxbredd för korten */
-    min-height: auto; /* Låt höjden anpassa sig beroende på innehåll */
-    background-color: #FFE98D;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Låt korten växa beroende på innehåll */
-    margin-bottom: 20px; /* Säkerställ att det finns avstånd under varje kort */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Detta gör att kortet växer beroende på innehåll */
+  align-items: flex-start; /* Säkerställer att kortet inte tar upp mer höjd än nödvändigt */
+  min-height: 0; /* Tar bort statisk höjd */
 }
 
 /* Recipe image */
@@ -271,6 +276,9 @@ h1 {
 .recipe-ingredients ul {
     padding-left: 20px;
     margin: 0;
+}
+.toggle-button {
+  display: none;
 }
 }
 
