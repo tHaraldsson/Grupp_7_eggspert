@@ -18,15 +18,24 @@ export class RecipeComponent {
 
   ngOnInit(): void {
     this.loadEggRecipes();
+    window.addEventListener('resize', () => {
+      const isDesktop = window.innerWidth >= 768;
+      this.eggRecipes.forEach(recipe => {
+        recipe.showFullRecipe = isDesktop;
+      });
+    });
   }
+  
+  
 
   loadEggRecipes(): void {
     this.httpClient.get<any>(this.apiUrl).subscribe({
       next: (response) => {
         this.eggRecipes = response.meals || [];
+        const isDesktop = window.innerWidth >= 768; // Kolla om det är desktop
         // Lägg till flagga för varje recept om det ska visa hela beskrivningen
         this.eggRecipes.forEach(recipe => {
-          recipe.showFullRecipe = false;  // Starta med att inte visa hela beskrivningen
+          recipe.showFullRecipe = isDesktop; // Visa hela receptet på desktop
         });
       },
       error: (error) => {

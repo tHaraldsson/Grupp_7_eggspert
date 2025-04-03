@@ -31,7 +31,8 @@
       </div>
 
       <!-- Knapp för att visa mer/mindre -->
-      <button (click)="toggleRecipe(recipe)" class="toggle-button">
+      <button *ngIf="!recipe.showFullRecipe" (click)="toggleRecipe(recipe)" class="toggle-button">
+
         <span *ngIf="!recipe.showFullRecipe">Visa mer ↓</span>
         <span *ngIf="recipe.showFullRecipe">Visa mindre ↑</span>
       </button>
