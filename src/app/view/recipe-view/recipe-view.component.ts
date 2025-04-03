@@ -5,7 +5,7 @@ import { EggTipsComponent } from "../../egg-tips/egg-tips.component";
 
 @Component({
   selector: 'app-recipe-view',
-  imports: [RecipeComponent, EggTipsComponent],
+  imports: [RecipeComponent],
   templateUrl: './recipe-view.component.html',
   styleUrl: './recipe-view.component.css'
 })

@@ -1,6 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Pompiere&display=swap");
+@font-face {
+  font-family: 'Barriecito';
+  src: url('/fonts/Barriecito.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Playpen+Sans:wght@400..700&family=Pompiere&display=swap");
+@font-face {
+  font-family: 'Playpen Sans';
+  src: url('/fonts/PlaypenSans.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 .menu-container {
   position: absolute;
