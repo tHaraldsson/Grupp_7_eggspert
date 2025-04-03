@@ -1,47 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, forkJoin, timer } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, timer, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiUrl = 'https://api.spoonacular.com/recipes/complexSearch';
-  private apiDetailsUrl = 'https://api.spoonacular.com/recipes';
-  private apiKey = 'e29ca641a7814ec58e9c4d1ebf0d7dfd';  // Din API-nyckel
+  private apiUrl = 'https://www.themealdb.com/api/json/v1/1/search.php';  // TheMealDB API URL
 
   constructor(private http: HttpClient) {}
 
-  // Hämta 3 recept som innehåller ägg en gång i veckan
-  getWeeklyRecipes(): Observable<any[]> {
-    return timer(0, 604800000).pipe( // Timer som körs var 7:e dag (604800000 ms)
+  // Hämta recept som innehåller "omelet"
+  getWeeklyRecipes(): Observable<any> {
+    return timer(0, 604800000).pipe(
       switchMap(() => {
-        const params = new HttpParams()
-          .set('apiKey', this.apiKey)
-          .set('number', '3') // Hämta 3 recept
-          .set('includeIngredients', 'egg'); // Recept som innehåller ägg
+        const params = new HttpParams().set('s', 'omelet');  // Filtrera på omelet
 
-        return this.http.get<any>(this.apiUrl, { params }).pipe(
-          switchMap(response => {
-            const recipeIds = response.results.map((recipe: any) => recipe.id);
-            return this.getMultipleRecipeDetails(recipeIds);  // Hämta detaljer för varje recept
-          })
-        );
+        return this.http.get<any>(this.apiUrl, { params });
       })
     );
   }
 
-  // Hämta detaljerad information om flera recept
-  private getMultipleRecipeDetails(recipeIds: number[]): Observable<any[]> {
-    const requests = recipeIds.map(id => this.getRecipeDetails(id));
-    return forkJoin(requests);  // Vänta på alla anrop
-  }
-
-  // Hämta detaljer för ett enskilt recept
+  // Hämta detaljer om ett specifikt recept
   getRecipeDetails(recipeId: number): Observable<any> {
-    const url = `${this.apiDetailsUrl}/${recipeId}/information`;
-    const params = new HttpParams().set('apiKey', this.apiKey);
-    return this.http.get<any>(url, { params });
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
+    return this.http.get<any>(url);
   }
 }

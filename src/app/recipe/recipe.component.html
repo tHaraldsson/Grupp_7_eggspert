@@ -3,14 +3,14 @@
     <h1>Veckans Recept</h1>
     <div *ngFor="let recipe of eggRecipes" class="recipe-card">
       <div class="recipe-card-header">
-        <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image" />
+        <!-- Visa bild om den finns -->
+        <img *ngIf="recipe.strMealThumb" [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" class="recipe-image" />
         <div class="recipe-info">
-          <h2>{{ recipe.title }}</h2>
+          <h2>{{ recipe.strMeal }}</h2>
 
           <div class="recipe-ingredients">
             <h3>Ingredienser:</h3>
             <ul>
-              <!-- Visa endast de första 5 ingredienserna -->
               <li *ngFor="let ingredient of getShortIngredients(recipe)">
                 {{ ingredient }}
               </li>
@@ -27,7 +27,6 @@
           </li>
         </ul>
         <div class="recipe-description">
-          <!-- Visa instruktionerna, eller ett meddelande om de inte finns -->
           <p>{{ getInstructions(recipe) }}</p>
         </div>
       </div>
