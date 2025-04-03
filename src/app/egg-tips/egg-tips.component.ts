@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-egg-tips',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './egg-tips.component.html',
   styleUrls: ['./egg-tips.component.css'],

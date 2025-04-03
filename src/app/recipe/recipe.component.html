@@ -1,16 +1,44 @@
 <div *ngIf="eggRecipes.length > 0; else noRecipes">
-    <h1>Egg Recipes</h1>
-    <ul>
-      <li *ngFor="let recipe of eggRecipes">
-        <h2>{{ recipe.title }}</h2>
-        <img [src]="recipe.image" alt="{{ recipe.title }}" width="200">
-        <p>{{ recipe.summary }}...</p>
-        <a [href]="'https://spoonacular.com/recipes/' + recipe.id" target="_blank">View Recipe</a>
-      </li>
-    </ul>
+  <div class="recipe-container">
+    <h1>Veckans Recept</h1>
+    <div *ngFor="let recipe of eggRecipes" class="recipe-card">
+      <div class="recipe-card-header">
+        <!-- Visa bild om den finns -->
+        <img *ngIf="recipe.strMealThumb" [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" class="recipe-image" />
+        <div class="recipe-info">
+          <h2>{{ recipe.strMeal }}</h2>
+
+          <div class="recipe-ingredients">
+            <h3>Ingredients:</h3>
+            <ul>
+              <li *ngFor="let ingredient of getShortIngredients(recipe)">
+                {{ ingredient }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra ingredienser + instruktioner visas bara när showFullRecipe är true -->
+      <div *ngIf="recipe.showFullRecipe" class="extra-recipe">
+        <ul>
+          <li *ngFor="let ingredient of getExtraIngredients(recipe)">
+            {{ ingredient }}
+          </li>
+        </ul>
+        <div class="recipe-description">
+          <p>{{ getInstructions(recipe) }}</p>
+        </div>
+      </div>
+
+      <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
+      <button *ngIf="screenIsMobile" (click)="toggleRecipe(recipe)" class="toggle-button">
+        {{ recipe.showFullRecipe ? 'Visa mindre ↑' : 'Visa mer ↓' }}
+      </button>
+    </div>
   </div>
-  
-  <ng-template #noRecipes>
-    <p>No recipes found. Try again later!</p>
-  </ng-template>
-  
+</div>
+
+<ng-template #noRecipes>
+  <p>Inga recept hittades. Försök igen senare!</p>
+</ng-template>
