@@ -258,30 +258,30 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
     startTempEgg: number,
     desiredTempEgg: number
   ): number {
-    // Baserat på empiriska data och fysikaliska modeller
-    const baseTime: Record<string, number> = {
-      'Löskokt': 240,    // 4 min bastid för medium ägg (60g)
-      'Mellankokt': 420,  // 7 min
-      'Hårdkokt': 600     // 10 min
+    // Definiera basetiderna med en typ som explicit tillåter strängindex
+    const baseTimes: Record<string, number> = {
+      '65': 255,   // Löskokt: 4:15
+      '73': 405,   // Mellankokt: 6:45
+      '83': 570    // Hårdkokt: 9:30
     };
   
-    // Justering för äggstorlek (kvadratrotsfaktor pga volym/area-förhållande)
-    const sizeFactor = Math.sqrt(mass / 60);
+    // Milder storlekspåverkan
+    const sizeFactor = Math.pow(mass / 60, 0.35);
   
-    // Justering för starttemperatur
-    const tempFactor = 1 + (20 - startTempEgg) * 0.015;
+    // Mindre temperaturpåverkan
+    const tempAdjustment = 1 + (20 - startTempEgg) * 0.007;
   
-    let time: number;
-    
-    switch (desiredTempEgg) {
-      case 65: time = baseTime['Löskokt']; break;
-      case 73: time = baseTime['Mellankokt']; break;
-      case 83: time = baseTime['Hårdkokt']; break;
-      default: time = 300; // Fallback
+    // Säker åtkomst till basetiderna
+    const desiredTempKey = desiredTempEgg.toString();
+    const baseTime = baseTimes[desiredTempKey] ?? 300; // Använd nullish coalescing
+  
+    // Beräkna tid
+    let time = baseTime * sizeFactor * tempAdjustment;
+  
+    // Extra justering för hårdkokt
+    if (desiredTempEgg >= 80) {
+      time *= 1.03;
     }
-  
-    // Slutlig beräkning med justeringar
-    time = time * sizeFactor * tempFactor;
   
     return Math.round(time);
   }
