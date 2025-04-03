@@ -1,10 +1,3 @@
-/* egg-timer.component.css */
-
-@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Pompiere&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Barriecito&family=Playpen+Sans:wght@400..700&family=Pompiere&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap");
-
 body {
   margin: 0;
   padding: 0;
@@ -53,7 +46,8 @@ h1 {
   margin: 0%;
 }
 
-.options button, .egg-temperature {
+.options button,
+.egg-temperature {
   background-color: white;
   border: 1px solid black;
   border-radius: 10px;
@@ -63,13 +57,15 @@ h1 {
   overflow: hidden;
 }
 
-.options button.hovered, .egg-temperature.hovered {
+.options button.hovered,
+.egg-temperature.hovered {
   background-color: #f4a90c; /* Orange färg vid hover */
   transform: scale(1.05);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.options button.selected, .egg-temperature.selected {
+.options button.selected,
+.egg-temperature.selected {
   background-color: #f49d11;
   transform: scale(0.95);
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -349,11 +345,11 @@ button {
   .container {
     display: none;
   }
-  .egg-tips{
+  .egg-tips {
     display: flex;
     width: 20rem;
     height: 50rem;
-    align-items:flex-start;
+    align-items: flex-start;
   }
 
   .egg-temperature-options button.selected {
@@ -367,11 +363,11 @@ button {
     width: 48%;
     margin: 0;
   }
-  
+
   .egg-temperature.hovered {
     transform: scale(1.03);
   }
-  
+
   .egg-temperature.selected {
     transform: scale(0.98);
   }
@@ -486,7 +482,7 @@ button {
     background-image: url("/pictures/Bakgrund-2.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size: contain;
     margin: 0;
   }
 

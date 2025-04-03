@@ -27,7 +27,7 @@ export class EggTimerComponent {
   checkpoints: { time: number; message: string }[] = [];
 
   selectedCategory: string | null = null;
-  
+
   hoveredSize: string | null = null;
   hoveredConsistency: string | null = null;
   hoveredTemp: string | null = null;
@@ -168,12 +168,13 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
     audio.play();
   }
   formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-
+    const roundedSeconds = Math.round(seconds); // Se till att vi hanterar ett heltal
+    const minutes = Math.floor(roundedSeconds / 60);
+    const remainingSeconds = roundedSeconds % 60;
+    
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-
+  
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
@@ -191,82 +192,57 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
   }
 
   calculateCookTime(): number {
-    let mass = 53;
-    const startTempEgg =
-      this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
+    let mass = 60;
+    const startTempEgg = this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
     let desiredTempEgg = 75;
 
     switch (this.selectedOptions['sizes']) {
-      case 'Small':
-        mass = 50;
-        break;
-      case 'Medium':
-        mass = 58;
-        break;
-      case 'Large':
-        mass = 68;
-        break;
-      case 'XLarge':
-        mass = 75;
-        break;
+      case 'Small': mass = 50; break;
+      case 'Medium': mass = 60; break;
+      case 'Large': mass = 70; break;
+      case 'XLarge': mass = 80; break;
     }
 
     switch (this.selectedOptions['consistency']) {
-      case 'Löskokt':
-        desiredTempEgg = 63;
-        break;
-      case 'Mellankokt':
-        desiredTempEgg = 68;
-        break;
-      case 'Hårdkokt':
-        desiredTempEgg = 75;
-        break;
+      case 'Löskokt': desiredTempEgg = 65; break;
+      case 'Mellankokt': desiredTempEgg = 73; break;
+      case 'Hårdkokt': desiredTempEgg = 83; break;
     }
 
-    this.time = this.eggQation(mass, 100, startTempEgg, 63);
-    this.time1 = this.eggQation(mass, 100, startTempEgg, 68);
-    this.time2 = this.eggQation(mass, 100, startTempEgg, 75);
+    this.time = this.eggQation(mass, 100, startTempEgg, 65);
+    this.time1 = this.eggQation(mass, 100, startTempEgg, 73);
+    this.time2 = this.eggQation(mass, 100, startTempEgg, 83);
 
-    const selectedConsistency =
-      this.selectedOptions['consistency'] || 'Hårdkokt';
+    const selectedConsistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
-    // ÄNDRING: Lägg endast till checkpoints om fler än 1 ägg
     if (this.eggCount > 1) {
+      const extraTime = Math.max(0, this.eggCount - 1) * 0.1;
+
       switch (selectedConsistency) {
         case 'Hårdkokt':
-          this.targetTime = this.time2;
+          this.targetTime = this.time2 * (1 + extraTime);
           this.checkpoints = [
             { time: this.targetTime - this.time1, message: 'Mellankokt' },
-            { time: this.targetTime - this.time, message: 'Löskokt' },
+            { time: this.targetTime - this.time, message: 'Löskokt' }
           ];
           break;
-
         case 'Mellankokt':
-          this.targetTime = this.time1;
+          this.targetTime = this.time1 * (1 + extraTime);
           this.checkpoints = [
-            { time: this.targetTime - this.time, message: 'Löskokt' },
+            { time: this.targetTime - this.time, message: 'Löskokt' }
           ];
           break;
-
         case 'Löskokt':
-          this.targetTime = this.time;
+          this.targetTime = this.time * (1 + extraTime);
           break;
       }
     } else {
-      // ÄNDRING: Hantera targetTime för 1 ägg
       switch (selectedConsistency) {
-        case 'Hårdkokt':
-          this.targetTime = this.time2;
-          break;
-        case 'Mellankokt':
-          this.targetTime = this.time1;
-          break;
-        case 'Löskokt':
-          this.targetTime = this.time;
-          break;
+        case 'Hårdkokt': this.targetTime = this.time2; break;
+        case 'Mellankokt': this.targetTime = this.time1; break;
+        case 'Löskokt': this.targetTime = this.time; break;
       }
-      this.checkpoints = [];
     }
 
     this.checkpoints.sort((a, b) => b.time - a.time);
@@ -282,22 +258,32 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
     startTempEgg: number,
     desiredTempEgg: number
   ): number {
-    // Grundläggande tidfaktor baserat på äggets massa
-    let timeFactor = 0.1; // Tid per gram i sekunder för kokning vid rumstemperatur (kan justeras)
-
-    // Korrigera för skillnaden mellan start- och önskad temperatur
-    let tempDifference = desiredTempEgg - startTempEgg;
-
-    // Beräkna koktid
-    let time = mass * timeFactor * tempDifference;
-
-    // Justera baserat på önskad kokgrad (kan vara t.ex. mjukkokt, hårdkokt, etc.)
-    // Exempel: En extra multiplikation kan tillämpas beroende på önskad kokgrad
-    if (desiredTempEgg > 70) {
-      time *= 1.2; // För hårdkokta ägg, lägg till mer tid
+    // Baserat på empiriska data och fysikaliska modeller
+    const baseTime: Record<string, number> = {
+      'Löskokt': 240,    // 4 min bastid för medium ägg (60g)
+      'Mellankokt': 420,  // 7 min
+      'Hårdkokt': 600     // 10 min
+    };
+  
+    // Justering för äggstorlek (kvadratrotsfaktor pga volym/area-förhållande)
+    const sizeFactor = Math.sqrt(mass / 60);
+  
+    // Justering för starttemperatur
+    const tempFactor = 1 + (20 - startTempEgg) * 0.015;
+  
+    let time: number;
+    
+    switch (desiredTempEgg) {
+      case 65: time = baseTime['Löskokt']; break;
+      case 73: time = baseTime['Mellankokt']; break;
+      case 83: time = baseTime['Hårdkokt']; break;
+      default: time = 300; // Fallback
     }
-
-    return Math.round(time); // Tid i sekunder
+  
+    // Slutlig beräkning med justeringar
+    time = time * sizeFactor * tempFactor;
+  
+    return Math.round(time);
   }
 
   // HEN ANIMATION
