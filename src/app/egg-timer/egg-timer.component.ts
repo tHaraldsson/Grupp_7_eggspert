@@ -48,6 +48,8 @@ export class EggTimerComponent {
 
   notificationSound: HTMLAudioElement | null = null;
 
+  private audioContext: AudioContext | null = null;
+
   ngOnInit() {
     this.calculateCookTime();
     // Check if the Wake Lock API is supported
@@ -130,8 +132,8 @@ export class EggTimerComponent {
     clearInterval(this.interval);
     this.preventScreenLock(); // Prevent screen from locking
 
-    if (!this.notificationSound) {
-      this.notificationSound = new Audio('/audio/chicSound.mp3');
+    if (!this.audioContext) {
+      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
 
     this.playSilentActivationSound();
@@ -189,24 +191,35 @@ export class EggTimerComponent {
     );
   }
 
-  playSound() {
-    if (!this.notificationSound) {
-      this.notificationSound = new Audio('/audio/chicSound.mp3');
-    }
+  async playSound() {
+    try {
+      // Skapa nytt AudioContext vid första användning
+      if (!this.audioContext) {
+        this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
   
-    // Försök spela upp ljudet direkt
-    this.notificationSound.currentTime = 0;
-    const playPromise = this.notificationSound.play();
-  
-    // Hantera iOS begränsningar
-    if (playPromise !== undefined) {
-      playPromise.catch((error: Error) => {
-        console.error('Automatisk ljuduppspelning misslyckades:', error);
-        // Fallback: Skapa nytt ljudelement
-        const fallbackAudio = new Audio('/audio/chicSound.mp3');
-        fallbackAudio.play().catch(e => console.error('Fallback ljud misslyckades:', e));
-      });
+      // Hämta ljuddata
+      const response = await fetch('/audio/chicSound.mp3');
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+      
+      // Spela upp ljudet
+      const source = this.audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(this.audioContext.destination);
+      source.start(0);
+    } catch (error) {
+      console.error('Web Audio API error:', error);
+      // Fallback till vanligt ljudelement
+      this.playFallbackSound();
     }
+  }
+
+  private playFallbackSound() {
+    const audio = new Audio('/audio/chicSound.mp3');
+    audio.play().catch(error => {
+      console.error('Fallback sound error:', error);
+    });
   }
 
   private playSilentActivationSound() {
