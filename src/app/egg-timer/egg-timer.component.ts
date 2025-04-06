@@ -154,6 +154,8 @@ export class EggTimerComponent {
         this.statusMessage.set(`${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`);
         clearInterval(this.interval); // Stoppa timern när den når 0
         this.timerisRunning = false;
+
+        this.playSound(); // ⬅️ Lägg till denna rad här!
         this.statusMessage.set(
           `${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`
         );
