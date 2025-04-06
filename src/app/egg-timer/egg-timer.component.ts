@@ -130,6 +130,12 @@ export class EggTimerComponent {
     clearInterval(this.interval);
     this.preventScreenLock(); // Prevent screen from locking
 
+    if (!this.notificationSound) {
+      this.notificationSound = new Audio('/audio/chicSound.mp3');
+    }
+
+    this.playSilentActivationSound();
+
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
         this.timeLeft.update((v) => v - 1);
@@ -184,21 +190,28 @@ export class EggTimerComponent {
   }
 
   playSound() {
-    // Use our preloaded sound
-    if (this.notificationSound) {
-      // Reset to beginning if already playing
-      this.notificationSound.currentTime = 0;
-      
-      // Play with error handling
-      this.notificationSound.play()
-        .catch((error: Error) => {
-          console.error('Sound play failed:', error);
-          
-          // Create new audio instance as fallback
-          const fallbackAudio = new Audio('/audio/chicSound.mp3');
-          fallbackAudio.play().catch(e => console.error('Fallback sound failed:', e));
-        });
+    if (!this.notificationSound) {
+      this.notificationSound = new Audio('/audio/chicSound.mp3');
     }
+  
+    // Försök spela upp ljudet direkt
+    this.notificationSound.currentTime = 0;
+    const playPromise = this.notificationSound.play();
+  
+    // Hantera iOS begränsningar
+    if (playPromise !== undefined) {
+      playPromise.catch((error: Error) => {
+        console.error('Automatisk ljuduppspelning misslyckades:', error);
+        // Fallback: Skapa nytt ljudelement
+        const fallbackAudio = new Audio('/audio/chicSound.mp3');
+        fallbackAudio.play().catch(e => console.error('Fallback ljud misslyckades:', e));
+      });
+    }
+  }
+
+  private playSilentActivationSound() {
+    const silentAudio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+    silentAudio.play().catch(e => console.debug('Silent activation sound error:', e));
   }
 
   formatTime(seconds: number): string {
