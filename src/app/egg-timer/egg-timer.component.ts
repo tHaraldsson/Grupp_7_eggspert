@@ -51,12 +51,18 @@ export class EggTimerComponent {
   private audioContext: AudioContext | null = null;
 
   ngOnInit() {
+<<<<<<< Updated upstream
     this.calculateCookTime();
     // Check if the Wake Lock API is supported
     this.wakeLockSupported = 'wakeLock' in navigator;
     // Preload the notification sound
     this.notificationSound = new Audio('/audio/chicSound.mp3');
     this.notificationSound.load(); // Explicitly load the audio
+=======
+     // När sidan laddas ska timern vara 00:00
+     this.timeLeft.set(0); // Starta med 0 sekunder
+     this.statusMessage.set('<br>');
+>>>>>>> Stashed changes
   }
 
   onEggCountChange() {
@@ -129,6 +135,7 @@ export class EggTimerComponent {
   }
 
   startTimer() {
+<<<<<<< Updated upstream
     clearInterval(this.interval);
     this.preventScreenLock(); // Prevent screen from locking
 
@@ -137,30 +144,31 @@ export class EggTimerComponent {
     }
 
     this.playSilentActivationSound();
+=======
+    // Se till att timern inte är igång
+    if (this.timerisRunning) return;
+
+    this.calculateCookTime(); // Beräkna koktiden baserat på val
+    this.timerisRunning = true;
+    localStorage.setItem('timerRunning', 'true'); // Spara status i localStorage
+>>>>>>> Stashed changes
 
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
-        this.timeLeft.update((v) => v - 1);
-        this.updateHenPosition();
-      }
-
-      if (this.eggCount > 1) {
-        this.checkpoints.forEach((checkpoint) => {
-          if (this.timeLeft() === checkpoint.time) {
-            this.playSound();
-            this.statusMessage.set(`Just nu:<br>${checkpoint.message}`);
-          }
-        });
-      }
-
-      if (this.timeLeft() === 0) {
-        this.playSound();
+        this.timeLeft.update((v) => v - 1); // Minska tiden varje sekund
+      } else {
+        this.statusMessage.set(`${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`);
+        clearInterval(this.interval); // Stoppa timern när den når 0
         this.timerisRunning = false;
+<<<<<<< Updated upstream
         this.statusMessage.set(
           `${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`
         );
         clearInterval(this.interval);
         this.allowScreenLock(); // Allow screen to lock when timer completes
+=======
+        localStorage.removeItem('timerRunning'); // Ta bort timerstatus från localStorage
+>>>>>>> Stashed changes
       }
     }, 1000);
   }
@@ -184,11 +192,12 @@ export class EggTimerComponent {
   }
 
   resetTimer() {
-    this.timeLeft.set(this.targetTime);
-    clearInterval(this.interval);
-    this.statusMessage.set(
-      `Mål:<br>${this.selectedOptions['consistency'] || 'Hårdkokt'}`
-    );
+    this.timeLeft.set(0); // Sätt timeLeft till 0 när vi nollställer
+    clearInterval(this.interval); // Stoppa intervallet om det körs
+    this.statusMessage.set('<br>'); // Visa en status att timern är nollställd
+
+     // Nollställ valda alternativ
+  this.selectedOptions = {}; // Töm alla val av ägginställningar
   }
 
   async playSound() {
@@ -214,6 +223,7 @@ export class EggTimerComponent {
       this.playFallbackSound();
     }
   }
+<<<<<<< Updated upstream
 
   private playFallbackSound() {
     const audio = new Audio('/audio/chicSound.mp3');
@@ -227,6 +237,9 @@ export class EggTimerComponent {
     silentAudio.play().catch(e => console.debug('Silent activation sound error:', e));
   }
 
+=======
+  
+>>>>>>> Stashed changes
   formatTime(seconds: number): string {
     const roundedSeconds = Math.round(seconds); // Se till att vi hanterar ett heltal
     const minutes = Math.floor(roundedSeconds / 60);
@@ -329,7 +342,7 @@ export class EggTimerComponent {
 
     this.checkpoints.sort((a, b) => b.time - a.time);
     this.timeLeft.set(this.targetTime);
-    this.statusMessage.set(`Mål:<br>${selectedConsistency}`);
+    this.statusMessage.set(`<br>${selectedConsistency}`);
 
     return this.targetTime;
   }

@@ -1,18 +1,40 @@
 <header>
-  <div class="moblie-container">
-    <app-hamburger-menu></app-hamburger-menu>
-  </div>
   <div class="desktop-container">
-    <div class="loga">
+    <!-- Logga och titel på desktop -->
+    <div class="loga" *ngIf="isDesktop">
       <img class="egglogo" src="/pictures/eggsize.png" />
       <h1 class="egg-timer-title">Eggspert</h1>
     </div>
-    <div class="links">
-      <a routerLink="recipe">Veckans recept</a>
-      <a routerLink="">Timer</a>
+
+    <!-- Tillbaka-länk (desktop version) -->
+    <div class="back-link" *ngIf="isDesktop && currentRoute === '/recipe'">
+      <a routerLink="/">← Tillbaka</a>
+    </div>
+
+    <!-- DESKTOP: Veckans recept-länk -->
+    <div class="links" *ngIf="isDesktop">
+      <a *ngIf="currentRoute !== '/recipe'" routerLink="/recipe">Veckans recept</a>
+    </div>
+  </div>
+
+  <!-- MOBIL: Wrapper för back + recipe-länk -->
+  <div class="mobile-header" *ngIf="!isDesktop">
+    <!-- Tillbaka-länk på mobil (enbart på /recipe sidan) -->
+    <div *ngIf="currentRoute === '/recipe'" class="back-link">
+      <a routerLink="/">← Tillbaka</a>
+    </div>
+
+    <!-- Veckans recept-länk på mobil (enbart på startsidan) -->
+    <div *ngIf="currentRoute === '/'">
+      <div class="mobile-recipe-link">
+        <a routerLink="/recipe">Veckans recept</a>
+      </div>
     </div>
   </div>
 </header>
+
 <main>
-  <router-outlet />
+  <router-outlet></router-outlet>
 </main>
+
+

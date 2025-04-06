@@ -1,33 +1,39 @@
+<img class="bakgrund" src="/pictures/Bakgrund-2.png" />
 <div class="container">
-  <img class="bakgrund" src="/pictures/bakgrund.png" />
+  
 
   <h1>Eggspert</h1>
 
   <!-- MOBIL 3 OPTIONS -->
-
   <div class="button-group">
     <div class="egg-option">
-      <img
-        class="egg-selectionOne"
-        src="/pictures/eggsize.png"
-        (click)="toggleSelection('sizes')"
-      />
+      <button class="icon-button" (click)="toggleSelection('sizes')">
+        <img
+          class="egg-selectionOne"
+          src="/pictures/eggsize.png"
+          alt="Storlek"
+        />
+      </button>
       <p>Storlek</p>
     </div>
     <div class="egg-option">
-      <img
-        class="egg-selectionTwo"
-        src="/pictures/konsistens.png"
-        (click)="toggleSelection('consistency')"
-      />
+      <button class="icon-button" (click)="toggleSelection('consistency')">
+        <img
+          class="egg-selectionTwo"
+          src="/pictures/konsistens.png"
+          alt="Konsistens"
+        />
+      </button>
       <p>Konsistens</p>
     </div>
     <div class="egg-option">
-      <img
-        class="egg-selectionThree"
-        src="/pictures/temp.png"
-        (click)="toggleSelection('temperature')"
-      />
+      <button class="icon-button" (click)="toggleSelection('temperature')">
+        <img
+          class="egg-selectionThree"
+          src="/pictures/temp.png"
+          alt="Temperatur"
+        />
+      </button>
       <p>Temperatur</p>
     </div>
   </div>
@@ -100,6 +106,12 @@
         (change)="onEggCountChange()"
       />
     </div>
+
+    <p class="egg-selection-display">
+       {{ selectedOptions['sizes'] || '' }}<br>
+       {{ selectedOptions['consistency'] || '' }}<br>
+       {{ selectedOptions['temperature'] || '' }}
+    </p>
     <div
       class="yolk-progress"
       [style.--progress]="(1 - timeLeft() / targetTime) * 100"
@@ -110,7 +122,7 @@
       <img class="egg" src="/pictures/äggform2.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
-      <span class="egg-text">{{ timerisRunning ? "Stop" : "Starta" }}</span>
+      <span class="egg-text">{{ timerisRunning ? "Återställ" : "Starta" }}</span>
     </div>
   </div>
 </div>
@@ -220,9 +232,9 @@
           [class.btn-pause]="timerisRunning"
           class="btn-start"
         >
-          {{ timerisRunning ? "Pausa" : "Starta" }}
+          {{ timerisRunning ? "Återställ" : "Starta" }}
         </button>
-        <button (click)="resetTimer()" class="btn-reset">Återställ</button>
+        
       </div>
     </div>
   </div>
