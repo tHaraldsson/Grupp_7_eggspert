@@ -46,10 +46,15 @@ export class EggTimerComponent {
   silentAudio: HTMLAudioElement | null = null;
   keepAwakeVideo: HTMLVideoElement | null = null;
 
+  notificationSound: HTMLAudioElement | null = null;
+
   ngOnInit() {
     this.calculateCookTime();
     // Check if the Wake Lock API is supported
     this.wakeLockSupported = 'wakeLock' in navigator;
+    // Preload the notification sound
+    this.notificationSound = new Audio('/audio/chicSound.mp3');
+    this.notificationSound.load(); // Explicitly load the audio
   }
 
   onEggCountChange() {
@@ -59,61 +64,64 @@ export class EggTimerComponent {
 
   getSizeImageName(size: string, isHovered: boolean = false): string {
     const isSelected = this.selectedOptions['sizes'] === size;
-    
+
     if (isSelected) {
       // Returnera rätt "pushed in"-bild för varje storlek
       const selectedImages: Record<string, string> = {
         Small: 'S_Pushed in.png',
         Medium: 'M_Pushed in.png',
         Large: 'L_Pushed in.png',
-        XLarge: 'XL_Pushed in.png'
+        XLarge: 'XL_Pushed in.png',
       };
       return selectedImages[size] || 'smallegg.png';
     }
-    
+
     if (isHovered) {
       // Returnera hover-bilden för varje storlek
       const hoverImages: Record<string, string> = {
         Small: 'S_Hoover.png',
         Medium: 'M_Hoover.png',
         Large: 'L_Hoover.png',
-        XLarge: 'XL_Hoover.png'
+        XLarge: 'XL_Hoover.png',
       };
       return hoverImages[size] || 'smallegg.png';
     }
-    
+
     // Standardbild när inte hover eller selected
     const sizeImages: Record<string, string> = {
       Small: 'smallegg.png',
       Medium: 'mediumegg.png',
       Large: 'largeegg.png',
-      XLarge: 'xlegg.png'
+      XLarge: 'xlegg.png',
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
 
-  getConcistencyImageName(consistency: string, isHovered: boolean = false): string {
+  getConcistencyImageName(
+    consistency: string,
+    isHovered: boolean = false
+  ): string {
     const isSelected = this.selectedOptions['consistency'] === consistency;
-    
+
     if (isSelected) {
       return `${consistency}_Pushed in.png`;
     }
-    
+
     if (isHovered) {
       // Returnera hover-bilden för varje konsistens
       const hoverImages: Record<string, string> = {
         Löskokt: 'Lös_Hoover.png',
         Mellankokt: 'Mellan_Hoover.png',
-        Hårdkokt: 'Hård_Hoover.png'
+        Hårdkokt: 'Hård_Hoover.png',
       };
       return hoverImages[consistency] || 'löskokt.png';
     }
-    
+
     // Standardbild när inte hover eller selected
     const consistencyImages: Record<string, string> = {
       Löskokt: 'löskokt.png',
       Mellankokt: 'mellankokt.png',
-      Hårdkokt: 'hårdkokt.png'
+      Hårdkokt: 'hårdkokt.png',
     };
     return consistencyImages[consistency] || 'assets/images/default-egg.png';
   }
@@ -164,7 +172,7 @@ export class EggTimerComponent {
   pauseTimer() {
     clearInterval(this.interval);
     this.timerisRunning = false;
-    this.allowScreenLock(); // Allow screen to lock when timer pauses
+    this.allowScreenLock(); // Allow screen to lock when timer pausas
   }
 
   resetTimer() {
@@ -176,18 +184,31 @@ export class EggTimerComponent {
   }
 
   playSound() {
-    const audio = new Audio('/audio/chicSound.mp3');
-    audio.play();
+    // Use our preloaded sound
+    if (this.notificationSound) {
+      // Reset to beginning if already playing
+      this.notificationSound.currentTime = 0;
+      
+      // Play with error handling
+      this.notificationSound.play()
+        .catch((error: Error) => {
+          console.error('Sound play failed:', error);
+          
+          // Create new audio instance as fallback
+          const fallbackAudio = new Audio('/audio/chicSound.mp3');
+          fallbackAudio.play().catch(e => console.error('Fallback sound failed:', e));
+        });
+    }
   }
 
   formatTime(seconds: number): string {
     const roundedSeconds = Math.round(seconds); // Se till att vi hanterar ett heltal
     const minutes = Math.floor(roundedSeconds / 60);
     const remainingSeconds = roundedSeconds % 60;
-    
+
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-  
+
     return `${formattedMinutes}:${formattedSeconds}`;
   }
 
@@ -197,7 +218,7 @@ export class EggTimerComponent {
   }
 
   selectEggOption(category: string, option: string) {
-    this.selectedOptions[category] = option; // Inga fler typfel!
+    this.selectedOptions[category] = option;
     this.selectedCategory = null; // Stäng alternativraden efter val
 
     this.calculateCookTime();
@@ -206,27 +227,43 @@ export class EggTimerComponent {
 
   calculateCookTime(): number {
     let mass = 60;
-    const startTempEgg = this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
+    const startTempEgg =
+      this.selectedOptions['temperature'] === 'Kylskåpskallt' ? 4 : 20;
     let desiredTempEgg = 75;
 
     switch (this.selectedOptions['sizes']) {
-      case 'Small': mass = 50; break;
-      case 'Medium': mass = 60; break;
-      case 'Large': mass = 70; break;
-      case 'XLarge': mass = 80; break;
+      case 'Small':
+        mass = 50;
+        break;
+      case 'Medium':
+        mass = 60;
+        break;
+      case 'Large':
+        mass = 70;
+        break;
+      case 'XLarge':
+        mass = 80;
+        break;
     }
 
     switch (this.selectedOptions['consistency']) {
-      case 'Löskokt': desiredTempEgg = 65; break;
-      case 'Mellankokt': desiredTempEgg = 73; break;
-      case 'Hårdkokt': desiredTempEgg = 83; break;
+      case 'Löskokt':
+        desiredTempEgg = 65;
+        break;
+      case 'Mellankokt':
+        desiredTempEgg = 73;
+        break;
+      case 'Hårdkokt':
+        desiredTempEgg = 83;
+        break;
     }
 
     this.time = this.eggQation(mass, 100, startTempEgg, 65);
     this.time1 = this.eggQation(mass, 100, startTempEgg, 73);
     this.time2 = this.eggQation(mass, 100, startTempEgg, 83);
 
-    const selectedConsistency = this.selectedOptions['consistency'] || 'Hårdkokt';
+    const selectedConsistency =
+      this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
     if (this.eggCount > 1) {
@@ -237,13 +274,13 @@ export class EggTimerComponent {
           this.targetTime = this.time2 * (1 + extraTime);
           this.checkpoints = [
             { time: this.targetTime - this.time1, message: 'Mellankokt' },
-            { time: this.targetTime - this.time, message: 'Löskokt' }
+            { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Mellankokt':
           this.targetTime = this.time1 * (1 + extraTime);
           this.checkpoints = [
-            { time: this.targetTime - this.time, message: 'Löskokt' }
+            { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Löskokt':
@@ -252,9 +289,15 @@ export class EggTimerComponent {
       }
     } else {
       switch (selectedConsistency) {
-        case 'Hårdkokt': this.targetTime = this.time2; break;
-        case 'Mellankokt': this.targetTime = this.time1; break;
-        case 'Löskokt': this.targetTime = this.time; break;
+        case 'Hårdkokt':
+          this.targetTime = this.time2;
+          break;
+        case 'Mellankokt':
+          this.targetTime = this.time1;
+          break;
+        case 'Löskokt':
+          this.targetTime = this.time;
+          break;
       }
     }
 
@@ -273,29 +316,29 @@ export class EggTimerComponent {
   ): number {
     // Definiera basetiderna med en typ som explicit tillåter strängindex
     const baseTimes: Record<string, number> = {
-      '65': 255,   // Löskokt: 4:15
-      '73': 405,   // Mellankokt: 6:45
-      '83': 570    // Hårdkokt: 9:30
+      '65': 255, // Löskokt: 4:15
+      '73': 405, // Mellankokt: 6:45
+      '83': 570, // Hårdkokt: 9:30
     };
-  
+
     // Milder storlekspåverkan
     const sizeFactor = Math.pow(mass / 60, 0.35);
-  
+
     // Mindre temperaturpåverkan
     const tempAdjustment = 1 + (20 - startTempEgg) * 0.007;
-  
+
     // Säker åtkomst till basetiderna
     const desiredTempKey = desiredTempEgg.toString();
     const baseTime = baseTimes[desiredTempKey] ?? 300; // Använd nullish coalescing
-  
+
     // Beräkna tid
     let time = baseTime * sizeFactor * tempAdjustment;
-  
+
     // Extra justering för hårdkokt
     if (desiredTempEgg >= 80) {
       time *= 1.03;
     }
-  
+
     return Math.round(time);
   }
 
@@ -338,11 +381,11 @@ export class EggTimerComponent {
   // For Android and supported browsers
   async requestWakeLock() {
     if (!this.wakeLockSupported) return;
-    
+
     try {
       this.wakeLock = await navigator.wakeLock.request('screen');
       console.log('Wake Lock active');
-      
+
       this.wakeLock.addEventListener('release', () => {
         console.log('Wake Lock released');
         this.wakeLock = null;
@@ -362,9 +405,13 @@ export class EggTimerComponent {
     if (!this.silentAudio) {
       this.silentAudio = new Audio('/audio/silent-sound.mp3');
       this.silentAudio.loop = true;
-      this.silentAudio.play().catch((error: Error) => console.log('Silent audio play failed:', error));
+      this.silentAudio
+        .play()
+        .catch((error: Error) =>
+          console.log('Silent audio play failed:', error)
+        );
     }
-    
+
     // Method 2: Create a video element
     if (!this.keepAwakeVideo) {
       this.keepAwakeVideo = document.createElement('video');
@@ -375,27 +422,31 @@ export class EggTimerComponent {
       this.keepAwakeVideo.style.position = 'absolute';
       this.keepAwakeVideo.style.opacity = '0.01';
       document.body.appendChild(this.keepAwakeVideo);
-      
+
       // Create a canvas as a video source
       const canvas = document.createElement('canvas');
       canvas.width = 1;
       canvas.height = 1;
-      
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(0, 0, 1, 1);
       }
-      
+
       // Convert canvas to blob and set as video source
       canvas.toBlob((blob) => {
         if (blob && this.keepAwakeVideo) {
           this.keepAwakeVideo.src = URL.createObjectURL(blob);
-          this.keepAwakeVideo.play().catch((error: Error) => console.log('Video play failed:', error));
+          this.keepAwakeVideo
+            .play()
+            .catch((error: Error) => console.log('Video play failed:', error));
         }
       });
     } else if (this.keepAwakeVideo) {
-      this.keepAwakeVideo.play().catch((error: Error) => console.log('Video play failed:', error));
+      this.keepAwakeVideo
+        .play()
+        .catch((error: Error) => console.log('Video play failed:', error));
     }
   }
 
@@ -405,7 +456,7 @@ export class EggTimerComponent {
       this.silentAudio.pause();
       this.silentAudio = null;
     }
-    
+
     // Remove video element
     if (this.keepAwakeVideo) {
       this.keepAwakeVideo.pause();
