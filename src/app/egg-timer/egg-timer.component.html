@@ -184,7 +184,12 @@
 
     <div class="egg-count-container">
       <label for="eggCountSelect">Antal ägg:</label>
-      <select id="eggCountSelect" class="egg-count-select">
+      <select 
+      id="eggCountSelect" 
+      class="egg-count-select"
+      [(ngModel)]="eggCount"
+      (change)="onEggCountChange()"
+    >
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
