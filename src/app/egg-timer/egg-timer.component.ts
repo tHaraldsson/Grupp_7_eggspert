@@ -40,8 +40,16 @@ export class EggTimerComponent {
 
   selectedOptions: { [key: string]: string } = {};
 
+  // Screen lock prevention properties
+  wakeLock: any = null;
+  wakeLockSupported = false;
+  silentAudio: HTMLAudioElement | null = null;
+  keepAwakeVideo: HTMLVideoElement | null = null;
+
   ngOnInit() {
     this.calculateCookTime();
+    // Check if the Wake Lock API is supported
+    this.wakeLockSupported = 'wakeLock' in navigator;
   }
 
   onEggCountChange() {
@@ -50,68 +58,69 @@ export class EggTimerComponent {
   }
 
   getSizeImageName(size: string, isHovered: boolean = false): string {
-  const isSelected = this.selectedOptions['sizes'] === size;
-  
-  if (isSelected) {
-    // Returnera rätt "pushed in"-bild för varje storlek
-    const selectedImages: Record<string, string> = {
-      Small: 'S_Pushed in.png',
-      Medium: 'M_Pushed in.png',
-      Large: 'L_Pushed in.png',
-      XLarge: 'XL_Pushed in.png'
+    const isSelected = this.selectedOptions['sizes'] === size;
+    
+    if (isSelected) {
+      // Returnera rätt "pushed in"-bild för varje storlek
+      const selectedImages: Record<string, string> = {
+        Small: 'S_Pushed in.png',
+        Medium: 'M_Pushed in.png',
+        Large: 'L_Pushed in.png',
+        XLarge: 'XL_Pushed in.png'
+      };
+      return selectedImages[size] || 'smallegg.png';
+    }
+    
+    if (isHovered) {
+      // Returnera hover-bilden för varje storlek
+      const hoverImages: Record<string, string> = {
+        Small: 'S_Hoover.png',
+        Medium: 'M_Hoover.png',
+        Large: 'L_Hoover.png',
+        XLarge: 'XL_Hoover.png'
+      };
+      return hoverImages[size] || 'smallegg.png';
+    }
+    
+    // Standardbild när inte hover eller selected
+    const sizeImages: Record<string, string> = {
+      Small: 'smallegg.png',
+      Medium: 'mediumegg.png',
+      Large: 'largeegg.png',
+      XLarge: 'xlegg.png'
     };
-    return selectedImages[size] || 'smallegg.png';
+    return sizeImages[size] || 'assets/images/default-egg.png';
   }
-  
-  if (isHovered) {
-    // Returnera hover-bilden för varje storlek
-    const hoverImages: Record<string, string> = {
-      Small: 'S_Hoover.png',
-      Medium: 'M_Hoover.png',
-      Large: 'L_Hoover.png',
-      XLarge: 'XL_Hoover.png'
-    };
-    return hoverImages[size] || 'smallegg.png';
-  }
-  
-  // Standardbild när inte hover eller selected
-  const sizeImages: Record<string, string> = {
-    Small: 'smallegg.png',
-    Medium: 'mediumegg.png',
-    Large: 'largeegg.png',
-    XLarge: 'xlegg.png'
-  };
-  return sizeImages[size] || 'assets/images/default-egg.png';
-}
 
-getConcistencyImageName(consistency: string, isHovered: boolean = false): string {
-  const isSelected = this.selectedOptions['consistency'] === consistency;
-  
-  if (isSelected) {
-    return `${consistency}_Pushed in.png`;
-  }
-  
-  if (isHovered) {
-    // Returnera hover-bilden för varje konsistens
-    const hoverImages: Record<string, string> = {
-      Löskokt: 'Lös_Hoover.png',
-      Mellankokt: 'Mellan_Hoover.png',
-      Hårdkokt: 'Hård_Hoover.png'
+  getConcistencyImageName(consistency: string, isHovered: boolean = false): string {
+    const isSelected = this.selectedOptions['consistency'] === consistency;
+    
+    if (isSelected) {
+      return `${consistency}_Pushed in.png`;
+    }
+    
+    if (isHovered) {
+      // Returnera hover-bilden för varje konsistens
+      const hoverImages: Record<string, string> = {
+        Löskokt: 'Lös_Hoover.png',
+        Mellankokt: 'Mellan_Hoover.png',
+        Hårdkokt: 'Hård_Hoover.png'
+      };
+      return hoverImages[consistency] || 'löskokt.png';
+    }
+    
+    // Standardbild när inte hover eller selected
+    const consistencyImages: Record<string, string> = {
+      Löskokt: 'löskokt.png',
+      Mellankokt: 'mellankokt.png',
+      Hårdkokt: 'hårdkokt.png'
     };
-    return hoverImages[consistency] || 'löskokt.png';
+    return consistencyImages[consistency] || 'assets/images/default-egg.png';
   }
-  
-  // Standardbild när inte hover eller selected
-  const consistencyImages: Record<string, string> = {
-    Löskokt: 'löskokt.png',
-    Mellankokt: 'mellankokt.png',
-    Hårdkokt: 'hårdkokt.png'
-  };
-  return consistencyImages[consistency] || 'assets/images/default-egg.png';
-}
 
   startTimer() {
     clearInterval(this.interval);
+    this.preventScreenLock(); // Prevent screen from locking
 
     this.interval = setInterval(() => {
       if (this.timeLeft() > 0) {
@@ -135,6 +144,7 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
           `${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`
         );
         clearInterval(this.interval);
+        this.allowScreenLock(); // Allow screen to lock when timer completes
       }
     }, 1000);
   }
@@ -144,6 +154,7 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
       clearInterval(this.interval); // Se till att stoppa intervallet
       this.resetTimer(); // Återställ timern
       this.timerisRunning = false; // Sätt timern till stoppad status
+      this.allowScreenLock(); // Allow screen to lock when timer stops
     } else {
       this.startTimer(); // Starta timern
       this.timerisRunning = true;
@@ -153,6 +164,7 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
   pauseTimer() {
     clearInterval(this.interval);
     this.timerisRunning = false;
+    this.allowScreenLock(); // Allow screen to lock when timer pauses
   }
 
   resetTimer() {
@@ -167,6 +179,7 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
     const audio = new Audio('/audio/chicSound.mp3');
     audio.play();
   }
+
   formatTime(seconds: number): string {
     const roundedSeconds = Math.round(seconds); // Se till att vi hanterar ett heltal
     const minutes = Math.floor(roundedSeconds / 60);
@@ -299,6 +312,107 @@ getConcistencyImageName(consistency: string, isHovered: boolean = false): string
     const henElement = document.querySelector('.hen') as HTMLElement;
     if (henElement) {
       henElement.style.transform = this.henPosition();
+    }
+  }
+
+  // Screen lock prevention methods
+  preventScreenLock() {
+    if (this.wakeLockSupported) {
+      // Use Wake Lock API for supported browsers (most Android devices)
+      this.requestWakeLock();
+    } else {
+      // Use fallback for iOS and unsupported browsers
+      this.preventSleepIOS();
+    }
+  }
+
+  allowScreenLock() {
+    if (this.wakeLockSupported && this.wakeLock) {
+      this.wakeLock.release().catch((error: Error) => console.error(error));
+      this.wakeLock = null;
+    } else {
+      this.allowSleepIOS();
+    }
+  }
+
+  // For Android and supported browsers
+  async requestWakeLock() {
+    if (!this.wakeLockSupported) return;
+    
+    try {
+      this.wakeLock = await navigator.wakeLock.request('screen');
+      console.log('Wake Lock active');
+      
+      this.wakeLock.addEventListener('release', () => {
+        console.log('Wake Lock released');
+        this.wakeLock = null;
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(`Wake Lock error: ${error.name}, ${error.message}`);
+      } else {
+        console.error('Wake Lock error:', error);
+      }
+    }
+  }
+
+  // For iOS devices
+  preventSleepIOS() {
+    // Method 1: Create silent audio
+    if (!this.silentAudio) {
+      this.silentAudio = new Audio('/audio/silent-sound.mp3');
+      this.silentAudio.loop = true;
+      this.silentAudio.play().catch((error: Error) => console.log('Silent audio play failed:', error));
+    }
+    
+    // Method 2: Create a video element
+    if (!this.keepAwakeVideo) {
+      this.keepAwakeVideo = document.createElement('video');
+      this.keepAwakeVideo.setAttribute('playsinline', '');
+      this.keepAwakeVideo.setAttribute('muted', '');
+      this.keepAwakeVideo.setAttribute('width', '1');
+      this.keepAwakeVideo.setAttribute('height', '1');
+      this.keepAwakeVideo.style.position = 'absolute';
+      this.keepAwakeVideo.style.opacity = '0.01';
+      document.body.appendChild(this.keepAwakeVideo);
+      
+      // Create a canvas as a video source
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, 1, 1);
+      }
+      
+      // Convert canvas to blob and set as video source
+      canvas.toBlob((blob) => {
+        if (blob && this.keepAwakeVideo) {
+          this.keepAwakeVideo.src = URL.createObjectURL(blob);
+          this.keepAwakeVideo.play().catch((error: Error) => console.log('Video play failed:', error));
+        }
+      });
+    } else if (this.keepAwakeVideo) {
+      this.keepAwakeVideo.play().catch((error: Error) => console.log('Video play failed:', error));
+    }
+  }
+
+  allowSleepIOS() {
+    // Stop silent audio
+    if (this.silentAudio) {
+      this.silentAudio.pause();
+      this.silentAudio = null;
+    }
+    
+    // Remove video element
+    if (this.keepAwakeVideo) {
+      this.keepAwakeVideo.pause();
+      if (this.keepAwakeVideo.parentNode) {
+        this.keepAwakeVideo.parentNode.removeChild(this.keepAwakeVideo);
+      }
+      this.keepAwakeVideo = null;
     }
   }
 }
