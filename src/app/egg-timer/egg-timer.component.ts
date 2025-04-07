@@ -52,15 +52,8 @@ export class EggTimerComponent {
     });
 
     this.timerService.timerCompleted.subscribe(() => {
-      // Set flag to false when timer completes
       this.timerisRunning = false;
       this.allowScreenLock();
-      this.statusMessage.set(
-        `${this.selectedOptions['consistency'] || 'Hårdkokt'}<br>klar!`
-      );
-
-      // Force change detection if needed
-      setTimeout(() => {}, 0);
     });
   }
 
@@ -147,8 +140,6 @@ export class EggTimerComponent {
     
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     this.timerService.startTimer(this.targetTime, consistency);
-    
-    setTimeout(() => {}, 0);
   }
 
   toggleTimer() {
@@ -166,20 +157,12 @@ export class EggTimerComponent {
   }
 
   resetTimer() {
-    // Stop the timer service
     this.timerService.stopTimer();
-
-    // Set flag AFTER stopping timer
     this.timerisRunning = false;
-
-    // Reset other properties
     this.currentTimeLeft.set(0);
     this.statusMessage.set('<br>');
     this.allowScreenLock();
     this.calculateCookTime();
-
-    // Force Angular change detection if needed
-    setTimeout(() => {}, 0);
   }
 
   formatTime(seconds: number): string {
