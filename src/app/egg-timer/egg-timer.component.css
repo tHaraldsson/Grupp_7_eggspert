@@ -623,7 +623,7 @@ button {
     height: 100px;
     background: transparent;
     border-radius: 50%;
-    top: 56%;
+    top: 69%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
@@ -642,7 +642,7 @@ button {
     position: absolute;
     width: 120px;
     height: 120px;
-    top: 56%;
+    top: 69%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
@@ -653,6 +653,20 @@ button {
     );
     z-index: 3;
   }
+
+  .egg-text {
+    position: absolute;
+    top: 69%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-family: "Playpen Sans", sans-serif;
+    color: black;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+    pointer-events: none; /* Förhindrar att texten blockerar klick */
+    z-index: 5;
+  }
+
   .timeLeft {
     position: inherit;
   }
