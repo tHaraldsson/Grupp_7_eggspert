@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Barriecito&display=swap');
+@font-face {
+  font-family: 'Barriecito';
+  src: url('/fonts/Barriecito.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Playpen Sans';
+  src: url('/fonts/PlaypenSans.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 
 body {
