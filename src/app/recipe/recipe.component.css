@@ -1,7 +1,16 @@
-/* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Barriecito&display=swap');
-/* Stil för hela sidan */
-/* Stil för hela sidan */
+@font-face {
+    font-family: 'Barriecito';
+    src: url('/fonts/Barriecito.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Playpen Sans';
+    src: url('/fonts/PlaypenSans.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
 body {
     background-color: #fffaea; /* Bakgrundsfärg för hela sidan */
     margin: 0;
