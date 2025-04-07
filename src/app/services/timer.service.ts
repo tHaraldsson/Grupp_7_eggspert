@@ -3,14 +3,16 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TimerService implements OnDestroy {
-  private timerInterval: any;
-  private audioContext: AudioContext | null = null;
-  private audioBuffer: AudioBuffer | null = null;
-  private notificationSound: HTMLAudioElement | null = null;
-  
-  public timeLeft = new Subject<number>();
-  public timerCompleted = new Subject<void>();
-  public statusMessage = new Subject<string>();
+    private timerInterval: any;
+    private audioContext: AudioContext | null = null;
+    private audioBuffer: AudioBuffer | null = null;
+    private notificationSound: HTMLAudioElement | null = null;
+    private isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    private audioUnlocked = false;
+    
+    public timeLeft = new Subject<number>();
+    public timerCompleted = new Subject<void>();
+    public statusMessage = new Subject<string>();
 
   constructor() {
     this.initializeAudio();
@@ -31,20 +33,43 @@ export class TimerService implements OnDestroy {
     }
   }
 
+  unlockAudio() {
+    if (!this.isIOS || this.audioUnlocked) return;
+    
+    // 1. Spela tyst ljud för att låsa upp ljudsystemet
+    const silentSound = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...');
+    silentSound.volume = 0;
+    
+    silentSound.play()
+      .then(() => {
+        this.audioUnlocked = true;
+        silentSound.remove();
+        console.log('iOS ljud upplåst');
+      })
+      .catch(e => console.warn('Misslyckades låsa upp ljud:', e));
+
+    // 2. Starta AudioContext om den finns
+    if (this.audioContext?.state === 'suspended') {
+      this.audioContext.resume().then(() => {
+        console.log('AudioContext återupptagen');
+      });
+    }
+  }
+
   async playSound() {
+    if (this.isIOS && !this.audioUnlocked) {
+      console.warn('Ljud blockerat på iOS - väntar på användarinteraktion');
+      return;
+    }
+
     try {
-      // iOS kräver att vi startar AudioContext efter användarinteraktion
-      if (this.audioContext?.state === 'suspended') {
-        await this.audioContext.resume();
-      }
-  
       // Försök med Web Audio API först
       if (this.audioContext && !this.audioBuffer) {
         const response = await fetch('/audio/chicSound.mp3');
         const arrayBuffer = await response.arrayBuffer();
         this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       }
-  
+
       if (this.audioContext && this.audioBuffer) {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.audioBuffer;
@@ -52,19 +77,11 @@ export class TimerService implements OnDestroy {
         source.start(0);
         return;
       }
-  
-      // HTML5 Audio fallback med iOS-specifik hantering
+
+      // Fallback till HTML5 Audio
       if (this.notificationSound) {
         this.notificationSound.currentTime = 0;
-        
-        // iOS kräver att detta körs inom en användarinteraktion
-        const playPromise = this.notificationSound.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log('iOS ljudblockering:', error);
-          });
-        }
+        await this.notificationSound.play();
       }
     } catch (error) {
       console.error('Ljuduppspelning misslyckades:', error);
@@ -83,6 +100,8 @@ export class TimerService implements OnDestroy {
 
   startTimer(duration: number, consistency: string) {
     this.stopTimer();
+    this.unlockAudio(); // Lås upp ljudsystemet när timern startas
+    
     let remaining = duration;
     this.timeLeft.next(remaining);
     this.statusMessage.next(`Mål:<br>${consistency}`);

@@ -143,28 +143,19 @@ export class EggTimerComponent {
   startTimer() {
     this.preventScreenLock();
     this.calculateCookTime();
-
-    // Set flag BEFORE starting timer service
     this.timerisRunning = true;
-
+    
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
-
-    // Start the timer service with the target time
     this.timerService.startTimer(this.targetTime, consistency);
-
-    // Force Angular change detection if needed
+    
     setTimeout(() => {}, 0);
   }
 
   toggleTimer() {
     if (this.timerisRunning) {
-      // If timer is running, reset it
       this.resetTimer();
-      // Note: resetTimer() already sets timerisRunning to false
     } else {
-      // Timer isn't running, start it
       this.startTimer();
-      // Note: startTimer() already sets timerisRunning to true
     }
   }
 
