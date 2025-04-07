@@ -33,13 +33,18 @@ export class TimerService implements OnDestroy {
 
   async playSound() {
     try {
+      // iOS kräver att vi startar AudioContext efter användarinteraktion
+      if (this.audioContext?.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+  
       // Försök med Web Audio API först
       if (this.audioContext && !this.audioBuffer) {
         const response = await fetch('/audio/chicSound.mp3');
         const arrayBuffer = await response.arrayBuffer();
         this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       }
-
+  
       if (this.audioContext && this.audioBuffer) {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.audioBuffer;
@@ -47,11 +52,19 @@ export class TimerService implements OnDestroy {
         source.start(0);
         return;
       }
-
-      // Fallback till HTML5 Audio
+  
+      // HTML5 Audio fallback med iOS-specifik hantering
       if (this.notificationSound) {
         this.notificationSound.currentTime = 0;
-        await this.notificationSound.play();
+        
+        // iOS kräver att detta körs inom en användarinteraktion
+        const playPromise = this.notificationSound.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('iOS ljudblockering:', error);
+          });
+        }
       }
     } catch (error) {
       console.error('Ljuduppspelning misslyckades:', error);
