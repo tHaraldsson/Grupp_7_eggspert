@@ -13,7 +13,7 @@
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('sizes')">
         <img
-          class="egg-selectionOne"
+          class="egg-selection"
           [src]="
             '/pictures/' +
             (selectedOptions['sizes']
@@ -28,7 +28,7 @@
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('consistency')">
         <img
-          class="egg-selectionTwo"
+          class="egg-selection"
           [src]="
             '/pictures/' +
             (selectedOptions['consistency']
@@ -43,7 +43,7 @@
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('temperature')">
         <img
-          class="egg-selectionThree"
+          class="egg-selection"
           [src]="
             '/pictures/' +
             (selectedOptions['temperature']
@@ -59,7 +59,7 @@
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('eggCount')">
         <img
-          class="egg-selectionFour"
+          class="egg-selection"
           [src]="
             selectedOptions['eggCount']
               ? '/pictures/' + selectedOptions['eggCount']
@@ -142,7 +142,7 @@
   <!-- För antal ägg -->
   <div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
     <div
-      *ngFor="let count of [1, 2, 3]"
+      *ngFor="let count of [1, 2]"
       class="egg-option"
       [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
       (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
@@ -171,11 +171,11 @@
       />
     </div> -->
 
-    <p class="egg-selection-display">
+    <!-- <p class="egg-selection-display">
       {{ selectedOptions["sizes"] || "" }}<br />
       {{ selectedOptions["consistency"] || "" }}<br />
       {{ selectedOptions["temperature"] || "" }}
-    </p>
+    </p>-->
     <div
       class="yolk-progress"
       [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"

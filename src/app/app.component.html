@@ -2,7 +2,7 @@
   <div class="desktop-container">
     <!-- Logga och titel på desktop -->
     <div class="loga" *ngIf="isDesktop">
-      <img class="egglogo" src="/pictures/eggsize.png" />
+      <!-- <img class="egglogo" src="/pictures/eggsize.png" /> -->
       <h1 class="egg-timer-title">Eggspert</h1>
     </div>
 
@@ -10,7 +10,7 @@
 
     <!-- DESKTOP: Veckans recept-länk -->
     <div class="links" *ngIf="isDesktop">
-      <a *ngIf="currentRoute !== '/recipe'" routerLink="/recipe">Veckans recept</a>
+      <a *ngIf="currentRoute !== '/recipe'" routerLink="/recipe">Recept🍳</a>
     </div>
   </div>
 
@@ -22,7 +22,7 @@
     <!-- Veckans recept-länk på mobil (enbart på startsidan) -->
     <div *ngIf="currentRoute === '/'">
       <div class="mobile-recipe-link">
-        <a routerLink="/recipe">Recept</a>
+        <a routerLink="/recipe">Recept🍳</a>
       </div>
     </div>
   </div>

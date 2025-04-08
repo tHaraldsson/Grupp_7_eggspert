@@ -90,8 +90,9 @@ export class EggTimerComponent {
         Small: 'eggsmall.png',
         Medium: 'eggmedium.png',
         Large: 'egglarge.png',
+        XLarge: 'eggXl.png'
       };
-      return selectedImages[size] || 'smallegg.png';
+      return selectedImages[size] || 'eggXl.png';
     }
 
     if (isHovered) {
@@ -100,6 +101,7 @@ export class EggTimerComponent {
         Small: 'eggsmall.png',
         Medium: 'eggmedium.png',
         Large: 'egglarge.png',
+        XLarge: 'eggXl.png'
       };
       return hoverImages[size] || 'smallegg.png';
     }
@@ -109,6 +111,7 @@ export class EggTimerComponent {
       Small: 'eggsmall.png',
       Medium: 'eggmedium.png',
       Large: 'egglarge.png',
+      XLarge: 'eggXl.png'
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }

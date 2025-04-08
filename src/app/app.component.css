@@ -24,6 +24,7 @@ a:hover {
   font-size: 40px;
   font-family: "Barriecito", cursive;
   color: #884d05;
+  margin-left: 1px;
 }
 
 .egglogo {
@@ -48,6 +49,7 @@ a {
   font-family: 'Comfortaa', sans-serif;
   border: none;
   text-decoration: underline;
+  margin-right: 15px;
 }
 
 /* För att justera placeringen på mobil */
