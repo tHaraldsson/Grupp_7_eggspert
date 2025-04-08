@@ -1,0 +1,167 @@
+<div class="recipe-container">
+  <h1>Veckans Recept</h1>
+  <div class="recipe-card">
+    <h2 *ngIf="!screenIsMobile">Spansk potatisomelett</h2>
+    <div class="recipe-card-header">
+      <!-- Visa bild om den finns -->
+      <img
+        src="/pictures/snabb_couscous_bowl_med_agg_och_avokado 1.png"
+        class="recipe-image"
+      />
+
+      <!--insert img-->
+      <div class="recipe-info">
+        <h2 *ngIf="screenIsMobile">Spansk potatisomelett</h2>
+
+        <div class="recipe-ingredients">
+          <h3>Ingredients:</h3>
+          <ul>
+            <li>2 ägg</li>
+            <li>1 medelstor potatis (ca 100 g), tunt skivad</li>
+            <li>¼ gul lök, tunt skivad</li>
+          </ul>
+          <ul *ngIf="eggRecipes1">
+            <li>Salt</li>
+            <li>Olivolja till stekning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra ingredienser + instruktioner visas bara när showFullRecipe är true -->
+
+    <div *ngIf="eggRecipes1" class="recipe-description">
+      <p>Instruktioner</p>
+      <ul>
+        <li>
+          Stek potatisen i olivolja tills mjuk (ca 10 min), tillsätt löken och
+          stek någon minut till.
+        </li>
+        <li>Vispa äggen med lite salt och blanda ner potatis och lök.</li>
+        <li>
+          Häll allt i liten panna och stek tills omeletten är fast, vänd
+          försiktigt och stek klart andra sidan.
+        </li>
+        <li>Servera varm eller kall – gärna med lite sallad eller bröd.</li>
+      </ul>
+    </div>
+
+    <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
+    <button
+      *ngIf="screenIsMobile"
+      (click)="eggRecipes1 = toggleRecipe(eggRecipes1)"
+      class="toggle-button"
+    >
+      {{ eggRecipes1 ? "Visa mindre ↑" : "Visa mer ↓" }}
+    </button>
+  </div>
+
+  <div class="recipe-card">
+    <h2 *ngIf="!screenIsMobile">Klassisk Denveromelett</h2>
+    <div class="recipe-card-header">
+      <!-- Visa bild om den finns -->
+      <img
+        src="/pictures/snabb_couscous_bowl_med_agg_och_avokado 2.png"
+        class="recipe-image"
+      />
+      <!--insert img-->
+      <div class="recipe-info">
+        <h2 *ngIf="screenIsMobile">Klassisk Denveromelett</h2>
+
+        <div class="recipe-ingredients">
+          <h3>Ingredients:</h3>
+          <ul>
+            <li>2 ägg</li>
+            <li>½ dl mjölk</li>
+            <li>½ dl riven cheddarost (eller valfri lagrad ost)</li>
+          </ul>
+          <ul *ngIf="eggRecipes2">
+            <li>½ dl tärnad rökt skinka</li>
+            <li>¼ röd paprika, hackad</li>
+            <li>¼ gul lök, finhackad</li>
+            <li>Salt och svartpeppar</li>
+            <li>En klick smör till stekning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra ingredienser + instruktioner visas bara när showFullRecipe är true -->
+    <div *ngIf="eggRecipes2" class="recipe-description">
+      <p>Instruktioner</p>
+      <ul>
+        <li>Vispa ihop ägg, mjölk, salt och peppar.</li>
+        <li>
+          Fräs lök och paprika i smör tills de mjuknar (ca 2–3 min), tillsätt
+          skinkan och fräs en kort stund.
+        </li>
+        <li>Häll äggblandningen i stekpannan och låt steka på medelvärme.</li>
+        <li>När äggen börjar stelna, strö över ost och fyllning.</li>
+        <li>Vik ihop omeletten och stek klart. Servera direkt!</li>
+      </ul>
+    </div>
+
+    <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
+    <button
+      *ngIf="screenIsMobile"
+      (click)="eggRecipes2 = toggleRecipe(eggRecipes2)"
+      class="toggle-button"
+    >
+      {{ eggRecipes2 ? "Visa mindre ↑" : "Visa mer ↓" }}
+    </button>
+  </div>
+
+  <div class="recipe-card">
+    <h2 *ngIf="!screenIsMobile">Grekisk omelett med sparris och feta</h2>
+    <div class="recipe-card-header">
+      <!-- Visa bild om den finns -->
+      <img
+        src="/pictures/snabb_couscous_bowl_med_agg_och_avokado 3.png"
+        class="recipe-image"
+      />
+      <!--insert img-->
+      <div class="recipe-info">
+        
+        <h2 *ngIf="screenIsMobile">Grekisk omelett med sparris och feta</h2>
+        <div class="recipe-ingredients">
+          <h3>Ingredients:</h3>
+          <ul>
+            <li>2 ägg</li>
+            <li>½ dl mjölk eller grädde</li>
+            <li>4–5 sparrisar</li>
+          </ul>
+          <ul *ngIf="eggRecipes3">
+            <li>3–4 körsbärstomater</li>
+            <li>50 g fetaost, smulad</li>
+            <li>½ tsk torkad oregano</li>
+            <li>Salt och peppar</li>
+            <li>Olivolja eller smör till stekning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extra ingredienser + instruktioner visas bara när showFullRecipe är true -->
+    <div *ngIf="eggRecipes3" class="recipe-description">
+      <p>Instruktioner</p>
+      <ul>
+        <li>Förkoka sparris i lättsaltat vatten i 1 minut.</li>
+        <li>Vispa ägg med mjölk, oregano, salt och peppar.</li>
+        <li>
+          Häll äggen i pannan med lite fett, lägg på sparris, tomat och feta.
+        </li>
+        <li>Stek klart på låg värme eller i ugn på 175°C tills den är fast.</li>
+        <li>Servera med grönsallad eller lite yoghurt med citron.</li>
+      </ul>
+    </div>
+
+    <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
+    <button
+      *ngIf="screenIsMobile"
+      (click)="eggRecipes3 = toggleRecipe(eggRecipes3)"
+      class="toggle-button"
+    >
+      {{ eggRecipes3 ? "Visa mindre ↑" : "Visa mer ↓" }}
+    </button>
+  </div>
+</div>
