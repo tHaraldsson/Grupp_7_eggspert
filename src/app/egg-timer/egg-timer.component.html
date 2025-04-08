@@ -109,13 +109,7 @@
     </button>
   </div>
 
-<<<<<<< Updated upstream
-  <!-- MOBIL ÄGGCONTAINER -->
-
-  <div class="yolk-container">
-    <div class="egg-count">
-      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
-=======
+  
   <!-- För antal ägg -->
 <div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
   <div
@@ -133,12 +127,11 @@
 </div>
 
 
-      <!-- MOBIL ÄGGCONTAINER -->      
+      <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
     <div class="egg-count">
-     <!-- <p class="timeLeft">{{ formatTime(timeLeft()) }}</p> -->
->>>>>>> Stashed changes
+      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
       <label for="eggCount" class="egg-label">Antal ägg:</label>
       <input
         type="number"
@@ -165,14 +158,9 @@
       <img class="egg" src="/pictures/äggform2.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
-<<<<<<< Updated upstream
       <span class="egg-text">{{
         timerisRunning ? "Återställ" : "Starta"
       }}</span>
-=======
-      <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
-      <span class="egg-text">{{ timerisRunning ? "Återställ" : "Starta" }}</span>
->>>>>>> Stashed changes
     </div>
     <div class="boiling-text">Starta klockan när vattnet kokar</div>
   </div>
