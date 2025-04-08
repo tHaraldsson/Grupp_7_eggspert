@@ -467,6 +467,58 @@ button {
   }
 
   /* Vänster sektion: Val av storlek, konsistens och temperatur */
+
+  .title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* avstånd mellan bild och text */
+  }
+  
+  .title-with-icon img.eggSize {
+    width: 30px; /* justera storlek som passar bäst */
+    height: auto;
+  }
+
+  .title-with-icon img.eggTemp {
+    width: 30px; /* justera storlek som passar bäst */
+    height: auto;
+  }
+
+  .title-with-icon img.eggCon {
+    width: 30px; /* justera storlek som passar bäst */
+    height: auto;
+  }
+  
+
+  .eggSize {
+    width: 50%;
+    height: 50%;
+  }
+
+  /* För storleksalternativ */
+.egg-size-options .egg-option:hover {
+  background-color: rgba(244, 214, 141, 0.8); /* Ljusa upp bakgrunden vid hover */
+  transform: scale(1.1); /* Gör ikonen större */
+  border-radius: 10px; /* Lägg till rundade hörn */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+/* För temperaturalternativ */
+.egg-temperature-options button:hover {
+  background-color: rgba(244, 157, 17, 0.8); /* En ljusare bakgrund när du hovrar över knapparna */
+  transform: scale(1.05); /* Gör knappen något större */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+/* För konsistensalternativ */
+.egg-consistency-options .egg-option:hover {
+  background-color: rgba(244, 214, 141, 0.8); /* Ljus bakgrund vid hover */
+  transform: scale(1.1); /* Gör bilden större */
+  border-radius: 10px; /* Rundade hörn */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+
   .egg-options-panel {
     display: flex;
     flex-direction: column;
@@ -491,13 +543,13 @@ button {
   }
 
   .egg-temperature-options button {
-    padding: 10px 20px;
+    padding: 18px 20px;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 150px;
-    margin: 0;
+    width: 146px;
+    margin: -3px;
     box-sizing: border-box;
   }
 
@@ -523,8 +575,9 @@ button {
     font-family: "Comfortaa", sans-serif;
     overflow: hidden;
     text-overflow: ellipsis;
-    outline: 3px solid black;
+    outline: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Skugga runt border */
+    margin-bottom: 36px;
   }
 
   /* Uppdaterad regel för temperaturknappar */
@@ -533,11 +586,12 @@ button {
     justify-content: center;
     gap: 20px;
     background: #f4d68d;
-    width: 80%;
-    padding: 20px;
+    width: 85%;
+    padding: 23px;
     border-radius: 10px;
-    outline: 3px solid black;
+    outline: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 36px;
   }
 
   .egg-size,
@@ -609,39 +663,40 @@ button {
     outline: #333;
   }
   .egg {
-    width: 380px; /* Ökar storleken lite */
-    height: 600px;
+    width: 365px; /* Ökar storleken lite */
+    height: 548px;
     position: relative;
     display: block;
     margin-top: 30px; /* Ger avstånd ovanför knapparna */
     z-index: 1; /* Ser till att den ligger under yolk-progress */
+    top: 64px;
   }
   .eggYolk {
     position: absolute;
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     background: transparent;
     border-radius: 50%;
-    top: 69%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
   }
   .egg-backround {
     position: absolute;
-    width: 30rem;
-    height: auto;
+    width: 119%;
+    height: 120%;
     background: transparent;
-    top: 52%;
+    top: 57%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 0;
   }
   .yolk-progress {
     position: absolute;
-    width: 250px;
-    height: 250px;
-    top: 69%;
+    width: 242px;
+    height: 242px;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
@@ -655,10 +710,10 @@ button {
 
   .egg-text {
     position: absolute;
-    top: 74%;
+    top: 81%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 20px;
+    font-size: 28px;
     font-family: "Comfortaa", sans-serif;
     color: black;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
@@ -667,8 +722,15 @@ button {
   }
 
   .timeLeft {
-    top: 52%;
-    left: 29%;
+    top: 61%;
+    left: 31%;
+    font-size: 36px;
+  }
+
+  .curve-text {
+    position: absolute;
+  top: 100%;
+  left: 21%;
   }
 }
 @media screen and (max-width: 1150px) {

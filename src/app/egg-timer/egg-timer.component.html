@@ -10,6 +10,23 @@
 
   <!-- MOBIL 3 OPTIONS -->
   <div class="button-group">
+
+    <div class="egg-option">
+      <button class="icon-button" (click)="toggleSelection('eggCount')">
+        <img
+          class="egg-selection"
+          [src]="
+            selectedOptions['eggCount']
+              ? '/pictures/' + selectedOptions['eggCount']
+              : '/pictures/eggamount.png'
+          "
+          alt="Antal Ägg"
+        />
+      </button>
+      <p>Antal ägg</p>
+    </div>
+
+
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('sizes')">
         <img
@@ -56,20 +73,6 @@
       <p>Temperatur</p>
     </div>
 
-    <div class="egg-option">
-      <button class="icon-button" (click)="toggleSelection('eggCount')">
-        <img
-          class="egg-selection"
-          [src]="
-            selectedOptions['eggCount']
-              ? '/pictures/' + selectedOptions['eggCount']
-              : '/pictures/eggamount.png'
-          "
-          alt="Antal Ägg"
-        />
-      </button>
-      <p>Antal ägg</p>
-    </div>
   </div>
 
   <!-- MOBIL SUBOPTIONS -->
@@ -158,24 +161,6 @@
   <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
-    <!--  <div class="egg-count">
-      
-      <label for="eggCount" class="egg-label">Antal ägg:</label>
-      <input
-        type="number"
-        id="eggCount"
-        [(ngModel)]="eggCount"
-        min="1"
-        max="10"
-        (change)="onEggCountChange()"
-      />
-    </div> -->
-
-    <!-- <p class="egg-selection-display">
-      {{ selectedOptions["sizes"] || "" }}<br />
-      {{ selectedOptions["consistency"] || "" }}<br />
-      {{ selectedOptions["temperature"] || "" }}
-    </p>-->
     <div
       class="yolk-progress"
       [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"
@@ -189,11 +174,10 @@
 
       <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
       <span class="egg-text">{{
-        timerisRunning ? "Återställ" : "Starta"
+        timerisRunning ? "Nollställ" : "Starta"
       }}</span>
     </div>
     <img class="curve-text" src="/pictures/curve-text.png" />
-    <!--<div class="boiling-text">Starta klockan när vattnet kokar</div> -->
   </div>
 </div>
 
@@ -202,7 +186,12 @@
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
   <div class="egg-options-panel">
-    <h2>Äggstorlek</h2>
+
+    <div class="title-with-icon">
+      <img class="eggSize" src="/pictures/eggsize.png" alt="Äggstorlek" />
+      <h2>Äggstorlek</h2>
+    </div>    
+
     <div class="egg-size-options">
       <div
         *ngFor="let size of sizes"
@@ -220,7 +209,11 @@
       </div>
     </div>
 
-    <h2>Äggtemperatur</h2>
+    <div class="title-with-icon">
+      <img class="eggTemp" src="/pictures/temp.png" alt="Äggstorlek" />
+      <h2>Äggtemperatur</h2>
+    </div> 
+
     <div class="egg-temperature-options">
       <button
         class="egg-temperature"
@@ -233,7 +226,7 @@
         (mouseenter)="hoveredTemp = 'Kylskåpskallt'"
         (mouseleave)="hoveredTemp = null"
       >
-        Direkt ur kylskåpet
+        Kylskåpskallt
       </button>
       <button
         class="egg-temperature"
@@ -250,7 +243,10 @@
       </button>
     </div>
 
-    <h2>Äggkonsistens</h2>
+    <div class="title-with-icon">
+      <img class="eggCon" src="/pictures/konsistens.png" alt="Äggstorlek" />
+      <h2>ÄggKonsistens</h2>
+    </div> 
     <div class="egg-consistency-options">
       <div
         *ngFor="let consistency of consistencies"
@@ -301,7 +297,7 @@
         class="yolk-progress"
         [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"
       ></div>
-      <img class="egg-backround" src="/pictures/Bakgrund-2.png" />
+      <img class="egg-backround" src="/pictures/bakgrund.png" />
       <div class="egg-container">
         <img class="egg" src="/pictures/äggform2.png" />
         <img
@@ -311,10 +307,10 @@
         />
         <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
         <span class="egg-text">{{
-          timerisRunning ? "Återställ" : "Starta"
+          timerisRunning ? "Nollställ" : "Starta"
         }}</span>
       </div>
-      <div class="boiling-text">Starta klockan när vattnet kokar</div>
+      <img class="curve-text" src="/pictures/curve-text.png" />
     </div>
   </div>
   <div class="egg-tips">
