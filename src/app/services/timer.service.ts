@@ -72,7 +72,6 @@ export class TimerService implements OnDestroy {
       if (remaining <= 0) {
         this.stopTimer();
         this.timerCompleted.next();
-        this.statusMessage.next(`${consistency} klar!`);
         this.playSound();
       }
     }, 1000);
