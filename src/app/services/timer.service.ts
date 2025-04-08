@@ -38,6 +38,12 @@ export class TimerService implements OnDestroy {
 
   async playSound() {
     try {
+      if (!this.audioContext) this.initializeAudio();
+
+      if (this.audioContext && this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+
       if (!this.audioContext) return;
 
       // Ladda ljudet vid första användning
@@ -58,12 +64,24 @@ export class TimerService implements OnDestroy {
     }
   }
 
-  private playHtml5Fallback() {
-    const audio = new Audio('/audio/chicSound.mp3');
-    audio.play().catch((e) => console.error('HTML5 Audio Error:', e));
+  private async playHtml5Fallback(isActivation = false) {
+    const audio = new Audio(isActivation ? 'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU' : '/audio/chicSound.mp3');
+    try {
+      audio.volume = isActivation ? 0 : 1;
+      await audio.play();
+    } catch (e) {
+      console.error('HTML5 Audio Error:', e);
+      if (!isActivation) {
+        // Visa visuell varning om ljud inte fungerar
+        this.statusMessage.next('🔇 Ljud ej tillgängligt');
+      }
+    }
   }
 
   async startTimer(duration: number, consistency: string) {
+    if (this.isIOS) {
+      await this.playHtml5Fallback(true); // Spela tyst ljud vid start
+    }
     this.stopTimer();
     this.playSilentActivationSound();
 

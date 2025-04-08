@@ -45,6 +45,8 @@ export class EggTimerComponent {
   silentAudio: HTMLAudioElement | null = null;
   keepAwakeVideo: HTMLVideoElement | null = null;
 
+  isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   constructor(private timerService: TimerService) {
     this.timerService.timeLeft.subscribe((time) => {
       this.currentTimeLeft.set(time);
@@ -177,6 +179,9 @@ export class EggTimerComponent {
   }
 
   startTimer() {
+    if (this.isIOS) {
+      this.playActivationSound();
+    }
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
@@ -470,6 +475,14 @@ export class EggTimerComponent {
         this.keepAwakeVideo.parentNode.removeChild(this.keepAwakeVideo);
       }
       this.keepAwakeVideo = null;
+    }
+  }
+
+  private playActivationSound() {
+    if (this.isIOS) {
+      const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+      audio.volume = 0;
+      audio.play().catch(e => console.debug('Activation sound error:', e));
     }
   }
 }
