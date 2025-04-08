@@ -34,6 +34,18 @@
       </button>
       <p>Temperatur</p>
     </div>
+
+    <div class="egg-option">
+      <button class="icon-button" (click)="toggleSelection('eggCount')">
+        <img
+          class="egg-selectionFour"
+          [src]="selectedOptions['eggCount'] ? '/pictures/' + selectedOptions['eggCount'] : '/pictures/eggamount.png'"
+          alt="Antal Ägg"
+        />
+      </button>
+      <p>Antal ägg</p>
+    </div>
+    
   </div>
 
   <!-- MOBIL SUBOPTIONS -->
@@ -97,11 +109,36 @@
     </button>
   </div>
 
+<<<<<<< Updated upstream
   <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
     <div class="egg-count">
       <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
+=======
+  <!-- För antal ägg -->
+<div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
+  <div
+    *ngFor="let count of [1,2,3]"
+    class="egg-option"
+    [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
+    (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
+  >
+    <img
+      [src]="'/pictures/egg' + count + '.png'"
+      alt="Ägg {{ count }}"
+      class="egg-selection"
+    />
+  </div>
+</div>
+
+
+      <!-- MOBIL ÄGGCONTAINER -->      
+
+  <div class="yolk-container">
+    <div class="egg-count">
+     <!-- <p class="timeLeft">{{ formatTime(timeLeft()) }}</p> -->
+>>>>>>> Stashed changes
       <label for="eggCount" class="egg-label">Antal ägg:</label>
       <input
         type="number"
@@ -128,10 +165,16 @@
       <img class="egg" src="/pictures/äggform2.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
+<<<<<<< Updated upstream
       <span class="egg-text">{{
         timerisRunning ? "Återställ" : "Starta"
       }}</span>
+=======
+      <p class="timeLeft">{{ formatTime(timeLeft()) }}</p>
+      <span class="egg-text">{{ timerisRunning ? "Återställ" : "Starta" }}</span>
+>>>>>>> Stashed changes
     </div>
+    <div class="boiling-text">Starta klockan när vattnet kokar</div>
   </div>
 </div>
 

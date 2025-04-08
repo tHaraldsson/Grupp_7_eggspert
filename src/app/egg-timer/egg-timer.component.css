@@ -42,6 +42,7 @@ h1 {
   letter-spacing: 0;
   color: #884d05;
   margin-top: -13px;
+  margin-bottom: 6px;
 }
 
 .btn-reset {
@@ -49,11 +50,11 @@ h1 {
 }
 
 .bakgrund {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  width: 109vw;
-  height: 114vh;
+  left: 0px;
+  width: 100vw;
+  height: 101vh;
   object-fit: cover;
   z-index: -1; /* Lägg den bakom allt annat */
 }
@@ -63,14 +64,7 @@ h1 {
   background-color: transparent;
   border: none;
   cursor: pointer; /* Visar att det är en klickbar knapp */
-  padding: 12px;
-  display: inline-block;
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 12px; /* Runda hörn för knappens kant */
-  
-  /* Startstil - för att ge en klickbar känsla direkt */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Mild skugga för att visa interaktivitet */
-  background-color: rgba(0, 0, 0, 0.05); /* Ljus bakgrund för att indikera att knappen är klickbar */
+  padding: 2px;
 }
 
 /* Tydlig visuell feedback på att knappen är klickad */
@@ -156,8 +150,8 @@ h1 {
 .button-group {
   display: flex;
   justify-content: center;
-  gap: 30px; /* Avstånd mellan bilderna */
-  margin-bottom: 50px; /* Avstånd till nästa sektion */
+  gap: 13px; /* Avstånd mellan bilderna */
+  margin-bottom: 36px; /* Avstånd till nästa sektion */
 }
 
 .egg-option {
@@ -183,10 +177,18 @@ h1 {
 }
 
 .egg-selectionThree {
-  width: 36px; /* Justera storleken vid behov */
+  width: 59px; /* Justera storleken vid behov */
   height: auto;
   cursor: pointer;
   transition: transform 0.2s;
+}
+
+.egg-selectionFour {
+  width: 98px; /* Justera storleken vid behov */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-top: 4px;
 }
 
 .egg-option img:hover {
@@ -196,8 +198,8 @@ h1 {
 
 .egg-option p {
   font-family: "Playpen Sans", sans-serif; /* Använd det typsnitt du vill */
-  font-size: 18px;
-  margin-top: 15px;
+  font-size: 17px;
+  margin-top: 13px;
   color: #333;
 }
 
@@ -332,9 +334,9 @@ button {
 
 .yolk-progress {
   position: absolute;
-  width: 145px;
-  height: 145px;
-  top: 70%;
+  width: 177px;
+  height: 177px;
+  top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
@@ -368,10 +370,10 @@ button {
 
 .egg-text {
   position: absolute;
-  top: 69%;
+  top: 68%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 25px;
+  font-size: 31px;
   font-family: "Playpen Sans", sans-serif;
   color: black;
   text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
@@ -380,21 +382,22 @@ button {
 }
 
 .egg {
-  width: 225px; /* Ökar storleken lite */
+  width: 243px; /* Ökar storleken lite */
   height: auto;
   position: relative;
   display: block;
   margin: 20px auto; /* Ger avstånd ovanför knapparna */
   z-index: 1; /* Ser till att den ligger under yolk-progress */
+  margin-top: -46px;
 }
 
 .eggYolk {
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 147px;
+  height: 147px;
   background: transparent;
   border-radius: 50%;
-  top: 70%;
+  top: 57%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -418,11 +421,27 @@ button {
 
 .timeLeft {
   font-family: "Playpen Sans", sans-serif;
-  font-size: 30px;
+  font-size: 39px;
   position: absolute;
-  top: -70%;
-  right: 856%;
+  top: 32%;
+  left: 36%;
+  z-index: 6;
+  color: black;
+  pointer-events: none; /* Så den inte stör klick på gulor */
+}
+
+.boiling-text {
+  position: absolute;
+  top: 96%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-family: "Playpen Sans", sans-serif;
+  color: black;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+  pointer-events: none; /* Förhindrar att texten blockerar klick */
   z-index: 5;
+  font-weight: bold;
 }
 
 /* Layout för större skärmar*/
