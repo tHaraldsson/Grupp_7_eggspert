@@ -1,0 +1,308 @@
+/* styles.css */
+@import url("https://fonts.googleapis.com/css2?family=Barriecito&display=swap");
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('/fonts/Comfortaa-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+/* Stil för hela sidan */
+/* Stil för hela sidan */
+body {
+  background-color: #fffaea; /* Bakgrundsfärg för hela sidan */
+  margin: 0;
+  padding: 0;
+  min-height: 100%; /* Se till att body täcker hela skärmen */
+  display: flex;
+  flex-direction: column;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+/* Stil för hela recept-container */
+.recipe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
+  max-width: 360px;
+  margin: auto;
+}
+
+/* Stil för varje recept card */
+.recipe-card {
+  background-color: #ffe98d;
+  padding: 12px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  min-height: auto; /* Anpassa höjden efter innehållet */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Låt kortet växa beroende på innehållet */
+  margin-bottom: 20px; /* Mellanrum under varje kort */
+  min-height: 0; /* Ta bort eventuella tvingande höjder */
+}
+
+/* Stil för receptbilden */
+.recipe-image {
+  width: 110px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  border: 1px solid black;
+}
+
+/* Info om receptet till höger om bilden */
+.recipe-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.recipe-info {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+h1 {
+  font-family: "Barriecito";
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: 0;
+  color: #884d05;
+}
+
+h2 {
+  font-size: 15px;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: bold;
+  margin: 0;
+}
+
+.recipe-ingredients {
+  margin-top: 12px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 10px;
+}
+
+.recipe-ingredients h3 {
+  font-size: 13px;
+  font-weight: bold;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.extra-recipe {
+  font-size: 12px;
+  font-family: 'Comfortaa', sans-serif;
+  margin-top: 10px;
+}
+
+.recipe-ingredients ul {
+  padding-left: 20px;
+}
+
+/* Stil för receptbeskrivningen */
+.recipe-description {
+  margin-top: 15px;
+  font-size: 14px;
+  font-family: 'Comfortaa', sans-serif;
+  overflow: visible; /* Låt hela texten vara synlig */
+  text-overflow: unset;
+  flex-grow: 1; /* Gör så att kortet växer om beskrivningen är längre */
+  height: auto; /* Se till att beskrivningen får flexibelt utrymme */
+  max-height: none; /* Ta bort max-höjd så att kortet kan anpassas */
+}
+
+/* Stil för knappen (nedåtpil och uppåtpil) */
+.toggle-button {
+  background: none;
+  border: none;
+  color: #884d05;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 10px;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover-effekt för knappen */
+.toggle-button:hover {
+  text-decoration: underline;
+  transform: scale(1.1); /* Lätt förstoring på hover */
+}
+
+/* Stil för att dölja "Visa mer" och "Visa mindre" beroende på tillstånd */
+.toggle-button span {
+  font-weight: bold;
+}
+
+/* Media query för iPhone SE (maxbredd: 375px) */
+@media screen and (max-width: 375px) {
+  .recipe-container {
+    max-width: 320px;
+    padding: 10px;
+  }
+
+  .recipe-card {
+    width: 260px;
+    min-height: auto;
+  }
+
+  .recipe-image {
+    width: 100px;
+    height: 140px;
+  }
+
+  .recipe-ingredients {
+    font-size: 9px;
+  }
+
+  /* Stil för knappen "Visa mer" och "Visa mindre" */
+  .toggle-button {
+    font-size: 14px; /* Lite mindre text på mobil */
+  }
+}
+
+/* Media query för Desktop (minbredd: 768px) */
+@media screen and (min-width: 768px) {
+  /* Centrera rubriken och gör den till en blockelement */
+  h1 {
+    font-size: 40px;
+    text-align: center; /* Rubrik centrerad */
+    margin: 20px 0; /* Mellanrum över och under rubriken */
+    color: #884d05;
+    width: 100%; /* Se till att rubriken tar hela bredden */
+  }
+
+  /* Recipe container med flexbox för radvisning */
+  .recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrera korten horisontellt */
+    gap: 20px;
+    margin: auto;
+    max-width: 90%;
+  }
+
+  /* Recipe card layout som är flexibel och anpassar sig till innehållet */
+  .recipe-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Detta gör att kortet växer beroende på innehåll */
+    align-items: flex-start; /* Säkerställer att kortet inte tar upp mer höjd än nödvändigt */
+    min-height: 0; /* Tar bort statisk höjd */
+  }
+
+  /* Recipe image */
+  .recipe-image {
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid black;
+    flex-shrink: 0;
+  }
+
+  /* Recipe info bredvid bilden */
+  .recipe-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .recipe-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 15px;
+    width: calc(100% - 135px); /* Justera så att både bild och text får plats */
+  }
+      
+  h2 {
+    font-size: 18px;
+  }
+
+  .recipe-ingredients {
+    margin-top: 10px;
+    font-size: 12px;
+    font-family: 'Comfortaa', sans-serif;
+  }
+
+  .recipe-ingredients h3 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  /* Visa hela ingredienserna under receptet om det är många */
+  .extra-recipe {
+    font-size: 12px;
+    font-family: 'Comfortaa', sans-serif;
+    margin-top: 10px;
+    flex-grow: 1;
+  }
+
+  /* Gör så att hela beskrivningen visas, utan maxhöjd */
+  .recipe-description {
+    font-size: 14px;
+    font-family: 'Comfortaa', sans-serif;
+    margin-top: 15px;
+    overflow: visible; /* Låt hela texten vara synlig */
+    text-overflow: unset;
+  }
+
+  /* Toggle button - visa mer/mindre */
+  .toggle-button {
+    background: none;
+    border: none;
+    color: #884d05;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .toggle-button:hover {
+    text-decoration: underline;
+  }
+
+  /* Recept-lista utan för många extra mellanrum */
+  .recipe-ingredients ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .toggle-button {
+    display: none;
+  }
+}
+
+/* Media query för stora skärmar (minbredd: 1024px) */
+@media screen and (min-width: 1024px) {
+  .recipe-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .recipe-card {
+    width: 320px;
+  }
+
+  .recipe-image {
+    width: 130px;
+    height: 170px;
+  }
+}

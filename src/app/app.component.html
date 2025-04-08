@@ -7,9 +7,6 @@
     </div>
 
     <!-- Tillbaka-länk (desktop version) -->
-    <div class="back-link" *ngIf="isDesktop && currentRoute === '/recipe'">
-      <a routerLink="/">← Tillbaka</a>
-    </div>
 
     <!-- DESKTOP: Veckans recept-länk -->
     <div class="links" *ngIf="isDesktop">
@@ -20,17 +17,20 @@
   <!-- MOBIL: Wrapper för back + recipe-länk -->
   <div class="mobile-header" *ngIf="!isDesktop">
     <!-- Tillbaka-länk på mobil (enbart på /recipe sidan) -->
-    <div *ngIf="currentRoute === '/recipe'" class="back-link">
-      <a routerLink="/">← Tillbaka</a>
-    </div>
+    
 
     <!-- Veckans recept-länk på mobil (enbart på startsidan) -->
     <div *ngIf="currentRoute === '/'">
       <div class="mobile-recipe-link">
-        <a routerLink="/recipe">Veckans recept</a>
+        <a routerLink="/recipe">Recept</a>
       </div>
     </div>
   </div>
+  <div *ngIf="currentRoute === '/recipe'" class="back-link">
+      
+    <img routerLink="/" src="/pictures/pil.png" class="pil-bild">
+  </div>
+  
 </header>
 
 <main>

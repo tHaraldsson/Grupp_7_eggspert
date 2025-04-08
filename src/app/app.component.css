@@ -1,4 +1,11 @@
 /* Gemensam styling för alla länkar */
+
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('/fonts/Confortaa-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -38,7 +45,7 @@ a:hover {
 }
 
 a {
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   border: none;
   text-decoration: underline;
 }
@@ -46,7 +53,7 @@ a {
 /* För att justera placeringen på mobil */
 .mobile-header {
   display: flex;
-  justify-content: space-between; /* Skapar avstånd mellan länkarna */
+  justify-content: end; /* Skapar avstånd mellan länkarna */
   align-items: center;
   padding: 8px 16px;
   width: 100%;
@@ -58,6 +65,12 @@ a {
   justify-content: flex-end; /* Placera till höger */
   align-items: center;
   padding-right: 16px;
+  color:#402824;
+  font-style:solid;
+  text-decoration-thickness: 0;
+  font-family: 'Comfortaa', sans-serif;
+
+  ;
 }
 
 /* För att placera 'Tillbaka' till vänster på mobilen */
@@ -65,14 +78,16 @@ a {
   display: flex;
   justify-content: flex-start; /* Placera till vänster */
   align-items: center;
-  padding-left: 16px;
+  
+}
+.pil-bild{
+  height: 50px;
+  width: 45px;
+  padding: 0;
+  margin-bottom: -55px;
+  padding-left: 10px;
 }
 
-.back-link a, .mobile-recipe-link a {
-  font-family: "Playpen Sans", sans-serif;
-  text-decoration: underline;
-  font-size: 16px;
-}
 
 /* För Desktop */
 @media screen and (min-width: 768px) {
