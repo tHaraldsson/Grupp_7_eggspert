@@ -480,9 +480,15 @@ export class EggTimerComponent {
 
   private playActivationSound() {
     if (this.isIOS) {
-      const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
+      // Fallback kedja
+      const audio = new Audio('/audio/silent-sound.mp3');
       audio.volume = 0;
-      audio.play().catch(e => console.debug('Activation sound error:', e));
+      audio.play().catch(() => {
+        // Fallback till base64 om MP3 misslyckas
+        const fallbackAudio = new Audio('data:audio/wav;base64,...');
+        fallbackAudio.volume = 0;
+        fallbackAudio.play();
+      });
     }
   }
 }
