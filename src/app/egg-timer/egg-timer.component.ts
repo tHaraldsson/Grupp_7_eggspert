@@ -34,6 +34,7 @@ export class EggTimerComponent {
   consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
   selectedOptions: { [key: string]: string } = {};
+  
 
   // Screen lock prevention properties
   wakeLock: any = null;
@@ -54,6 +55,13 @@ export class EggTimerComponent {
     this.timerService.timerCompleted.subscribe(() => {
       this.timerisRunning = false;
       this.allowScreenLock();
+    });
+
+    this.timerService.timerCheckpoints.subscribe(() => {
+      this.checkpoints;
+    });
+    this.timerService.timerContinuos.subscribe(() => {
+      true; //kant get it to work jet
     });
   }
 
@@ -137,36 +145,35 @@ export class EggTimerComponent {
 
   getTemperatureImageName(temp: string, isHovered: boolean = false): string {
     const isSelected = this.selectedOptions['temperature'] === temp;
-  
+
     if (isSelected) {
       const selectedImages: Record<string, string> = {
-        'Kylskåpskallt': 'tempCold.png',
-        'Rumstempererat': 'tempHot.png',
+        Kylskåpskallt: 'tempCold.png',
+        Rumstempererat: 'tempHot.png',
       };
       return selectedImages[temp] || 'tempDefault_selected.png';
     }
-  
+
     if (isHovered) {
       const hoverImages: Record<string, string> = {
-        'Kylskåpskallt': 'tempCold.png',
-        'Rumstempererat': 'tempHot.png',
+        Kylskåpskallt: 'tempCold.png',
+        Rumstempererat: 'tempHot.png',
       };
       return hoverImages[temp] || 'tempDefault_hover.png';
     }
-  
+
     const defaultImages: Record<string, string> = {
-      'Kylskåpskallt': 'tempCold.png',
-      'Rumstempererat': 'tempHot.png',
+      Kylskåpskallt: 'tempCold.png',
+      Rumstempererat: 'tempHot.png',
     };
     return defaultImages[temp] || 'tempDefault.png';
   }
-  
 
   startTimer() {
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
-    
+
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     this.timerService.startTimer(this.targetTime, consistency);
   }
@@ -191,7 +198,6 @@ export class EggTimerComponent {
     this.currentTimeLeft.set(0);
     this.statusMessage.set('<br>');
     this.allowScreenLock();
-    this.calculateCookTime();
   }
 
   formatTime(seconds: number): string {
