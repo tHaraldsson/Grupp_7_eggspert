@@ -18,15 +18,20 @@ export class TimerService implements OnDestroy {
 
   private initializeAudio() {
     if (typeof window.AudioContext !== 'undefined') {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      this.audioContext = new (window.AudioContext ||
+        (window as any).webkitAudioContext)();
     }
   }
 
   private playSilentActivationSound() {
     if (!this.isIOS) return;
 
-    const silentAudio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
-    silentAudio.play().catch(e => console.debug('Silent activation error:', e));
+    const silentAudio = new Audio(
+      'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'
+    );
+    silentAudio
+      .play()
+      .catch((e) => console.debug('Silent activation error:', e));
   }
 
   async playSound() {
@@ -45,7 +50,6 @@ export class TimerService implements OnDestroy {
       source.buffer = this.audioBuffer;
       source.connect(this.audioContext.destination);
       source.start(0);
-
     } catch (error) {
       console.error('Web Audio Error:', error);
       this.playHtml5Fallback();
@@ -54,7 +58,7 @@ export class TimerService implements OnDestroy {
 
   private playHtml5Fallback() {
     const audio = new Audio('/audio/chicSound.mp3');
-    audio.play().catch(e => console.error('HTML5 Audio Error:', e));
+    audio.play().catch((e) => console.error('HTML5 Audio Error:', e));
   }
 
   async startTimer(duration: number, consistency: string) {
