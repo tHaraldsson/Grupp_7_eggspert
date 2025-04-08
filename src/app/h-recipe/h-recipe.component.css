@@ -1,5 +1,11 @@
 /* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Barriecito&display=swap");
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('/fonts/Comfortaa-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 /* Stil för hela sidan */
 /* Stil för hela sidan */
 body {
@@ -9,6 +15,7 @@ body {
   min-height: 100%; /* Se till att body täcker hela skärmen */
   display: flex;
   flex-direction: column;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 /* Stil för hela recept-container */
@@ -72,26 +79,26 @@ h1 {
 
 h2 {
   font-size: 15px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-weight: bold;
   margin: 0;
 }
 
 .recipe-ingredients {
   margin-top: 12px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 10px;
 }
 
 .recipe-ingredients h3 {
   font-size: 13px;
   font-weight: bold;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 .extra-recipe {
   font-size: 12px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   margin-top: 10px;
 }
 
@@ -103,7 +110,7 @@ h2 {
 .recipe-description {
   margin-top: 15px;
   font-size: 14px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   overflow: visible; /* Låt hela texten vara synlig */
   text-overflow: unset;
   flex-grow: 1; /* Gör så att kortet växer om beskrivningen är längre */
@@ -228,7 +235,7 @@ h2 {
   .recipe-ingredients {
     margin-top: 10px;
     font-size: 12px;
-    font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
   }
 
   .recipe-ingredients h3 {
@@ -239,7 +246,7 @@ h2 {
   /* Visa hela ingredienserna under receptet om det är många */
   .extra-recipe {
     font-size: 12px;
-    font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     margin-top: 10px;
     flex-grow: 1;
   }
@@ -247,7 +254,7 @@ h2 {
   /* Gör så att hela beskrivningen visas, utan maxhöjd */
   .recipe-description {
     font-size: 14px;
-    font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     margin-top: 15px;
     overflow: visible; /* Låt hela texten vara synlig */
     text-overflow: unset;

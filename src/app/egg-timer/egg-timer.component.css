@@ -6,17 +6,17 @@
 }
 
 @font-face {
-  font-family: 'Playpen Sans';
-  src: url('/fonts/PlaypenSans.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-}
+    font-family: 'Comfortaa';
+    src: url('/fonts/Comfortaa-Regular.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
 
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   text-align: center;
   background-color: white; /* Fallback om bakgrundsbilden inte laddas */
 }
@@ -95,7 +95,7 @@ h1 {
 }
 
 .options button {
-  font-family: "Playpen Sans", sans-serif;
+font-family: 'Comfortaa', sans-serif;
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid black;
@@ -197,7 +197,7 @@ h1 {
 }
 
 .egg-option p {
-  font-family: "Playpen Sans", sans-serif; /* Använd det typsnitt du vill */
+font-family: 'Comfortaa', sans-serif;
   font-size: 17px;
   margin-top: 13px;
   color: #333;
@@ -222,7 +222,7 @@ h1 {
 
 /* Antal ägg-text */
 .egg-label {
-  font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
   font-size: 15px;
   color: #333; /* Anpassa färgen om det behövs */
   margin-bottom: 2px;
@@ -236,14 +236,14 @@ h1 {
   text-align: center;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   margin-right: -56px;
   margin-bottom: -16px;
 }
 
 .egg-selection-display {
   font-size: 18px; /* Justera textstorlek */
-  font-family: 'Arial', sans-serif; /* Välj en passande font */
+  font-family: 'Comfortaa', sans-serif;
   color: #000000; /* Sätt textfärgen */
   margin: 10px 0; /* Lägg till marginaler runt texten */
   padding: 5px; /* Lägg till padding om du vill att texten ska ha utrymme runt sig */
@@ -276,7 +276,7 @@ h1 {
 }
 
 button {
-  font-family: "Playpen Sans", sans-serif;
+font-family: 'Comfortaa', sans-serif;
   font-size: 16px;
   display: flex;
   justify-content: center;
@@ -288,7 +288,7 @@ button {
 
 .btn-start {
   background-color: white; /* Ändra bakgrundsfärg till vit */
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   color: black;
   padding: 6px;
   border: 1px solid black;
@@ -318,7 +318,7 @@ button {
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 /* Progressbar runt äggulan */
@@ -374,7 +374,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 31px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   color: black;
   text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
   pointer-events: none; /* Förhindrar att texten blockerar klick */
@@ -416,11 +416,11 @@ button {
   top: 10%;
   z-index: 0;
   font-size: 20px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
 }
 
 .timeLeft {
-  font-family: "Playpen Sans", sans-serif;
+ font-family: 'Comfortaa', sans-serif;
   font-size: 39px;
   position: absolute;
   top: 32%;
@@ -436,7 +436,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 11px;
-  font-family: "Playpen Sans", sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   color: black;
   text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
   pointer-events: none; /* Förhindrar att texten blockerar klick */
@@ -453,7 +453,7 @@ button {
     background-color: #fffaea;
     background-size: cover;
     height: 100%;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
   }
   .container {
     display: none;
@@ -496,7 +496,7 @@ button {
     border-radius: 15px;
     border-top-width: 0;
     width: 30%;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
     outline: #333;
     z-index: 2;
   }
@@ -540,7 +540,7 @@ button {
     border-radius: 10px;
     width: 90%;
     text-align: center;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
     overflow: hidden;
     text-overflow: ellipsis;
     outline: 3px solid black;
@@ -568,7 +568,7 @@ button {
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
   }
 
   /* Antal ägg */
@@ -577,14 +577,14 @@ button {
     outline: #333;
     border-radius: 10px;
     font-size: 20px;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
   }
 
   .egg-count-select {
     padding: 5px;
     font-size: 16px;
     border-radius: 10px;
-    font-family: "Playpen Sans";
+    font-family: 'Comfortaa', sans-serif;
   }
 
   /* Höger sektion timer och äggbild */
@@ -612,7 +612,7 @@ button {
     top: 10%;
     z-index: 2;
     font-size: 20px;
-    font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
   }
 
   .timer-display {
@@ -679,7 +679,7 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20px;
-    font-family: "Playpen Sans", sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     color: black;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
     pointer-events: none; /* Förhindrar att texten blockerar klick */
