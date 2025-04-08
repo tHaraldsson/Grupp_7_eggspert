@@ -75,10 +75,9 @@ export class EggTimerComponent {
     if (isSelected) {
       // Returnera rätt "pushed in"-bild för varje storlek
       const selectedImages: Record<string, string> = {
-        Small: 'S_Pushed in.png',
-        Medium: 'M_Pushed in.png',
-        Large: 'L_Pushed in.png',
-        XLarge: 'XL_Pushed in.png',
+        Small: 'eggsmall.png',
+        Medium: 'eggmedium.png',
+        Large: 'egglarge.png',
       };
       return selectedImages[size] || 'smallegg.png';
     }
@@ -86,20 +85,18 @@ export class EggTimerComponent {
     if (isHovered) {
       // Returnera hover-bilden för varje storlek
       const hoverImages: Record<string, string> = {
-        Small: 'S_Hoover.png',
-        Medium: 'M_Hoover.png',
-        Large: 'L_Hoover.png',
-        XLarge: 'XL_Hoover.png',
+        Small: 'eggsmall.png',
+        Medium: 'eggmedium.png',
+        Large: 'egglarge.png',
       };
       return hoverImages[size] || 'smallegg.png';
     }
 
     // Standardbild när inte hover eller selected
     const sizeImages: Record<string, string> = {
-      Small: 'smallegg.png',
-      Medium: 'mediumegg.png',
-      Large: 'largeegg.png',
-      XLarge: 'xlegg.png',
+      Small: 'eggsmall.png',
+      Medium: 'eggmedium.png',
+      Large: 'egglarge.png',
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
@@ -111,27 +108,59 @@ export class EggTimerComponent {
     const isSelected = this.selectedOptions['consistency'] === consistency;
 
     if (isSelected) {
-      return `${consistency}_Pushed in.png`;
+      const selectedImages: Record<string, string> = {
+        Löskokt: 'eggboiled.png',
+        Mellankokt: 'eggboiled-medium.png',
+        Hårdkokt: 'eggboiled-hard.png',
+      };
+      return selectedImages[consistency] || 'eggboiled.png';
     }
 
     if (isHovered) {
       // Returnera hover-bilden för varje konsistens
       const hoverImages: Record<string, string> = {
-        Löskokt: 'Lös_Hoover.png',
-        Mellankokt: 'Mellan_Hoover.png',
-        Hårdkokt: 'Hård_Hoover.png',
+        Löskokt: 'eggboiled.png',
+        Mellankokt: 'eggboiled-medium.png',
+        Hårdkokt: 'eggboiled-hard.png',
       };
       return hoverImages[consistency] || 'löskokt.png';
     }
 
     // Standardbild när inte hover eller selected
     const consistencyImages: Record<string, string> = {
-      Löskokt: 'löskokt.png',
-      Mellankokt: 'mellankokt.png',
-      Hårdkokt: 'hårdkokt.png',
+      Löskokt: 'eggboiled.png',
+      Mellankokt: 'eggboiled-medium.png',
+      Hårdkokt: 'eggboiled-hard.png',
     };
     return consistencyImages[consistency] || 'assets/images/default-egg.png';
   }
+
+  getTemperatureImageName(temp: string, isHovered: boolean = false): string {
+    const isSelected = this.selectedOptions['temperature'] === temp;
+  
+    if (isSelected) {
+      const selectedImages: Record<string, string> = {
+        'Kylskåpskallt': 'tempCold.png',
+        'Rumstempererat': 'tempHot.png',
+      };
+      return selectedImages[temp] || 'tempDefault_selected.png';
+    }
+  
+    if (isHovered) {
+      const hoverImages: Record<string, string> = {
+        'Kylskåpskallt': 'tempCold.png',
+        'Rumstempererat': 'tempHot.png',
+      };
+      return hoverImages[temp] || 'tempDefault_hover.png';
+    }
+  
+    const defaultImages: Record<string, string> = {
+      'Kylskåpskallt': 'tempCold.png',
+      'Rumstempererat': 'tempHot.png',
+    };
+    return defaultImages[temp] || 'tempDefault.png';
+  }
+  
 
   startTimer() {
     this.preventScreenLock();

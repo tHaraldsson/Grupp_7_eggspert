@@ -1,4 +1,4 @@
-<img class="bakgrund" src="/pictures/Bakgrund-2.png" />
+<img class="bakgrund" src="/pictures/bakgrund.png" />
 <div class="container">
   <h1>Eggspert</h1>
 
@@ -7,30 +7,31 @@
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('sizes')">
         <img
-          class="egg-selectionOne"
-          src="/pictures/eggsize.png"
-          alt="Storlek"
-        />
+  class="egg-selectionOne"
+  [src]="'/pictures/' + (selectedOptions['sizes'] ? getSizeImageName(selectedOptions['sizes']) : 'eggsize.png')"
+  alt="Storlek"
+/>
+
       </button>
       <p>Storlek</p>
     </div>
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('consistency')">
         <img
-          class="egg-selectionTwo"
-          src="/pictures/konsistens.png"
-          alt="Konsistens"
-        />
+  class="egg-selectionTwo"
+  [src]="'/pictures/' + (selectedOptions['consistency'] ? getConcistencyImageName(selectedOptions['consistency']) : 'konsistens.png')"
+  alt="Konsistens"
+/>
       </button>
       <p>Konsistens</p>
     </div>
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('temperature')">
         <img
-          class="egg-selectionThree"
-          src="/pictures/temp.png"
-          alt="Temperatur"
-        />
+  class="egg-selectionThree"
+  [src]="'/pictures/' + (selectedOptions['temperature'] ? getTemperatureImageName(selectedOptions['temperature']) : 'temp.png')"
+  alt="Temperatur"
+/>
       </button>
       <p>Temperatur</p>
     </div>
@@ -94,20 +95,28 @@
   </div>
 
   <!-- För temperatur -->
-  <div *ngIf="selectedCategory === 'temperature'" class="options">
-    <button
-      *ngFor="let temp of temperatures"
-      [class.selected]="selectedOptions['temperature'] === temp"
-      [class.hovered]="
-        hoveredTemp === temp && selectedOptions['temperature'] !== temp
-      "
-      (click)="selectEggOption('temperature', temp)"
-      (mouseenter)="hoveredTemp = temp"
-      (mouseleave)="hoveredTemp = null"
-    >
-      {{ temp }}
-    </button>
+<div *ngIf="selectedCategory === 'temperature'" class="options">
+  <div
+    *ngFor="let temp of temperatures"
+    class="egg-option"
+    [class.selected]="selectedOptions['temperature'] === temp"
+    (click)="selectEggOption('temperature', temp)"
+    (mouseenter)="hoveredTemp = temp"
+    (mouseleave)="hoveredTemp = null"
+  >
+  <img
+  [src]="
+    '/pictures/' +
+    getTemperatureImageName(temp, hoveredTemp === temp)
+  "
+  [alt]="temp"
+  class="egg-selection"
+/>
+
+    {{ temp }}
   </div>
+</div>
+
 
   
   <!-- För antal ägg -->
@@ -130,8 +139,8 @@
       <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
-    <div class="egg-count">
-      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
+   <!--  <div class="egg-count">
+      
       <label for="eggCount" class="egg-label">Antal ägg:</label>
       <input
         type="number"
@@ -141,7 +150,7 @@
         max="10"
         (change)="onEggCountChange()"
       />
-    </div>
+    </div> -->
 
     <p class="egg-selection-display">
       {{ selectedOptions["sizes"] || "" }}<br />
@@ -158,11 +167,14 @@
       <img class="egg" src="/pictures/äggform2.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
+
+      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
       <span class="egg-text">{{
         timerisRunning ? "Återställ" : "Starta"
       }}</span>
     </div>
-    <div class="boiling-text">Starta klockan när vattnet kokar</div>
+    <img class="curve-text" src="/pictures/curve-text.png" />
+    <!--<div class="boiling-text">Starta klockan när vattnet kokar</div> -->
   </div>
 </div>
 
@@ -266,6 +278,7 @@
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
     <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
+   
     <div class="yolk-container">
       <div
         class="yolk-progress"
@@ -274,11 +287,16 @@
       <p class="status-message" [innerHTML]="statusMessage()"></p>
       <img class="egg-backround" src="/pictures/Bakgrund-2.png" />
       <div class="egg-container" (click)="toggleTimer()">
+
         <img class="egg" src="/pictures/äggform2.png" />
         <img class="eggYolk" src="/pictures/eggYolk.png" />
+
+        <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
+        
         <span class="egg-text">{{
           timerisRunning ? "Återställ" : "Starta"
         }}</span>
+        
       </div>
     </div>
   </div>
