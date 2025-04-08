@@ -65,7 +65,11 @@ export class TimerService implements OnDestroy {
   }
 
   private async playHtml5Fallback(isActivation = false) {
-    const audio = new Audio(isActivation ? 'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU' : '/audio/chicSound.mp3');
+    const audio = new Audio(
+      isActivation
+        ? 'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'
+        : '/audio/chicSound.mp3'
+    );
     try {
       audio.volume = isActivation ? 0 : 1;
       await audio.play();
@@ -106,7 +110,7 @@ export class TimerService implements OnDestroy {
         this.timerCompleted.next();
         this.playSound();
       }
-    }, 1000);
+    }, 1);
   }
 
   stopTimer() {
