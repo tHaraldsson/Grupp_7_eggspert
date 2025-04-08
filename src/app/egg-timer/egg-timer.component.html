@@ -39,13 +39,16 @@
       <button class="icon-button" (click)="toggleSelection('eggCount')">
         <img
           class="egg-selectionFour"
-          [src]="selectedOptions['eggCount'] ? '/pictures/' + selectedOptions['eggCount'] : '/pictures/eggamount.png'"
+          [src]="
+            selectedOptions['eggCount']
+              ? '/pictures/' + selectedOptions['eggCount']
+              : '/pictures/eggamount.png'
+          "
           alt="Antal Ägg"
         />
       </button>
       <p>Antal ägg</p>
     </div>
-    
   </div>
 
   <!-- MOBIL SUBOPTIONS -->
@@ -109,25 +112,23 @@
     </button>
   </div>
 
-  
   <!-- För antal ägg -->
-<div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
-  <div
-    *ngFor="let count of [1,2,3]"
-    class="egg-option"
-    [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
-    (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
-  >
-    <img
-      [src]="'/pictures/egg' + count + '.png'"
-      alt="Ägg {{ count }}"
-      class="egg-selection"
-    />
+  <div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
+    <div
+      *ngFor="let count of [1, 2, 3]"
+      class="egg-option"
+      [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
+      (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
+    >
+      <img
+        [src]="'/pictures/egg' + count + '.png'"
+        alt="Ägg {{ count }}"
+        class="egg-selection"
+      />
+    </div>
   </div>
-</div>
 
-
-      <!-- MOBIL ÄGGCONTAINER -->
+  <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
     <div class="egg-count">
@@ -154,7 +155,7 @@
     ></div>
     <p class="status-message" [innerHTML]="statusMessage()"></p>
 
-    <div class="egg-container" (click)="toggleTimer()">
+    <div (click)="toggleTimer()">
       <img class="egg" src="/pictures/äggform2.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
@@ -166,7 +167,7 @@
   </div>
 </div>
 
-<!-- DESKTOP OPTIONS -->
+<!-- DESKTOP OPTIONS ------------------------------------------------------------------------------------------------->
 
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
@@ -186,31 +187,6 @@
           [alt]="size"
           class="egg-selection"
         />
-      </div>
-    </div>
-
-    <h2>Äggkonsistens</h2>
-    <div class="egg-consistency-options">
-      <div
-        *ngFor="let consistency of consistencies"
-        class="egg-option"
-        [class.selected]="selectedOptions['consistency'] === consistency"
-        (click)="selectEggOption('consistency', consistency)"
-        (mouseenter)="hoveredConsistency = consistency"
-        (mouseleave)="hoveredConsistency = null"
-      >
-        <img
-          [src]="
-            '/pictures/' +
-            getConcistencyImageName(
-              consistency,
-              hoveredConsistency === consistency
-            )
-          "
-          [alt]="consistency"
-          class="egg-selection"
-        />
-        {{ consistency }}
       </div>
     </div>
 
@@ -243,6 +219,33 @@
         Rumstemperatur
       </button>
     </div>
+    
+    <h2>Äggkonsistens</h2>
+    <div class="egg-consistency-options">
+      <div
+        *ngFor="let consistency of consistencies"
+        class="egg-option"
+        [class.selected]="selectedOptions['consistency'] === consistency"
+        (click)="selectEggOption('consistency', consistency)"
+        (mouseenter)="hoveredConsistency = consistency"
+        (mouseleave)="hoveredConsistency = null"
+      >
+        <img
+          [src]="
+            '/pictures/' +
+            getConcistencyImageName(
+              consistency,
+              hoveredConsistency === consistency
+            )
+          "
+          [alt]="consistency"
+          class="egg-selection"
+        />
+        {{ consistency }}
+      </div>
+    </div>
+
+
 
     <div class="egg-count-container">
       <label for="eggCountSelect">Antal ägg:</label>
@@ -265,21 +268,22 @@
 
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
-    <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
     <div class="yolk-container">
+      
       <div
         class="yolk-progress"
         [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"
       ></div>
-      <p class="status-message" [innerHTML]="statusMessage()"></p>
       <img class="egg-backround" src="/pictures/Bakgrund-2.png" />
-      <div class="egg-container" (click)="toggleTimer()">
+      <div class="egg-container">
         <img class="egg" src="/pictures/äggform2.png" />
-        <img class="eggYolk" src="/pictures/eggYolk.png" />
+        <img class="eggYolk" src="/pictures/eggYolk.png" (click)="toggleTimer()"/>
+        <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
         <span class="egg-text">{{
           timerisRunning ? "Återställ" : "Starta"
         }}</span>
       </div>
+       <div class="boiling-text">Starta klockan när vattnet kokar</div>
     </div>
   </div>
   <div class="egg-tips">

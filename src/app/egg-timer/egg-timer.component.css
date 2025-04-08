@@ -11,7 +11,12 @@
   font-weight: 100 900;
   font-style: normal;
 }
-
+@font-face {
+  font-family: 'Digital-7 ';
+  src: url('/fonts/DigitalNumbers-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
 
 body {
   margin: 0;
@@ -420,7 +425,7 @@ button {
 }
 
 .timeLeft {
-  font-family: "Playpen Sans", sans-serif;
+  font-family: "Digital-7 ", sans-serif;
   font-size: 39px;
   position: absolute;
   top: 32%;
@@ -629,17 +634,17 @@ button {
     outline: #333;
   }
   .egg {
-    width: 280px; /* Ökar storleken lite */
-    height: 400px;
+    width: 380px; /* Ökar storleken lite */
+    height: 600px;
     position: relative;
     display: block;
-    margin: 20px auto; /* Ger avstånd ovanför knapparna */
+    margin-top: 30px ; /* Ger avstånd ovanför knapparna */
     z-index: 1; /* Ser till att den ligger under yolk-progress */
   }
   .eggYolk {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 220px;
+    height: 220px;
     background: transparent;
     border-radius: 50%;
     top: 69%;
@@ -652,15 +657,15 @@ button {
     width: 30rem;
     height: auto;
     background: transparent;
-    top: 42%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 0;
   }
   .yolk-progress {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 250px;
+    height: 250px;
     top: 69%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -675,7 +680,7 @@ button {
 
   .egg-text {
     position: absolute;
-    top: 69%;
+    top: 74%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20px;
@@ -687,7 +692,8 @@ button {
   }
 
   .timeLeft {
-    position: inherit;
+    top: 52%;
+    left: 29%;
   }
 }
 @media screen and (max-width: 1150px){

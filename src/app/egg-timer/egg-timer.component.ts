@@ -55,6 +55,13 @@ export class EggTimerComponent {
       this.timerisRunning = false;
       this.allowScreenLock();
     });
+
+    this.timerService.timerCheckpoints.subscribe(() => {
+      this.checkpoints;
+    });
+    this.timerService.timerContinuos.subscribe(() => {
+      true; //kant get it to work jet
+    });
   }
 
   ngOnInit() {
@@ -162,7 +169,7 @@ export class EggTimerComponent {
     this.currentTimeLeft.set(0);
     this.statusMessage.set('<br>');
     this.allowScreenLock();
-    this.calculateCookTime();
+    
   }
 
   formatTime(seconds: number): string {
