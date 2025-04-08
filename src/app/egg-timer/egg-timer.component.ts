@@ -66,9 +66,9 @@ export class EggTimerComponent {
     this.timerService.timerCheckpoints.subscribe(() => {
       this.checkpoints;
     });
-    this.timerService.timerContinuos.subscribe(() => {
-      true; //kant get it to work jet
-    });
+    //this.timerService.timerContinuos.subscribe(() => {
+   //   true; //kant get it to work jet
+    //});
   }
 
   ngOnInit() {
@@ -185,9 +185,10 @@ export class EggTimerComponent {
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
-
+  
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
-    this.timerService.startTimer(this.targetTime, consistency);
+    // Pass the checkpoints array to the timer service
+    this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
   }
 
   toggleTimer() {
