@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 import { TimerService } from '../services/timer.service';
+import { FinishedEggTipsComponent } from '../finished-egg-tips/finished-egg-tips.component';
+
 
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent],
+  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent, FinishedEggTipsComponent],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })
@@ -20,6 +22,7 @@ export class EggTimerComponent {
   currentTimeLeft = signal(0);
   statusMessage = signal('');
   timerisRunning = false;
+  showFinishedTips = false;
 
   targetTime = 0;
   checkpoints: { time: number; message: string }[] = [];
@@ -54,6 +57,7 @@ export class EggTimerComponent {
     this.timerService.timerCompleted.subscribe(() => {
       this.timerisRunning = false;
       this.allowScreenLock();
+      this.showFinishedTips = true;
     });
   }
 

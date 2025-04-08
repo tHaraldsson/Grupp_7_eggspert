@@ -1,0 +1,31 @@
+<div *ngIf="isVisible && tips.length > 0" class="finished-tips-container">
+    
+    <div class="tips-header">
+      
+    </div>
+    <img class="tips-eggman" src="/pictures/tipsGubbe.png" alt="">
+    <img class="tips-speechBubble" src="/pictures/tipsPratbubbla.png" alt="">
+    <h4 class="eggstra-heading">EGGstra tips</h4>
+    
+    <div class="tip-content">
+      <p>{{ tips[currentTipIndex].tip }}</p>
+    </div>
+
+    <div class="nav-buttons">
+      <button 
+        class="nav-btn" 
+        (click)="prevTip()" 
+        [disabled]="currentTipIndex === 0"
+      >
+        ←
+      </button>
+      <button class="close-btn" (click)="hide()">OK</button>
+      <button 
+        class="nav-btn" 
+        (click)="nextTip()" 
+        [disabled]="currentTipIndex === tips.length - 1"
+      >
+        →
+      </button>
+    </div>
+</div>
