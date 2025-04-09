@@ -7,82 +7,126 @@ export class TimerService implements OnDestroy {
   private audioContext: AudioContext | null = null;
   private audioBuffer: AudioBuffer | null = null;
   private isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  private soundEnabled = false;
+  private checkpoints: { time: number; message: string }[] = [];
 
   public timeLeft = new Subject<number>();
   public timerCompleted = new Subject<void>();
   public statusMessage = new Subject<string>();
-  public timerCheckpoints = new Subject<{ time: number; message: string }>();
-  public timerContinuos = new Subject<boolean>();
+  public timerCheckpoints = new Subject<{ time: number; message: string }[]>();
+  public timerContinuous = new Subject<boolean>();
 
   constructor() {
-    this.initializeAudio();
+    // Don't initialize audio until user interaction
   }
 
-  private initializeAudio() {
-    if (typeof window.AudioContext !== 'undefined') {
-      this.audioContext = new (window.AudioContext ||
-        (window as any).webkitAudioContext)();
+  // Call this method when user interacts (e.g., clicks start button)
+  public initializeAudio() {
+    if (typeof window.AudioContext !== 'undefined' || typeof (window as any).webkitAudioContext !== 'undefined') {
+      try {
+        this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        this.soundEnabled = true;
+        this.preloadSound();
+      } catch (e) {
+        console.error('AudioContext initialization failed:', e);
+      }
     }
+
+    // Always try the HTML5 Audio fallback initialization as well
+    this.initializeHTML5Audio();
   }
 
-  private playSilentActivationSound() {
-    if (!this.isIOS) return;
+  private initializeHTML5Audio() {
+    // Create and immediately play a silent sound to unlock audio
+    const silentSound = new Audio();
+    silentSound.src = "data:audio/mp3;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+    silentSound.volume = 0.01; // Very low but not zero
+    silentSound.play()
+      .then(() => {
+        console.log("HTML5 Audio initialized successfully");
+        this.soundEnabled = true;
+      })
+      .catch(err => console.warn("HTML5 Audio initialization failed:", err));
+  }
 
-    const silentAudio = new Audio(
-      'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'
-    );
-    silentAudio
-      .play()
-      .catch((e) => console.debug('Silent activation error:', e));
+  private async preloadSound() {
+    // Only preload if audio context is available
+    if (!this.audioContext) return;
+    
+    try {
+      const response = await fetch('/audio/chicSound.mp3');
+      const arrayBuffer = await response.arrayBuffer();
+      this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+      console.log("Sound preloaded successfully");
+    } catch (error) {
+      console.error('Error preloading sound:', error);
+    }
   }
 
   async playSound() {
-    try {
-      if (!this.audioContext) return;
-
-      // Ladda ljudet vid första användning
-      if (!this.audioBuffer) {
-        const response = await fetch('/audio/chicSound.mp3');
-        const arrayBuffer = await response.arrayBuffer();
-        this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+    // First, try Web Audio API
+    if (this.audioContext && this.audioBuffer) {
+      try {
+        // Resume context if it was suspended
+        if (this.audioContext.state === 'suspended') {
+          await this.audioContext.resume();
+        }
+        
+        const source = this.audioContext.createBufferSource();
+        source.buffer = this.audioBuffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
+        return; // If successful, exit function
+      } catch (error) {
+        console.warn('Web Audio playback failed, trying HTML5 fallback:', error);
       }
-
-      // Spela upp ljudet
-      const source = this.audioContext.createBufferSource();
-      source.buffer = this.audioBuffer;
-      source.connect(this.audioContext.destination);
-      source.start(0);
-    } catch (error) {
-      console.error('Web Audio Error:', error);
-      this.playHtml5Fallback();
     }
+    
+    // Fallback to HTML5 Audio
+    this.playHTML5Sound();
   }
 
-  private playHtml5Fallback() {
+  private playHTML5Sound() {
     const audio = new Audio('/audio/chicSound.mp3');
-    audio.play().catch((e) => console.error('HTML5 Audio Error:', e));
+    audio.volume = 1.0;
+    
+    // Use the play() promise to handle errors
+    audio.play()
+      .catch(error => {
+        console.error('HTML5 Audio playback failed:', error);
+        // Show visual notification if sound fails
+        this.statusMessage.next('🔇 Ljud ej tillgängligt');
+      });
   }
 
-  async startTimer(duration: number, consistency: string) {
+  async startTimer(duration: number, consistency: string, checkpoints: { time: number; message: string }[] = []) {
+    // Initialize audio on user interaction
+    this.initializeAudio();
+    
+    // Stop any existing timer
     this.stopTimer();
-    this.playSilentActivationSound();
-
+    
+    // Store checkpoints for later use
+    this.checkpoints = [...checkpoints];
+    
+    // Set initial values
     let remaining = duration;
     this.timeLeft.next(remaining);
     this.statusMessage.next(`Mål:<br>${consistency}`);
 
+    // Create timer with 1-second interval
     this.timerInterval = setInterval(() => {
       remaining--;
       this.timeLeft.next(remaining);
-      if (this.timerContinuos) {
-        this.timerCheckpoints.forEach((checkpoint) => {
-          if (remaining === checkpoint.time) {
-            this.playSound();
-            //this.statusMessage.set(`Just nu:<br>${checkpoint.message}`);
-          }
-        });
+      
+      // Check for checkpoints
+      const checkpoint = this.checkpoints.find(cp => cp.time === remaining);
+      if (checkpoint) {
+        this.playSound();
+        this.statusMessage.next(`Just nu:<br>${checkpoint.message}`);
       }
 
+      // Check if timer completed
       if (remaining <= 0) {
         this.stopTimer();
         this.timerCompleted.next();
@@ -100,5 +144,11 @@ export class TimerService implements OnDestroy {
 
   ngOnDestroy() {
     this.stopTimer();
+    
+    // Clean up audio resources
+    if (this.audioContext) {
+      this.audioContext.close().catch(e => console.error("Error closing AudioContext:", e));
+      this.audioContext = null;
+    }
   }
 }
