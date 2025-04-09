@@ -132,7 +132,7 @@ export class TimerService implements OnDestroy {
         this.timerCompleted.next();
         this.playSound();
       }
-    }, 1000);
+    }, 1);
   }
 
   stopTimer() {
