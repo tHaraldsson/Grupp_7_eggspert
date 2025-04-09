@@ -67,6 +67,9 @@ export class EggTimerComponent {
     this.timerService.timerContinuos.subscribe(() => {
       true; //kant get it to work jet
     });
+
+    
+    
   }
 
   ngOnInit() {
@@ -175,6 +178,7 @@ export class EggTimerComponent {
     };
     return defaultImages[temp] || 'tempDefault.png';
   }
+
 
   startTimer() {
     this.preventScreenLock();
@@ -472,4 +476,7 @@ export class EggTimerComponent {
       this.keepAwakeVideo = null;
     }
   }
+  
+  
+  
 }

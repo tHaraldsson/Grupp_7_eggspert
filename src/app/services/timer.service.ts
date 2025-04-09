@@ -36,7 +36,15 @@ export class TimerService implements OnDestroy {
       .catch((e) => console.debug('Silent activation error:', e));
   }
 
-  async playSound() {
+  async playSound(repeats: number = 5) {
+    for (let i = 0; i < repeats; i++) {
+      await this.playSingleSound();
+      await this.delay(1000); // Vänta i 1 sekund mellan varje ljud
+    }
+  }
+
+  // Hjälpfunktion som spelar ljudet en gång
+  private async playSingleSound() {
     try {
       if (!this.audioContext) return;
 
@@ -58,10 +66,18 @@ export class TimerService implements OnDestroy {
     }
   }
 
+  // HTML5 fallback för ljuduppspelning om Web Audio API misslyckas
   private playHtml5Fallback() {
     const audio = new Audio('/audio/chicSound.mp3');
     audio.play().catch((e) => console.error('HTML5 Audio Error:', e));
   }
+
+  // Funktion för att skapa en fördröjning (i millisekunder)
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  
+  
 
   async startTimer(duration: number, consistency: string) {
     this.stopTimer();
@@ -78,7 +94,7 @@ export class TimerService implements OnDestroy {
         this.timerCheckpoints.forEach((checkpoint) => {
           if (remaining === checkpoint.time) {
             this.playSound();
-            //this.statusMessage.set(`Just nu:<br>${checkpoint.message}`);
+            
           }
         });
       }
@@ -86,9 +102,13 @@ export class TimerService implements OnDestroy {
       if (remaining <= 0) {
         this.stopTimer();
         this.timerCompleted.next();
-        this.playSound();
+        this.playSound(5); // Spela ljudet 5 gånger
+        
+        
+
       }
-    }, 1000);
+      
+    }, 1);
   }
 
   stopTimer() {
