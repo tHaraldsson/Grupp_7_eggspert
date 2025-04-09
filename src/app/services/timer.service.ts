@@ -11,6 +11,8 @@ export class TimerService implements OnDestroy {
   public timeLeft = new Subject<number>();
   public timerCompleted = new Subject<void>();
   public statusMessage = new Subject<string>();
+  public timerCheckpoints = new Subject<{ time: number; message: string }>();
+  public timerContinuos = new Subject<boolean>();
 
   constructor() {
     this.initializeAudio();
@@ -68,6 +70,14 @@ export class TimerService implements OnDestroy {
     this.timerInterval = setInterval(() => {
       remaining--;
       this.timeLeft.next(remaining);
+      if (this.timerContinuos) {
+        this.timerCheckpoints.forEach((checkpoint) => {
+          if (remaining === checkpoint.time) {
+            this.playSound();
+            //this.statusMessage.set(`Just nu:<br>${checkpoint.message}`);
+          }
+        });
+      }
 
       if (remaining <= 0) {
         this.stopTimer();
