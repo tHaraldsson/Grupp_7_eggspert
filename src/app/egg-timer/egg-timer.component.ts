@@ -45,6 +45,8 @@ export class EggTimerComponent {
   silentAudio: HTMLAudioElement | null = null;
   keepAwakeVideo: HTMLVideoElement | null = null;
 
+  isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   constructor(private timerService: TimerService) {
     this.timerService.timeLeft.subscribe((time) => {
       this.currentTimeLeft.set(time);
@@ -64,12 +66,9 @@ export class EggTimerComponent {
     this.timerService.timerCheckpoints.subscribe(() => {
       this.checkpoints;
     });
-    this.timerService.timerContinuos.subscribe(() => {
-      true; //kant get it to work jet
-    });
-
-    
-    
+    //this.timerService.timerContinuos.subscribe(() => {
+   //   true; //kant get it to work jet
+    //});
   }
 
   ngOnInit() {
@@ -181,12 +180,16 @@ export class EggTimerComponent {
 
 
   startTimer() {
+    if (this.isIOS) {
+      this.playActivationSound();
+    }
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
-
+  
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
-    this.timerService.startTimer(this.targetTime, consistency);
+    // Pass the checkpoints array to the timer service
+    this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
   }
 
   toggleTimer() {
@@ -476,7 +479,18 @@ export class EggTimerComponent {
       this.keepAwakeVideo = null;
     }
   }
-  
-  
-  
+
+  private playActivationSound() {
+    if (this.isIOS) {
+      // Fallback kedja
+      const audio = new Audio('/audio/silent-sound.mp3');
+      audio.volume = 0;
+      audio.play().catch(() => {
+        // Fallback till base64 om MP3 misslyckas
+        const fallbackAudio = new Audio('data:audio/wav;base64,...');
+        fallbackAudio.volume = 0;
+        fallbackAudio.play();
+      });
+    }
+  }
 }
