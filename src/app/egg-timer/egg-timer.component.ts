@@ -178,16 +178,27 @@ export class EggTimerComponent {
   }
 
   getEggCountImageName(count: number): string {
-    // Kollar om den valda bilden matchar det valda alternativet
+    // Check if this count is selected
     const selected = this.selectedOptions['eggCount'] === `egg${count}.png`;
     
-    // Kollar om denna bild är hoverad
+    // Check if this count is being hovered over
     const hovered = this.hoveredCount === count;
     
-    // Om bilden är vald eller hoverad, visa -hover.png. Annars visa den vanliga bilden.
-    const suffix = selected || hovered ? '-hover.png' : '.png';
+    // If selected or hovered, use the hover version
+    if (selected || hovered) {
+      return `/pictures/egg${count}-hover.png`;
+    } else {
+      return `/pictures/egg${count}.png`;
+    }
+  }
+
+  getEggCountIconSrc(): string {
+    if (!this.selectedOptions['eggCount']) {
+      return '/pictures/eggamount.png';
+    }
     
-    return `/pictures/egg${count}${suffix}`;
+    // Replace .png with -hover.png to get the hover version
+    return '/pictures/' + this.selectedOptions['eggCount'].replace('.png', '-hover.png');
   }
   
 

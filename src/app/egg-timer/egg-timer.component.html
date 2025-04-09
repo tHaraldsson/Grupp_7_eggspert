@@ -15,11 +15,7 @@
       <button class="icon-button" (click)="toggleSelection('eggCount')">
         <img
           class="egg-selection"
-          [src]="
-            selectedOptions['eggCount']
-              ? '/pictures/' + selectedOptions['eggCount']
-              : '/pictures/eggamount.png'
-          "
+          [src]="getEggCountIconSrc()"
           alt="Antal Ägg"
         />
       </button>
@@ -143,23 +139,23 @@
     </div>
   </div>
 
-<!-- För antal ägg -->
-<div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
-  <div
-    *ngFor="let count of [1, 2]"
-    class="egg-option"
-    [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
-    (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
-    (mouseenter)="hoveredCount = count"
-    (mouseleave)="hoveredCount = null"
-  >
-    <img
-      [src]="getEggCountImageName(count)"
-      alt="Ägg {{ count }}"
-      class="egg-selection"
-    />
+  <!-- För eggCount -->
+  <div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
+    <div
+      *ngFor="let count of [1, 2]"
+      class="egg-option"
+      [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
+      (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
+      (mouseenter)="hoveredCount = count"
+      (mouseleave)="hoveredCount = null"
+    >
+      <img
+        [src]="getEggCountImageName(count)"
+        alt="Ägg {{ count }}"
+        class="egg-selection"
+      />
+    </div>
   </div>
-</div>
 
 
 
@@ -291,15 +287,13 @@
         (mouseenter)="hoveredCount = count"
         (mouseleave)="hoveredCount = null"
       >
-      <img
-  [src]="'/pictures/egg' + count + ((hoveredCount === count || selectedOptions['eggCount'] === 'egg' + count + '.png') ? '-hover.png' : '.png')"
-  [alt]="'Ägg ' + count"
-  class="egg-selection"
-/>
-
+        <img
+          [src]="getEggCountImageName(count)"
+          alt="Ägg {{ count }}"
+          class="egg-selection"
+        />
       </div>
     </div>
-  </div>
 
   <!-- DESKTOP ÄGGCONTAINER -->
 
