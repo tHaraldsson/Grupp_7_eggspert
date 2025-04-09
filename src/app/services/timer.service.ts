@@ -13,8 +13,7 @@ export class TimerService implements OnDestroy {
   public timeLeft = new Subject<number>();
   public timerCompleted = new Subject<void>();
   public statusMessage = new Subject<string>();
-  public timerCheckpoints = new Subject<{ time: number; message: string }[]>();
-  public timerContinuous = new Subject<boolean>();
+  public showtip = new Subject<void>();
 
   constructor() {
     // Don't initialize audio until user interaction
@@ -143,6 +142,7 @@ export class TimerService implements OnDestroy {
       if (remaining <= 0) {
         this.stopTimer();
         this.timerCompleted.next();
+        this.showtip.next();
         this.playSound(5); // Spela ljudet 5 gånger
       }
     }, 1); // 1 sekund mellan varje uppdatering

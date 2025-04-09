@@ -1,4 +1,4 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, Input, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -38,6 +38,7 @@ export class EggTimerComponent {
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
   selectedOptions: { [key: string]: string } = {};
   
+  @ViewChild(FinishedEggTipsComponent) finishedEggTipsComponent!: FinishedEggTipsComponent;
 
   // Screen lock prevention properties
   wakeLock: any = null;
@@ -60,15 +61,12 @@ export class EggTimerComponent {
     this.timerService.timerCompleted.subscribe(() => {
       this.timerisRunning = false;
       this.allowScreenLock();
-      this.showFinishedTips = true;
     });
 
-    this.timerService.timerCheckpoints.subscribe(() => {
-      this.checkpoints;
-    });
-    //this.timerService.timerContinuos.subscribe(() => {
-   //   true; //kant get it to work jet
-    //});
+    this.timerService.showtip.subscribe(()=>{
+      this.showFinishedTips = true;
+      this.finishedEggTipsComponent.show();
+    })
   }
 
   ngOnInit() {
@@ -190,6 +188,7 @@ export class EggTimerComponent {
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     // Pass the checkpoints array to the timer service
     this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
+    console.log(this.showFinishedTips);
   }
 
   toggleTimer() {
@@ -279,25 +278,24 @@ export class EggTimerComponent {
       this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
-    if (this.eggCount > 1) {
-      const extraTime = Math.max(0, this.eggCount - 1) * 0.1;
+    if (this.selectedOptions['eggCount']==='egg2.png') {
 
       switch (selectedConsistency) {
         case 'Hårdkokt':
-          this.targetTime = this.time2 * (1 + extraTime);
+          this.targetTime = this.time2;
           this.checkpoints = [
             { time: this.targetTime - this.time1, message: 'Mellankokt' },
             { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Mellankokt':
-          this.targetTime = this.time1 * (1 + extraTime);
+          this.targetTime = this.time1;
           this.checkpoints = [
             { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Löskokt':
-          this.targetTime = this.time * (1 + extraTime);
+          this.targetTime = this.time;
           break;
       }
     } else {
