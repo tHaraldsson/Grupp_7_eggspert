@@ -64,43 +64,48 @@ export class TimerService implements OnDestroy {
   }
 
   async playSound(repeats: number = 5) {
-    // First, try Web Audio API
-    for (let i = 0; i < repeats; i++) {
-      await this.delay(1000); // Vänta i 1 sekund mellan varje ljud
-    }
+    // Försök först med Web Audio API
     if (this.audioContext && this.audioBuffer) {
       try {
         // Resume context if it was suspended
         if (this.audioContext.state === 'suspended') {
           await this.audioContext.resume();
         }
-
-        const source = this.audioContext.createBufferSource();
-        source.buffer = this.audioBuffer;
-        source.connect(this.audioContext.destination);
-        source.start(0);
-        return; // If successful, exit function
+  
+        // Spela ljudet med en fördröjning
+        for (let i = 0; i < repeats; i++) {
+          if (i > 0) {
+            await this.delay(1000); // Vänta 1 sekund efter den första uppspelningen
+          }
+          const source = this.audioContext.createBufferSource();
+          source.buffer = this.audioBuffer;
+          source.connect(this.audioContext.destination);
+          source.start(0); // Spela ljudet omedelbart
+        }
+        return; // Om Web Audio lyckas, stoppa här
       } catch (error) {
         console.warn('Web Audio playback failed, trying HTML5 fallback:', error);
       }
     }
-    
-    // Fallback to HTML5 Audio
-    this.playHTML5Sound();
+  
+    // Fallback till HTML5 Audio
+    this.playHTML5Sound(repeats);
   }
-
-  private playHTML5Sound() {
-    const audio = new Audio('/audio/chicSound.mp3');
-    audio.volume = 1.0;
-    
-    // Use the play() promise to handle errors
-    audio.play()
-      .catch(error => {
-        console.error('HTML5 Audio playback failed:', error);
-        // Show visual notification if sound fails
-        this.statusMessage.next('🔇 Ljud ej tillgängligt');
-      });
+  
+  private playHTML5Sound(repeats: number) {
+    for (let i = 0; i < repeats; i++) {
+      setTimeout(() => {
+        const audio = new Audio('/audio/chicSound.mp3');
+        audio.volume = 1.0;
+        audio.play()
+          .catch(error => {
+            console.error('HTML5 Audio playback failed:', error);
+            this.statusMessage.next('🔇 Ljud ej tillgängligt');
+          });
+      }, 1000 * i); // Vänta 1 sekund mellan varje uppspelning
+    }
   }
+  
 
   // Funktion för att skapa en fördröjning (i millisekunder)
   private delay(ms: number): Promise<void> {
