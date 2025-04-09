@@ -31,6 +31,7 @@ export class EggTimerComponent {
   hoveredSize: string | null = null;
   hoveredConsistency: string | null = null;
   hoveredTemp: string | null = null;
+  hoveredCount: number | null = null;
 
   eggCount: number = 1;
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
@@ -87,10 +88,10 @@ export class EggTimerComponent {
     if (isSelected) {
       // Returnera rätt "pushed in"-bild för varje storlek
       const selectedImages: Record<string, string> = {
-        Small: 'eggsmall.png',
-        Medium: 'eggmedium.png',
-        Large: 'egglarge.png',
-        XLarge: 'eggXl.png'
+        Small: 'eggsmall-hover.png',
+        Medium: 'eggmedium-hover.png',
+        Large: 'egglarge-hover.png',
+        XLarge: 'eggXl-hover.png'
       };
       return selectedImages[size] || 'eggXl.png';
     }
@@ -98,10 +99,10 @@ export class EggTimerComponent {
     if (isHovered) {
       // Returnera hover-bilden för varje storlek
       const hoverImages: Record<string, string> = {
-        Small: 'eggsmall.png',
-        Medium: 'eggmedium.png',
-        Large: 'egglarge.png',
-        XLarge: 'eggXl.png'
+        Small: 'eggsmall-hover.png',
+        Medium: 'eggmedium-hover.png',
+        Large: 'egglarge-hover.png',
+        XLarge: 'eggXl-hover.png'
       };
       return hoverImages[size] || 'smallegg.png';
     }
@@ -124,9 +125,9 @@ export class EggTimerComponent {
 
     if (isSelected) {
       const selectedImages: Record<string, string> = {
-        Löskokt: 'eggboiled.png',
-        Mellankokt: 'eggboiled-medium.png',
-        Hårdkokt: 'eggboiled-hard.png',
+        Löskokt: 'eggboiled-hover.png',
+        Mellankokt: 'eggboiled-medium-hover.png',
+        Hårdkokt: 'eggboiled-hard-hover.png',
       };
       return selectedImages[consistency] || 'eggboiled.png';
     }
@@ -134,9 +135,9 @@ export class EggTimerComponent {
     if (isHovered) {
       // Returnera hover-bilden för varje konsistens
       const hoverImages: Record<string, string> = {
-        Löskokt: 'eggboiled.png',
-        Mellankokt: 'eggboiled-medium.png',
-        Hårdkokt: 'eggboiled-hard.png',
+        Löskokt: 'eggboiled-hover.png',
+        Mellankokt: 'eggboiled-medium-hover.png',
+        Hårdkokt: 'eggboiled-hard-hover.png',
       };
       return hoverImages[consistency] || 'löskokt.png';
     }
@@ -155,16 +156,16 @@ export class EggTimerComponent {
 
     if (isSelected) {
       const selectedImages: Record<string, string> = {
-        Kylskåpskallt: 'tempCold.png',
-        Rumstempererat: 'tempHot.png',
+        Kylskåpskallt: 'tempCold-hover.png',
+        Rumstempererat: 'tempHot-hover.png',
       };
       return selectedImages[temp] || 'tempDefault_selected.png';
     }
 
     if (isHovered) {
       const hoverImages: Record<string, string> = {
-        Kylskåpskallt: 'tempCold.png',
-        Rumstempererat: 'tempHot.png',
+        Kylskåpskallt: 'tempCold-hover.png',
+        Rumstempererat: 'tempHot-hover.png',
       };
       return hoverImages[temp] || 'tempDefault_hover.png';
     }
@@ -176,6 +177,19 @@ export class EggTimerComponent {
     return defaultImages[temp] || 'tempDefault.png';
   }
 
+  getEggCountImageName(count: number): string {
+    // Kollar om den valda bilden matchar det valda alternativet
+    const selected = this.selectedOptions['eggCount'] === `egg${count}.png`;
+    
+    // Kollar om denna bild är hoverad
+    const hovered = this.hoveredCount === count;
+    
+    // Om bilden är vald eller hoverad, visa -hover.png. Annars visa den vanliga bilden.
+    const suffix = selected || hovered ? '-hover.png' : '.png';
+    
+    return `/pictures/egg${count}${suffix}`;
+  }
+  
 
   startTimer() {
     if (this.isIOS) {
