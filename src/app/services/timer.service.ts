@@ -140,7 +140,7 @@ export class TimerService implements OnDestroy {
         this.timerCompleted.next();
         this.playSound(5); // Spela ljudet 5 gånger
       }
-    }, 1000); // 1 sekund mellan varje uppdatering
+    }, 1); // 1 sekund mellan varje uppdatering
   }
 
   stopTimer() {
