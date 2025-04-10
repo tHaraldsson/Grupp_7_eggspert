@@ -415,7 +415,7 @@ button {
   position: absolute;
   top: 5%;
   left: 35%;
-  z-index: 6;
+  z-index: 4;
   color: black;
   pointer-events: none; /* Så den inte stör klick på gulor */
 }
