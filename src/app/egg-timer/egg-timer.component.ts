@@ -6,11 +6,16 @@ import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 import { TimerService } from '../services/timer.service';
 import { FinishedEggTipsComponent } from '../finished-egg-tips/finished-egg-tips.component';
 
-
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent, FinishedEggTipsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    EggTipsComponent,
+    FinishedEggTipsComponent,
+  ],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })
@@ -33,13 +38,14 @@ export class EggTimerComponent {
   hoveredTemp: string | null = null;
   hoveredCount: number | null = null;
 
-  popupVisible:boolean=false;
+  popupVisible: boolean = false;
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
   consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
   selectedOptions: { [key: string]: string } = {};
-  
-  @ViewChild(FinishedEggTipsComponent) finishedEggTipsComponent!: FinishedEggTipsComponent;
+
+  @ViewChild(FinishedEggTipsComponent)
+  finishedEggTipsComponent!: FinishedEggTipsComponent;
 
   // Screen lock prevention properties
   wakeLock: any = null;
@@ -56,24 +62,19 @@ export class EggTimerComponent {
     });
 
     this.timerService.statusMessage.subscribe((msg) => {
-      
-      if(msg==='Löskokt'||msg==='Mellankokt'){
-        if(msg==='Löskokt'){
+      if (msg === 'Löskokt' || msg === 'Mellankokt') {
+        if (msg === 'Löskokt') {
           this.statusMessage.set('löskokt.png');
-        }
-        else if(msg==='Mellankokt'){
+        } else if (msg === 'Mellankokt') {
           this.statusMessage.set('mellankokt.png');
         }
-        this.popupVisible=true;
-      }
-      else{
+        this.popupVisible = true;
+      } else {
         this.hidePopup();
         console.log('hej');
-        
       }
-      console.log('msg: ' +msg);
-      console.log('popupVisible: '+this.popupVisible);
-
+      console.log('msg: ' + msg);
+      console.log('popupVisible: ' + this.popupVisible);
     });
 
     this.timerService.timerCompleted.subscribe(() => {
@@ -81,10 +82,10 @@ export class EggTimerComponent {
       this.allowScreenLock();
     });
 
-    this.timerService.showtip.subscribe(()=>{
+    this.timerService.showtip.subscribe(() => {
       this.showFinishedTips = true;
       this.finishedEggTipsComponent.show();
-    })
+    });
   }
 
   ngOnInit() {
@@ -108,7 +109,7 @@ export class EggTimerComponent {
         Small: 'eggsmall-hover.png',
         Medium: 'eggmedium-hover.png',
         Large: 'egglarge-hover.png',
-        XLarge: 'eggXl-hover.png'
+        XLarge: 'eggXl-hover.png',
       };
       return selectedImages[size] || 'eggXl.png';
     }
@@ -119,7 +120,7 @@ export class EggTimerComponent {
         Small: 'eggsmall-hover.png',
         Medium: 'eggmedium-hover.png',
         Large: 'egglarge-hover.png',
-        XLarge: 'eggXl-hover.png'
+        XLarge: 'eggXl-hover.png',
       };
       return hoverImages[size] || 'smallegg.png';
     }
@@ -129,7 +130,7 @@ export class EggTimerComponent {
       Small: 'eggsmall.png',
       Medium: 'eggmedium.png',
       Large: 'egglarge.png',
-      XLarge: 'eggXl.png'
+      XLarge: 'eggXl.png',
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
@@ -197,10 +198,10 @@ export class EggTimerComponent {
   getEggCountImageName(count: number): string {
     // Check if this count is selected
     const selected = this.selectedOptions['eggCount'] === `egg${count}.png`;
-    
+
     // Check if this count is being hovered over
     const hovered = this.hoveredCount === count;
-    
+
     // If selected or hovered, use the hover version
     if (selected || hovered) {
       return `/pictures/egg${count}-hover.png`;
@@ -213,11 +214,13 @@ export class EggTimerComponent {
     if (!this.selectedOptions['eggCount']) {
       return '/pictures/eggamount3.png';
     }
-    
+
     // Replace .png with -hover.png to get the hover version
-    return '/pictures/' + this.selectedOptions['eggCount'].replace('.png', '-hover.png');
+    return (
+      '/pictures/' +
+      this.selectedOptions['eggCount'].replace('.png', '-hover.png')
+    );
   }
-  
 
   startTimer() {
     if (this.isIOS) {
@@ -226,10 +229,14 @@ export class EggTimerComponent {
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
-  
+
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     // Pass the checkpoints array to the timer service
-    this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
+    this.timerService.startTimer(
+      this.targetTime,
+      consistency,
+      this.checkpoints
+    );
   }
 
   toggleTimer() {
@@ -313,8 +320,7 @@ export class EggTimerComponent {
       this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
-    if (this.selectedOptions['eggCount']==='egg2.png') {
-
+    if (this.selectedOptions['eggCount'] === 'egg2.png') {
       switch (selectedConsistency) {
         case 'Hårdkokt':
           this.targetTime = this.time2;
@@ -358,31 +364,35 @@ export class EggTimerComponent {
     mass: number,
     waterTemp: number,
     startTempEgg: number,
-    desiredTempEgg: number
+    desiredTempEgg: number,
+    eggCount: number = 1
   ): number {
-    // Definiera basetiderna med en typ som explicit tillåter strängindex
+    // Adjust base times to make soft-boiled around 6-7 minutes
     const baseTimes: Record<string, number> = {
-      '65': 255, // Löskokt: 4:15
-      '73': 405, // Mellankokt: 6:45
-      '83': 570, // Hårdkokt: 9:30
+      '65': 380, // Löskokt: ~6:20 (previously 5:05)
+      '73': 520, // Mellankokt: ~8:40 (previously 8:05)
+      '83': 610, // Hårdkokt: ~12:00 (previously 11:20)
     };
 
-    // Milder storlekspåverkan
-    const sizeFactor = Math.pow(mass / 60, 0.35);
+    // Keep size factor as is
+    const sizeFactor = Math.pow(mass / 60, 0.4);
 
-    // Mindre temperaturpåverkan
-    const tempAdjustment = 1 + (20 - startTempEgg) * 0.007;
+    const tempDiff = 20 - startTempEgg; // 16 degrees difference for refrigerated eggs
+    const tempAdjustment = 1 + tempDiff * 0.0065;
 
-    // Säker åtkomst till basetiderna
+    // Keep egg count factor as is
+    const countFactor = 1 + (Math.max(1, eggCount) - 1) * 0.05;
+
+    // Get base time for desired temperature
     const desiredTempKey = desiredTempEgg.toString();
-    const baseTime = baseTimes[desiredTempKey] ?? 300; // Använd nullish coalescing
+    const baseTime = baseTimes[desiredTempKey] ?? 400;
 
-    // Beräkna tid
-    let time = baseTime * sizeFactor * tempAdjustment;
+    // Calculate time with all factors
+    let time = baseTime * sizeFactor * tempAdjustment * countFactor;
 
-    // Extra justering för hårdkokt
+    // Keep extra adjustment for hard-boiled
     if (desiredTempEgg >= 80) {
-      time *= 1.03;
+      time *= 1.02;
     }
 
     return Math.round(time);
@@ -527,7 +537,7 @@ export class EggTimerComponent {
     }
   }
 
-  public hidePopup():void{
-    this.popupVisible=false;
+  public hidePopup(): void {
+    this.popupVisible = false;
   }
 }
