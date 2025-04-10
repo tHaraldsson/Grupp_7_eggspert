@@ -9,9 +9,14 @@
     <!-- Tillbaka-länk (desktop version) -->
 
     <!-- DESKTOP: Veckans recept-länk -->
-    <div class="links" *ngIf="isDesktop">
-      <a *ngIf="currentRoute !== '/recipe'" routerLink="/recipe">Recept🍳</a>
-    </div>
+    <!-- DESKTOP: Veckans recept-länk -->
+<div class="links" *ngIf="isDesktop">
+  <a *ngIf="currentRoute !== '/recipe'" routerLink="/recipe">
+    <img src="/pictures/pan.png" alt="Receptikon" class="icon" />
+    Recept
+  </a>
+</div>
+
   </div>
 
   <!-- MOBIL: Wrapper för back + recipe-länk -->
@@ -22,7 +27,7 @@
     <!-- Veckans recept-länk på mobil (enbart på startsidan) -->
     <div *ngIf="currentRoute === '/'">
       <div class="mobile-recipe-link">
-        <a routerLink="/recipe">Recept🍳</a>
+        <a routerLink="/recipe">🍳Recept</a>
       </div>
     </div>
   </div>

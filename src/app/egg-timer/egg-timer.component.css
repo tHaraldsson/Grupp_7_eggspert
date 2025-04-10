@@ -485,6 +485,26 @@ button {
 
   /* Vänster sektion: Val av storlek, konsistens och temperatur */
 
+  .egg-selection {
+    width: 83px;
+    height: 92px;
+    object-fit: contain;
+    display: block;
+    padding: 5px;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .egg-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 80px; /* Fixar att alla får samma bredd */
+    font-size: 16px;
+  }
+
+
   .title-with-icon {
     display: flex;
     align-items: center;
@@ -561,12 +581,12 @@ button {
   }
 
   .egg-temperature-options button {
-    padding: 18px 20px;
-    font-size: 14px;
+    padding: 27px 20px;
+    font-size: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 146px;
+    width: 174px;
     margin: -3px;
     box-sizing: border-box;
   }
@@ -579,7 +599,7 @@ button {
     background: #f4d68d;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
+    width: 45%;
     text-align: center;
     font-family: "Comfortaa", sans-serif;
     overflow: hidden;
@@ -642,10 +662,10 @@ button {
   .egg-temperature-options {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     background: #f4d68d;
-    width: 85%;
-    padding: 23px;
+    width: 82%;
+    padding: 37px;
     border-radius: 10px;
     outline: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -721,14 +741,14 @@ button {
     outline: #333;
   }
   .egg {
-    width: 365px; /* Ökar storleken lite */
-    height: 570px;
+    width: 489px; /* Ökar storleken lite */
+    height: 771px;
     position: relative;
     display: block;
     margin-top: 30px; /* Ger avstånd ovanför knapparna */
     z-index: 1; /* Ser till att den ligger under yolk-progress */
     top: 143px;
-    left: 30px;
+    left: 53px;
   }
   .eggYolk {
     position: absolute;
@@ -736,27 +756,27 @@ button {
     height: 200px;
     background: transparent;
     border-radius: 50%;
-    top: 89%;
-    left: 58%;
+    top: 83%;
+    left: 59%;
     transform: translate(-50%, -50%);
     z-index: 3;
   }
   .egg-backround {
     position: absolute;
-    width: 127%;
-    height: 138%;
+    width: 118%;
+    height: 117%;
     background: transparent;
-    top: 68%;
+    top: 69%;
     left: 59%;
     transform: translate(-50%, -50%);
     z-index: 0;
   }
   .yolk-progress {
     position: absolute;
-    width: 242px;
-    height: 242px;
-    top: 89%;
-    left: 58%;
+    width: 300px;
+    height: 300px;
+    top: 83%;
+    left: 59%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: conic-gradient(
@@ -769,10 +789,10 @@ button {
 
   .egg-text {
     position: absolute;
-    top: 96%;
-    left: 57%;
+    top: 83%;
+    left: 59%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
+    font-size: 34px;
     font-family: "Comfortaa", sans-serif;
     color: black;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
@@ -781,9 +801,9 @@ button {
   }
 
   .timeLeft {
-    top: 75%;
-    left: 37%;
-    font-size: 36px;
+    top: 44%;
+    left: 40%;
+    font-size: 51px;
   }
 
   .curve-text {

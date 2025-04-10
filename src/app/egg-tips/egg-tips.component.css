@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   width: 100%;
   background-color: #f4d68d;
   border-radius: 15px;
@@ -14,7 +14,7 @@
 .title-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0rem;
   margin-bottom: 1.5rem;
   width: 100%;
   justify-content: flex-start;
@@ -22,7 +22,7 @@
 
 /* Rubrik för tips */
 .tips-title {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
   margin: 0;
   font-family: "Barriecito", sans-serif;
@@ -38,33 +38,31 @@
   width: 100%;
   max-width: 700px;
   position: relative; /* Lägg till denna */
-  min-height: 100px; /* Ger en definierad höjd */
+  min-height: 35px; /* Ger en definierad höjd */
 }
 
 /* Knapp (pil) för nästa och föregående */
 .tip-button {
-  font-size: 17px;
+  font-size: 26px;
   padding: 10px;
   border: none;
   background-color: transparent;
   align-self: center;
   cursor: pointer;
-  color: black;
   transition: background-color 0.3s ease;
 }
 
 .tip-button:disabled {
   cursor: not-allowed;
-  background-color: #f0f0f0;
 }
 
 /* Texten för tips */
 .tip-text {
-  font-size: 18px;
+  font-size: 13px;
   padding: 0 20px;
   text-align: center;
   max-width: 60%;
-  margin: 0 auto 10px;
+  margin: -30px auto 10px;
   flex-grow: 1;
 }
 
@@ -90,7 +88,6 @@
 
 /* Förbättring av disabled-styling */
 .disabled {
-  background-color: lightgrey;
   opacity: 0.5;
   cursor: not-allowed;
 }
