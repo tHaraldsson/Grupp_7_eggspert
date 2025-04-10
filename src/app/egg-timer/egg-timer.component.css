@@ -41,7 +41,7 @@ body {
   display: none;
 }
 .container {
-  position: relative;
+  position: absolute;
   text-align: center;
   padding: 20px;
   border-radius: 15px;
@@ -805,6 +805,7 @@ button {
     top: 47%;
     left: 35%;
     font-size: 50px;
+    transform: translate(-50%, -50%);
   }
 
   .curve-text {
