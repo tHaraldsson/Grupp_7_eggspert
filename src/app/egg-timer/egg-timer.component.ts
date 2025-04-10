@@ -370,7 +370,7 @@ export class EggTimerComponent {
     // Adjust base times to make soft-boiled around 6-7 minutes
     const baseTimes: Record<string, number> = {
       '65': 380, // Löskokt: ~6:20 (previously 5:05)
-      '73': 520, // Mellankokt: ~8:40 (previously 8:05)
+      '73': 510, // Mellankokt: ~8:40 (previously 8:05)
       '83': 610, // Hårdkokt: ~12:00 (previously 11:20)
     };
 
