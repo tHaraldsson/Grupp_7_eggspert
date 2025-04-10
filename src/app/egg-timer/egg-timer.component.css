@@ -360,7 +360,7 @@ button {
 
 .egg-text {
   position: absolute;
-  top: 62%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 24px;
@@ -413,7 +413,7 @@ button {
   font-family: "Digital-7 ", sans-serif;
   font-size: 26px;
   position: absolute;
-  top: 35%;
+  top: 5%;
   left: 35%;
   z-index: 6;
   color: black;
