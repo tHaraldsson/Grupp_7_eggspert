@@ -10,9 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class HRecipeComponent implements OnInit, OnDestroy {
   screenIsMobile = window.innerWidth < 768;
-  eggRecipes1 = false;
-  eggRecipes2 = false;
-  eggRecipes3 = false;
+  eggRecipes1 = !this.screenIsMobile; // Initiera direkt baserat på skärmstorlek
+  eggRecipes2 = !this.screenIsMobile;
+  eggRecipes3 = !this.screenIsMobile;
   
   private resizeObserver: ResizeObserver | undefined;
 
@@ -61,24 +61,29 @@ export class HRecipeComponent implements OnInit, OnDestroy {
   updateRecipeVisibility(): void {
     const newMobileStatus = window.innerWidth < 768;
     
-    // Uppdatera bara om skärmstorleken ändrat status (mobil/desktop)
     if (this.screenIsMobile !== newMobileStatus) {
       this.screenIsMobile = newMobileStatus;
-      const isDesktop = !this.screenIsMobile;
       
-      this.eggRecipes1 = isDesktop;
-      this.eggRecipes2 = isDesktop;
-      this.eggRecipes3 = isDesktop;
+      // I desktop-läge, expandera alla recept
+      if (!this.screenIsMobile) {
+        this.eggRecipes1 = true;
+        this.eggRecipes2 = true;
+        this.eggRecipes3 = true;
+      }
+      // I mobil-läge, behåll nuvarande tillstånd eller komprimera om du vill
       
       this.cdr.detectChanges();
     }
   }
 
   toggleRecipe(recipe: 'eggRecipes1' | 'eggRecipes2' | 'eggRecipes3'): void {
-    this[recipe] = !this[recipe];
-    // Stabilisera layouten
-    setTimeout(() => {
-      this.cdr.detectChanges();
-    }, 0);
+    // Tillåt endast att växla i mobil-läge
+    if (this.screenIsMobile) {
+      this[recipe] = !this[recipe];
+      // Stabilisera layouten
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      }, 0);
+    }
   }
 }
