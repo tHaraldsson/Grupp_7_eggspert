@@ -647,7 +647,7 @@ button {
     background: #f4d68d;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     text-align: center;
     font-family: "Comfortaa", sans-serif;
     overflow: hidden;
@@ -663,7 +663,7 @@ button {
     justify-content: center;
     gap: 20px;
     background: #f4d68d;
-    width: 82%;
+    width: 91%;
     padding: 38px;
     border-radius: 10px;
     outline: 1px solid black;
@@ -742,8 +742,8 @@ button {
     outline: #333;
   }
   .egg {
-    width: 481px; /* Ökar storleken lite */
-    height: 709px;
+    width: 441px;
+    height: 618px;
     position: relative;
     display: block;
     margin-top: 30px; /* Ger avstånd ovanför knapparna */
@@ -753,12 +753,12 @@ button {
   }
   .eggYolk {
     position: absolute;
-    width: 230px;
-    height: 230px;
+    width: 195px;
+    height: 195px;
     background: transparent;
     border-radius: 50%;
-    top: 86%;
-    left: 55%;
+    top: 92%;
+    left: 57%;
     transform: translate(-50%, -50%);
     z-index: 3;
   }
@@ -768,16 +768,16 @@ button {
     height: 124%;
     background: transparent;
     top: 70%;
-    left: 55%;
+    left: 57%;
     transform: translate(-50%, -50%);
     z-index: 0;
   }
   .yolk-progress {
     position: absolute;
-    width: 300px;
-    height: 300px;
-    top: 86%;
-    left: 55%;
+    width: 230px;
+    height: 230px;
+    top: 92%;
+    left: 57%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: conic-gradient(
@@ -790,8 +790,8 @@ button {
 
   .egg-text {
     position: absolute;
-    top: 87%;
-    left: 55%;
+    top: 92%;
+    left: 57%;
     transform: translate(-50%, -50%);
     font-size: 41px;
     font-family: "Comfortaa", sans-serif;
@@ -802,9 +802,9 @@ button {
   }
 
   .timeLeft {
-    top: 42%;
-    left: 35%;
-    font-size: 56px;
+    top: 47%;
+    left: 33%;
+    font-size: 50px;
   }
 
   .curve-text {
