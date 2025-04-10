@@ -24,7 +24,7 @@ body {
   padding: 0;
   font-family: "Comfortaa", sans-serif;
   text-align: center;
-  background-color: white; /* Fallback om bakgrundsbilden inte laddas */
+  background-color: #fffaea; /* Fallback om bakgrundsbilden inte laddas */
 }
 
 .egg-timer-layout {
@@ -59,8 +59,8 @@ h1 {
   position: absolute;
   top: 0;
   left: 0px;
-  width: 98vw;
-  height: 101vh;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   z-index: -1; /* Lägg den bakom allt annat */
 }
@@ -431,6 +431,10 @@ button {
 
 /* Layout för större skärmar*/
 @media screen and (min-width: 768px) {
+
+  .bakgrund {
+    display: none;
+  }
   .egg-timer-layout {
     display: flex;
     justify-content: space-between;
@@ -453,8 +457,18 @@ button {
     z-index: 2;
   }
 
+  .egg-selection {
+    width: 81px;
+    height: 86px;
+    object-fit: contain;
+    display: block;
+    padding: 5px;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+  }
+
   .egg-temperature-options button.selected {
-    background-color: #f49d11 !important;
+    background-color: #fdebcf !important;
   }
 
   .egg-temperature {
@@ -483,17 +497,17 @@ button {
   }
   
   .title-with-icon img.eggSize {
-    width: 30px; /* justera storlek som passar bäst */
+    width: 37px; /* justera storlek som passar bäst */
     height: auto;
   }
 
   .title-with-icon img.eggTemp {
-    width: 30px; /* justera storlek som passar bäst */
+    width: 37px; /* justera storlek som passar bäst */
     height: auto;
   }
 
   .title-with-icon img.eggCon {
-    width: 30px; /* justera storlek som passar bäst */
+    width: 37px; /* justera storlek som passar bäst */
     height: auto;
   }
   
@@ -513,8 +527,7 @@ button {
 
 /* För temperaturalternativ */
 .egg-temperature-options button:hover {
-  background-color: rgba(244, 157, 17, 0.8); /* En ljusare bakgrund när du hovrar över knapparna */
-  transform: scale(1.05); /* Gör knappen något större */
+  transform: scale(1.1); /* Gör knappen något större */
   transition: transform 0.2s ease-in-out, background-color 0.3s ease;
 }
 
@@ -551,12 +564,12 @@ button {
   }
 
   .egg-temperature-options button {
-    padding: 18px 20px;
-    font-size: 14px;
+    padding: 29px 20px;
+    font-size: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 146px;
+    width: 174px;
     margin: -3px;
     box-sizing: border-box;
   }
@@ -567,9 +580,9 @@ button {
     align-items: center;
     gap: 5%;
     background: #f4d68d;
-    padding: 10px;
+    padding: 13px;
     border-radius: 10px;
-    width: 90%;
+    width: 45%;
     text-align: center;
     font-family: "Comfortaa", sans-serif;
     overflow: hidden;
@@ -634,8 +647,8 @@ button {
     justify-content: center;
     gap: 20px;
     background: #f4d68d;
-    width: 85%;
-    padding: 23px;
+    width: 82%;
+    padding: 38px;
     border-radius: 10px;
     outline: 1px solid black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -711,42 +724,42 @@ button {
     outline: #333;
   }
   .egg {
-    width: 365px; /* Ökar storleken lite */
-    height: 570px;
+    width: 481px; /* Ökar storleken lite */
+    height: 709px;
     position: relative;
     display: block;
     margin-top: 30px; /* Ger avstånd ovanför knapparna */
     z-index: 1; /* Ser till att den ligger under yolk-progress */
-    top: 143px;
+    top: 165px;
     left: 30px;
   }
   .eggYolk {
     position: absolute;
-    width: 215px;
-    height: 215px;
+    width: 230px;
+    height: 230px;
     background: transparent;
     border-radius: 50%;
-    top: 89%;
-    left: 58%;
+    top: 86%;
+    left: 55%;
     transform: translate(-50%, -50%);
     z-index: 3;
   }
   .egg-backround {
     position: absolute;
-    width: 127%;
-    height: 138%;
+    width: 112%;
+    height: 124%;
     background: transparent;
-    top: 68%;
-    left: 59%;
+    top: 70%;
+    left: 55%;
     transform: translate(-50%, -50%);
     z-index: 0;
   }
   .yolk-progress {
     position: absolute;
-    width: 242px;
-    height: 242px;
-    top: 89%;
-    left: 58%;
+    width: 300px;
+    height: 300px;
+    top: 86%;
+    left: 55%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: conic-gradient(
@@ -759,10 +772,10 @@ button {
 
   .egg-text {
     position: absolute;
-    top: 96%;
-    left: 57%;
+    top: 87%;
+    left: 55%;
     transform: translate(-50%, -50%);
-    font-size: 28px;
+    font-size: 41px;
     font-family: "Comfortaa", sans-serif;
     color: black;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
@@ -771,9 +784,9 @@ button {
   }
 
   .timeLeft {
-    top: 75%;
-    left: 37%;
-    font-size: 36px;
+    top: 42%;
+    left: 35%;
+    font-size: 56px;
   }
 
   .curve-text {
