@@ -114,7 +114,7 @@ h1 {
 
 .options button.hovered,
 .egg-temperature.hovered {
-  background-color: #f4a90c; /* Orange färg vid hover */
+  background-color: #fdebcf; /* Orange färg vid hover */
   transform: scale(1.05);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -139,9 +139,9 @@ h1 {
   padding: 12px;
   border: 1px solid black;
   top: 41%;
-  left: 48%;
+  left: 50%;
   transform: translate(-50%, -50%); /* Centrera */
-  font-family: "Playpen Sans", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   z-index: 5;
 }
 
@@ -286,7 +286,7 @@ button {
 
 .options button.selected,
 .egg-temperature-options button.selected {
-  background-color: #f49d11 !important;
+  background-color: #fdebcf !important;
 }
 
 .btn-start:hover /*un usede*/,
@@ -803,7 +803,7 @@ button {
 
   .timeLeft {
     top: 47%;
-    left: 33%;
+    left: 35%;
     font-size: 50px;
   }
 
@@ -817,5 +817,162 @@ button {
 @media screen and (max-width: 1150px) {
   .egg-temperature-options button {
     font-size: 9px;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 767px) {
+  .btn-start:hover /*un usede*/,
+  .btn-reset:hover {
+    background-color: #f49d11;
+  }
+
+  .btn-pause {
+    /*un usede*/
+    background-color: rgb(255, 255, 255);
+  }
+
+  .btn-reset {
+    /*un usede*/
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 6px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Comfortaa", sans-serif;
+  }
+
+  /* Progressbar runt äggulan */
+  .yolk-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrerar innehållet vertikalt */
+    width: 100%;
+    margin-top: 10px; /* Skapar avstånd från övriga element */
+  }
+
+  .yolk-progress {
+    position: absolute;
+    width: 164px;
+    height: 164px;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: conic-gradient(
+      #c21414 0deg,
+      #c21414 calc(var(--progress) * 3.6deg),
+      #d9d9d9 calc(var(--progress) * 3.6deg)
+    );
+    z-index: 3;
+  }
+
+  .yolk-hole {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background: transparent;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+  .eggBackround {
+    /*un usede*/
+    width: 200px; /* Ökar storleken lite */
+    height: auto;
+    position: relative;
+    display: block;
+    margin: 20px auto; /* Ger avstånd ovanför knapparna */
+    z-index: 0; /* Ser till att den ligger under yolk-progress */
+  }
+
+  .egg-text {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-family: "Comfortaa", sans-serif;
+    color: black;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+    pointer-events: none; /* Förhindrar att texten blockerar klick */
+    z-index: 5;
+  }
+
+  .egg {
+    width: 300px; /* Ökar storleken lite */
+    height: auto;
+    position: relative;
+    display: block;
+    margin: 20px auto; /* Ger avstånd ovanför knapparna */
+    z-index: 1; /* Ser till att den ligger under yolk-progress */
+    margin-top: 30px;
+  }
+
+  .eggYolk {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    background: transparent;
+    border-radius: 50%;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  /* Grundlayout för timertext */
+  .timer-display {
+    font-size: 2.5em;
+    margin: 20px 0;
+    font-weight: bold;
+  }
+
+  .status-message {
+    position: absolute;
+    background-color: transparent;
+    top: 10%;
+    z-index: 0;
+    font-size: 20px;
+    font-family: "Comfortaa", sans-serif;
+  }
+
+  .timeLeft {
+    font-family: "Digital-7 ", sans-serif;
+    font-size: 34px;
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    z-index: 4;
+    color: black;
+    pointer-events: none; /* Så den inte stör klick på gulor */
+  }
+
+  .options {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    gap: 31px;
+    margin: 20px auto;
+    max-width: 89%;
+    background-color: #f4d68d;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid black;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrera */
+    font-family: "Comfortaa", sans-serif;
+    z-index: 5;
+  }
+
+  .bigerGap {
+    min-width: 285px;
+    gap: 65px;
   }
 }
