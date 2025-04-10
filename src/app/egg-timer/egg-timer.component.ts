@@ -211,7 +211,7 @@ export class EggTimerComponent {
 
   getEggCountIconSrc(): string {
     if (!this.selectedOptions['eggCount']) {
-      return '/pictures/eggamount.png';
+      return '/pictures/eggamount3.png';
     }
     
     // Replace .png with -hover.png to get the hover version

@@ -117,7 +117,7 @@
   </div>
 
   <!-- För temperatur -->
-  <div *ngIf="selectedCategory === 'temperature'" class="options">
+  <div *ngIf="selectedCategory === 'temperature'" class="options bigerGap">
     <div
       *ngFor="let temp of temperatures"
       class="egg-option"
@@ -244,7 +244,7 @@
 
     <div class="egg-temperature-options">
       <button
-        class="egg-temperature"
+        class="egg-temperature "
         [class.selected]="selectedOptions['temperature'] === 'Kylskåpskallt'"
         [class.hovered]="
           hoveredTemp === 'Kylskåpskallt' &&
@@ -267,7 +267,7 @@
         (mouseenter)="hoveredTemp = 'Rumstempererat'"
         (mouseleave)="hoveredTemp = null"
       >
-        Rumstemperatur
+      Rumstemperatur
       </button>
     </div>
 

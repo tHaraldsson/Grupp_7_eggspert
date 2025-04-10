@@ -439,6 +439,11 @@ button {
   font-weight: bold;
 }
 
+.bigerGap{
+  min-width: 250px;
+  gap: 50px;
+}
+
 /* Layout för större skärmar*/
 @media screen and (min-width: 768px) {
   .egg-timer-layout {
