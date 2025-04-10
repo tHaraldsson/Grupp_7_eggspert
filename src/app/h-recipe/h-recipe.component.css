@@ -8,6 +8,7 @@
 }
 /* Stil för hela sidan */
 /* Stil för hela sidan */
+
 body {
   background-color: #fffaea; /* Bakgrundsfärg för hela sidan */
   margin: 0;
@@ -96,7 +97,8 @@ h2 {
   font-family: 'Comfortaa', sans-serif;
 }
 
-.extra-recipe {
+
+.extra-recipe { /*un usede*/
   font-size: 12px;
   font-family: 'Comfortaa', sans-serif;
   margin-top: 10px;

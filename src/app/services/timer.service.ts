@@ -137,7 +137,7 @@ export class TimerService implements OnDestroy {
         this.statusMessage.next(checkpoint.message);
       }
       // Check for end checkpoints
-      const endCheckpoint = this.checkpoints.find(cp => cp.time-5 === remaining);
+      const endCheckpoint = this.checkpoints.find(cp => cp.time-50 === remaining);
       if (endCheckpoint) {
         this.statusMessage.next('');
       }
@@ -150,7 +150,7 @@ export class TimerService implements OnDestroy {
         this.playSound(5); // Spela ljudet 5 gånger
         this.statusMessage.next('');
       }
-    }, 1000); // 1 sekund mellan varje uppdatering
+    }, 10); // 1 sekund mellan varje uppdatering
   }
 
   stopTimer() {

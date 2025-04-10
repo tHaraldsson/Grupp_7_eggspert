@@ -18,7 +18,17 @@
   font-weight: 100 900;
   font-style: normal;
 }
-
+.popup-container {
+  position: fixed;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: smoothAppear 0.5s ease-out;
+  width: 90%;
+  top: 50%;
+  left: 44%;
+  transform: translate(-50%, -50%);
+}
 body {
   margin: 0;
   padding: 0;
@@ -52,6 +62,7 @@ h1 {
 }
 
 .btn-reset {
+  /*un usede*/
   align-items: center;
 }
 
@@ -150,7 +161,6 @@ h1 {
   width: 80px; /* Fixar att alla får samma bredd */
 }
 
-
 .egg-selection {
   width: 60px;
   height: 82px;
@@ -196,6 +206,7 @@ h1 {
 
 /* Antal ägg-text */
 .egg-label {
+  /*un usede*/
   font-family: "Comfortaa", sans-serif;
   font-size: 15px;
   color: #333; /* Anpassa färgen om det behövs */
@@ -216,6 +227,7 @@ h1 {
 }
 
 .egg-selection-display {
+  /*un usede*/
   font-size: 18px; /* Justera textstorlek */
   font-family: "Comfortaa", sans-serif;
   color: #000000; /* Sätt textfärgen */
@@ -261,6 +273,7 @@ button {
 }
 
 .btn-start {
+  /*un usede*/
   background-color: white; /* Ändra bakgrundsfärg till vit */
   font-family: "Comfortaa", sans-serif;
   color: black;
@@ -276,16 +289,18 @@ button {
   background-color: #f49d11 !important;
 }
 
-.btn-start:hover,
+.btn-start:hover /*un usede*/,
 .btn-reset:hover {
   background-color: #f49d11;
 }
 
 .btn-pause {
+  /*un usede*/
   background-color: rgb(255, 255, 255);
 }
 
 .btn-reset {
+  /*un usede*/
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
   padding: 6px;
@@ -334,6 +349,7 @@ button {
   z-index: 3;
 }
 .eggBackround {
+  /*un usede*/
   width: 200px; /* Ökar storleken lite */
   height: auto;
   position: relative;
@@ -424,14 +440,13 @@ button {
   font-weight: bold;
 }
 
-.bigerGap{
+.bigerGap {
   min-width: 250px;
   gap: 50px;
 }
 
 /* Layout för större skärmar*/
 @media screen and (min-width: 768px) {
-
   .bakgrund {
     display: none;
   }
@@ -495,7 +510,7 @@ button {
     gap: 10px; /* avstånd mellan bild och text */
     margin-top: -24px;
   }
-  
+
   .title-with-icon img.eggSize {
     width: 37px; /* justera storlek som passar bäst */
     height: auto;
@@ -510,7 +525,6 @@ button {
     width: 37px; /* justera storlek som passar bäst */
     height: auto;
   }
-  
 
   .eggSize {
     width: 50%;
@@ -518,27 +532,31 @@ button {
   }
 
   /* För storleksalternativ */
-.egg-size-options .egg-option:hover {
-  background-color: rgba(244, 214, 141, 0.8); /* Ljusa upp bakgrunden vid hover */
-  transform: scale(1.1); /* Gör ikonen större */
-  border-radius: 10px; /* Lägg till rundade hörn */
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
-}
+  .egg-size-options .egg-option:hover {
+    background-color: rgba(
+      244,
+      214,
+      141,
+      0.8
+    ); /* Ljusa upp bakgrunden vid hover */
+    transform: scale(1.1); /* Gör ikonen större */
+    border-radius: 10px; /* Lägg till rundade hörn */
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+  }
 
-/* För temperaturalternativ */
-.egg-temperature-options button:hover {
-  transform: scale(1.1); /* Gör knappen något större */
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
-}
+  /* För temperaturalternativ */
+  .egg-temperature-options button:hover {
+    transform: scale(1.1); /* Gör knappen något större */
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+  }
 
-/* För konsistensalternativ */
-.egg-consistency-options .egg-option:hover {
-  background-color: rgba(244, 214, 141, 0.8); /* Ljus bakgrund vid hover */
-  transform: scale(1.1); /* Gör bilden större */
-  border-radius: 10px; /* Rundade hörn */
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
-}
-
+  /* För konsistensalternativ */
+  .egg-consistency-options .egg-option:hover {
+    background-color: rgba(244, 214, 141, 0.8); /* Ljus bakgrund vid hover */
+    transform: scale(1.1); /* Gör bilden större */
+    border-radius: 10px; /* Rundade hörn */
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+  }
 
   .egg-options-panel {
     display: flex;
@@ -591,20 +609,19 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin-bottom: 36px;
   }
-  
+
   .egg-count-options .egg-option:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
   }
-  
+
   .egg-count-options .egg-option.selected {
-    
     border-radius: 10px;
   }
 
   .title-with-icon img.eggCountIcon {
-    width: 45px;  /* eller den storlek du vill ha */
+    width: 45px; /* eller den storlek du vill ha */
     height: auto; /* håller proportionerna */
   }
 
@@ -612,7 +629,6 @@ button {
     width: 30px;
     height: auto;
   }
-  
 
   /* Justera äggantal-input för desktop */
   .egg-count-select {
@@ -693,11 +709,13 @@ button {
   }
 
   .egg-timer-title {
+    /*un usede*/
     font-size: 50px;
     font-family: "Barriecito", cursive;
     color: #884d05;
   }
   .egglogo {
+    /*un usede*/
     height: 80px;
   }
 
@@ -790,9 +808,10 @@ button {
   }
 
   .curve-text {
+    /*un usede*/
     position: absolute;
-  top: 100%;
-  left: 21%;
+    top: 100%;
+    left: 21%;
   }
 }
 @media screen and (max-width: 1150px) {

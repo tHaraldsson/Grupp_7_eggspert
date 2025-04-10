@@ -87,6 +87,9 @@ a {
   margin-bottom: -55px;
   padding-left: 10px;
 }
+main{
+ height: 100%;
+}
 
 
 /* För Desktop */

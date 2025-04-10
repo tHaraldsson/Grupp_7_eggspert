@@ -64,9 +64,9 @@ export class EggTimerComponent {
     this.timerService.statusMessage.subscribe((msg) => {
       if (msg === 'Löskokt' || msg === 'Mellankokt') {
         if (msg === 'Löskokt') {
-          this.statusMessage.set('löskokt.png');
+          this.statusMessage.set('Square1.png');
         } else if (msg === 'Mellankokt') {
-          this.statusMessage.set('mellankokt.png');
+          this.statusMessage.set('Square2.png');
         }
         this.popupVisible = true;
       } else {
