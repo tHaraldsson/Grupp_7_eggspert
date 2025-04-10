@@ -15,15 +15,13 @@ a {
   border-radius: 50px;
 }
 
-a:hover {
-  background-color: rgb(161, 161, 98);
-}
 
 /* Styling för titel och logo */
 .egg-timer-title {
   font-size: 40px;
   font-family: "Barriecito", cursive;
   color: #884d05;
+  margin-left: 25px;
 }
 
 .egglogo {
@@ -48,6 +46,8 @@ a {
   font-family: 'Comfortaa', sans-serif;
   border: none;
   text-decoration: underline;
+  margin-right: 15px;
+  font-size: 24px;
 }
 
 /* För att justera placeringen på mobil */
@@ -97,7 +97,7 @@ a {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: #f4d68d;
+    background: #ffe98d;
   }
 
   .links {
@@ -111,5 +111,19 @@ a {
   .mobile-header {
     display: none;
   }
+
+  .links a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: underline;
+    
+  }
+  
+  .icon {
+    height: 57px;
+    width: auto;
+  }
+  
   
 }

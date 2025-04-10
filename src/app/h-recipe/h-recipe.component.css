@@ -57,7 +57,7 @@ body {
 /* Info om receptet till höger om bilden */
 .recipe-card-header {
   display: flex;
-  align-items: center;
+  align-items: self-start;
   margin-bottom: 10px;
 }
 
@@ -230,6 +230,7 @@ h2 {
       
   h2 {
     font-size: 18px;
+    margin-bottom: 10px;
   }
 
   .recipe-ingredients {

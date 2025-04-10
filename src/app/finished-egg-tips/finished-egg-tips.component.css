@@ -1,0 +1,168 @@
+@font-face {
+  font-family: "Barriecito";
+  src: url("/fonts/Barriecito.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Playpen Sans";
+  src: url("/fonts/PlaypenSans.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+.finished-tips-container {
+  font-family: "Playpen Sans", sans-serif;
+  position: fixed;
+  background: rgba(255, 243, 224, 0.98);
+  border: 1px solid black;
+  border-radius: 60px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: smoothAppear 0.5s ease-out;
+  width: 90%;
+  top: 50%;
+  left: 44%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes smoothAppear {
+  from {
+    transform: translate(-50%, -40%); /* Starta lite högre upp */
+    opacity: 0;
+    scale: 0.95;
+  }
+  to {
+    transform: translate(-50%, -50%); /* Sluta i exakt center */
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.tips-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 15px;
+  font-family: "Barriecito", sans-serif;
+}
+
+.tip-content {
+  background-color: #ffe98d;
+  border-radius: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: black;
+  border: 1px solid black;
+  border-radius: 25px;
+  margin-left: 10px;
+  background: #ffe98d;
+  width: 120px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tip-content {
+  text-align: center;
+  font-style: italic;
+}
+
+.nav-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-btn {
+  background: #ffe98d;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nav-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.tips-eggman {
+  width: auto;
+  height: 100px;
+  margin-left: 50px;
+}
+
+.tips-speechBubble {
+  width: auto;
+  height: 65px;
+  margin-bottom: 35px;
+}
+
+@media (max-width: 375px) {
+  /* iPhone 12/13 standard */
+  .finished-tips-container {
+    top: 45%;
+    width: 85%;
+    animation: smoothAppearMobile 0.5s ease-out;
+  }
+  @keyframes smoothAppearMobile {
+    from {
+      transform: translate(-50%, -35%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  /* iPhone SE */
+  .finished-tips-container {
+    top: 40%;
+    padding: 15px;
+    animation: smoothAppearMobile 0.5s ease-out;
+  }
+  @keyframes smoothAppearMobile {
+    from {
+      transform: translate(-50%, -35%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .tip-content {
+    display: none !important;
+  }
+  .nav-btn {
+    display: none !important;
+  }
+  .eggstra-heading {
+    display: none !important;
+  }
+  .nav-buttons {
+    justify-content: center;
+  }
+  .tips-speechBubble {
+    height: 80px;
+    margin-bottom: 35px;
+  }
+  .tips-eggman {
+    height: 140px;
+    margin-left: 50px;
+  }
+}

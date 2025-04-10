@@ -1,34 +1,53 @@
-<img class="bakgrund" src="/pictures/Bakgrund-2.png" />
+<app-finished-egg-tips
+  *ngIf="showFinishedTips"
+  (close)="showFinishedTips = false"
+></app-finished-egg-tips>
+
+<img *ngIf="popupVisible" [src]="'/pictures/'+statusMessage()" class="popup-container " (click)="hidePopup()">
+
+<img class="bakgrund" src="/pictures/bakgrund4.png" />
 <div class="container">
   <h1>Eggspert</h1>
 
   <!-- MOBIL 3 OPTIONS -->
   <div class="button-group">
     <div class="egg-option">
-      <button class="icon-button" (click)="toggleSelection('sizes')">
+      <button class="icon-button" (click)="toggleSelection('eggCount')">
         <img
-          class="egg-selectionOne"
-          src="/pictures/eggsize.png"
-          alt="Storlek"
+          class="egg-selection"
+          [src]="getEggCountIconSrc()"
+          alt="Antal Ägg"
         />
       </button>
-      <p>Storlek</p>
+      <p>Antal ägg</p>
     </div>
+
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('consistency')">
         <img
-          class="egg-selectionTwo"
-          src="/pictures/konsistens.png"
+          class="egg-selection"
+          [src]="
+            '/pictures/' +
+            (selectedOptions['consistency']
+              ? getConcistencyImageName(selectedOptions['consistency'])
+              : 'konsistens.png')
+          "
           alt="Konsistens"
         />
       </button>
       <p>Konsistens</p>
     </div>
+
     <div class="egg-option">
       <button class="icon-button" (click)="toggleSelection('temperature')">
         <img
-          class="egg-selectionThree"
-          src="/pictures/temp.png"
+          class="egg-selection"
+          [src]="
+            '/pictures/' +
+            (selectedOptions['temperature']
+              ? getTemperatureImageName(selectedOptions['temperature'])
+              : 'temp.png')
+          "
           alt="Temperatur"
         />
       </button>
@@ -36,18 +55,19 @@
     </div>
 
     <div class="egg-option">
-      <button class="icon-button" (click)="toggleSelection('eggCount')">
+      <button class="icon-button" (click)="toggleSelection('sizes')">
         <img
-          class="egg-selectionFour"
+          class="egg-selection"
           [src]="
-            selectedOptions['eggCount']
-              ? '/pictures/' + selectedOptions['eggCount']
-              : '/pictures/eggamount.png'
+            '/pictures/' +
+            (selectedOptions['sizes']
+              ? getSizeImageName(selectedOptions['sizes'])
+              : 'eggsize.png')
           "
-          alt="Antal Ägg"
+          alt="Storlek"
         />
       </button>
-      <p>Antal ägg</p>
+      <p>Storlek</p>
     </div>
   </div>
 
@@ -97,31 +117,39 @@
   </div>
 
   <!-- För temperatur -->
-  <div *ngIf="selectedCategory === 'temperature'" class="options">
-    <button
+  <div *ngIf="selectedCategory === 'temperature'" class="options bigerGap">
+    <div
       *ngFor="let temp of temperatures"
+      class="egg-option"
       [class.selected]="selectedOptions['temperature'] === temp"
-      [class.hovered]="
-        hoveredTemp === temp && selectedOptions['temperature'] !== temp
-      "
       (click)="selectEggOption('temperature', temp)"
       (mouseenter)="hoveredTemp = temp"
       (mouseleave)="hoveredTemp = null"
     >
+      <img
+        [src]="
+          '/pictures/' + getTemperatureImageName(temp, hoveredTemp === temp)
+        "
+        [alt]="temp"
+        class="egg-selection"
+      />
+
       {{ temp }}
-    </button>
+    </div>
   </div>
 
-  <!-- För antal ägg -->
+  <!-- För eggCount -->
   <div *ngIf="selectedCategory === 'eggCount'" class="options row-options">
     <div
-      *ngFor="let count of [1, 2, 3]"
+      *ngFor="let count of [1, 2]"
       class="egg-option"
       [class.selected]="selectedOptions['eggCount'] === 'egg' + count + '.png'"
       (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
+      (mouseenter)="hoveredCount = count"
+      (mouseleave)="hoveredCount = null"
     >
       <img
-        [src]="'/pictures/egg' + count + '.png'"
+        [src]="getEggCountImageName(count)"
         alt="Ägg {{ count }}"
         class="egg-selection"
       />
@@ -131,24 +159,6 @@
   <!-- MOBIL ÄGGCONTAINER -->
 
   <div class="yolk-container">
-    <div class="egg-count">
-      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
-      <label for="eggCount" class="egg-label">Antal ägg:</label>
-      <input
-        type="number"
-        id="eggCount"
-        [(ngModel)]="eggCount"
-        min="1"
-        max="10"
-        (change)="onEggCountChange()"
-      />
-    </div>
-
-    <p class="egg-selection-display">
-      {{ selectedOptions["sizes"] || "" }}<br />
-      {{ selectedOptions["consistency"] || "" }}<br />
-      {{ selectedOptions["temperature"] || "" }}
-    </p>
     <div
       class="yolk-progress"
       [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"
@@ -156,14 +166,16 @@
     <p class="status-message" [innerHTML]="statusMessage()"></p>
 
     <div (click)="toggleTimer()">
-      <img class="egg" src="/pictures/äggform2.png" />
+      <img class="egg" src="/pictures/eggform.png" />
 
       <img class="eggYolk" src="/pictures/eggYolk.png" />
+
+      <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
       <span class="egg-text">{{
-        timerisRunning ? "Återställ" : "Starta"
+        timerisRunning ? "STOPP" : "START"
       }}</span>
     </div>
-    <div class="boiling-text">Starta klockan när vattnet kokar</div>
+    <!--  <img class="curve-text" src="/pictures/curve-text.png" /> -->
   </div>
 </div>
 
@@ -172,7 +184,42 @@
 <div class="egg-timer-layout">
   <!-- Vänstra sektionen (Val av storlek, konsistens, temperatur) -->
   <div class="egg-options-panel">
-    <h2>Äggstorlek</h2>
+
+    <div class="title-with-icon">
+      <img
+        class="eggCountIcon"
+        src="/pictures/eggamount2.png"
+        alt="Antal ägg"
+      />
+      <h2>Antal ägg</h2>
+    </div>
+
+    <div class="egg-count-options">
+      <div
+        *ngFor="let count of [1, 2]"
+        class="egg-option"
+        [class.selected]="
+          selectedOptions['eggCount'] === 'egg' + count + '.png'
+        "
+        (click)="selectEggOption('eggCount', 'egg' + count + '.png')"
+        (mouseenter)="hoveredCount = count"
+        (mouseleave)="hoveredCount = null"
+      >
+        <img
+          [src]="getEggCountImageName(count)"
+          alt="Ägg {{ count }}"
+          class="egg-selection"
+        />
+      </div>
+    </div>
+
+
+
+    <div class="title-with-icon">
+      <img class="eggSize" src="/pictures/eggsize.png" alt="Äggstorlek" />
+      <h2>Storlek</h2>
+    </div>
+
     <div class="egg-size-options">
       <div
         *ngFor="let size of sizes"
@@ -190,10 +237,14 @@
       </div>
     </div>
 
-    <h2>Äggtemperatur</h2>
+    <div class="title-with-icon">
+      <img class="eggTemp" src="/pictures/temp.png" alt="Äggstorlek" />
+      <h2>Temperatur</h2>
+    </div>
+
     <div class="egg-temperature-options">
       <button
-        class="egg-temperature"
+        class="egg-temperature "
         [class.selected]="selectedOptions['temperature'] === 'Kylskåpskallt'"
         [class.hovered]="
           hoveredTemp === 'Kylskåpskallt' &&
@@ -203,7 +254,7 @@
         (mouseenter)="hoveredTemp = 'Kylskåpskallt'"
         (mouseleave)="hoveredTemp = null"
       >
-        Direkt ur kylskåpet
+        Kylskåpskallt
       </button>
       <button
         class="egg-temperature"
@@ -216,11 +267,14 @@
         (mouseenter)="hoveredTemp = 'Rumstempererat'"
         (mouseleave)="hoveredTemp = null"
       >
-        Rumstemperatur
+      Rumstemperatur
       </button>
     </div>
-    
-    <h2>Äggkonsistens</h2>
+
+    <div class="title-with-icon">
+      <img class="eggCon" src="/pictures/konsistens.png" alt="Äggstorlek" />
+      <h2>Konsistens</h2>
+    </div>
     <div class="egg-consistency-options">
       <div
         *ngFor="let consistency of consistencies"
@@ -246,46 +300,34 @@
     </div>
 
 
+    <!-- DESKTOP ÄGGCONTAINER -->
 
-    <div class="egg-count-container">
-      <label for="eggCountSelect">Antal ägg:</label>
-      <select
-        id="eggCountSelect"
-        class="egg-count-select"
-        [(ngModel)]="eggCount"
-        (change)="onEggCountChange()"
-      >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </div>
+  
   </div>
-
-  <!-- DESKTOP ÄGGCONTAINER -->
-
   <!-- Höger timer och äggbild-->
   <div class="egg-timer-display">
     <div class="yolk-container">
-      
       <div
         class="yolk-progress"
         [style.--progress]="(1 - currentTimeLeft() / targetTime) * 100"
       ></div>
-      <img class="egg-backround" src="/pictures/Bakgrund-2.png" />
+      <img class="egg-backround" src="/pictures/bakgrund4.png" />
       <div class="egg-container">
-        <img class="egg" src="/pictures/äggform2.png" />
-        <img class="eggYolk" src="/pictures/eggYolk.png" (click)="toggleTimer()"/>
+        <img class="egg" src="/pictures/eggform.png" />
+        <img
+          class="eggYolk"
+          src="/pictures/eggYolk.png"
+          (click)="toggleTimer()"
+        />
         <p class="timeLeft">{{ formatTime(currentTimeLeft()) }}</p>
         <span class="egg-text">{{
-          timerisRunning ? "Återställ" : "Starta"
+          timerisRunning ? "STOPP" : "START"
         }}</span>
       </div>
-       <div class="boiling-text">Starta klockan när vattnet kokar</div>
+      <!-- <img class="curve-text" src="/pictures/curve-text.png" /> -->
     </div>
   </div>
+
   <div class="egg-tips">
     <app-egg-tips />
   </div>

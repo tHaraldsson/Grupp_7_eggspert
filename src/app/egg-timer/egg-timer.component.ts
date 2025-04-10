@@ -1,14 +1,16 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, Input, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EggTipsComponent } from '../egg-tips/egg-tips.component';
 import { TimerService } from '../services/timer.service';
+import { FinishedEggTipsComponent } from '../finished-egg-tips/finished-egg-tips.component';
+
 
 @Component({
   selector: 'app-egg-timer',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent],
+  imports: [CommonModule, FormsModule, RouterModule, EggTipsComponent, FinishedEggTipsComponent],
   templateUrl: './egg-timer.component.html',
   styleUrl: './egg-timer.component.css',
 })
@@ -20,6 +22,7 @@ export class EggTimerComponent {
   currentTimeLeft = signal(0);
   statusMessage = signal('');
   timerisRunning = false;
+  showFinishedTips = false;
 
   targetTime = 0;
   checkpoints: { time: number; message: string }[] = [];
@@ -28,18 +31,23 @@ export class EggTimerComponent {
   hoveredSize: string | null = null;
   hoveredConsistency: string | null = null;
   hoveredTemp: string | null = null;
+  hoveredCount: number | null = null;
 
-  eggCount: number = 1;
+  popupVisible:boolean=false;
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
   consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
   selectedOptions: { [key: string]: string } = {};
+  
+  @ViewChild(FinishedEggTipsComponent) finishedEggTipsComponent!: FinishedEggTipsComponent;
 
   // Screen lock prevention properties
   wakeLock: any = null;
   wakeLockSupported = false;
   silentAudio: HTMLAudioElement | null = null;
   keepAwakeVideo: HTMLVideoElement | null = null;
+
+  isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   constructor(private timerService: TimerService) {
     this.timerService.timeLeft.subscribe((time) => {
@@ -48,7 +56,24 @@ export class EggTimerComponent {
     });
 
     this.timerService.statusMessage.subscribe((msg) => {
-      this.statusMessage.set(msg);
+      
+      if(msg==='Löskokt'||msg==='Mellankokt'){
+        if(msg==='Löskokt'){
+          this.statusMessage.set('löskokt.png');
+        }
+        else if(msg==='Mellankokt'){
+          this.statusMessage.set('mellankokt.png');
+        }
+        this.popupVisible=true;
+      }
+      else{
+        this.hidePopup();
+        console.log('hej');
+        
+      }
+      console.log('msg: ' +msg);
+      console.log('popupVisible: '+this.popupVisible);
+
     });
 
     this.timerService.timerCompleted.subscribe(() => {
@@ -56,19 +81,17 @@ export class EggTimerComponent {
       this.allowScreenLock();
     });
 
-    this.timerService.timerCheckpoints.subscribe(() => {
-      this.checkpoints;
-    });
-    this.timerService.timerContinuos.subscribe(() => {
-      true; //kant get it to work jet
-    });
+    this.timerService.showtip.subscribe(()=>{
+      this.showFinishedTips = true;
+      this.finishedEggTipsComponent.show();
+    })
   }
 
   ngOnInit() {
     this.calculateCookTime();
     this.wakeLockSupported = 'wakeLock' in navigator;
     this.currentTimeLeft.set(0);
-    this.statusMessage.set('<br>');
+    this.statusMessage.set('');
   }
 
   onEggCountChange() {
@@ -82,31 +105,31 @@ export class EggTimerComponent {
     if (isSelected) {
       // Returnera rätt "pushed in"-bild för varje storlek
       const selectedImages: Record<string, string> = {
-        Small: 'S_Pushed in.png',
-        Medium: 'M_Pushed in.png',
-        Large: 'L_Pushed in.png',
-        XLarge: 'XL_Pushed in.png',
+        Small: 'eggsmall-hover.png',
+        Medium: 'eggmedium-hover.png',
+        Large: 'egglarge-hover.png',
+        XLarge: 'eggXl-hover.png'
       };
-      return selectedImages[size] || 'smallegg.png';
+      return selectedImages[size] || 'eggXl.png';
     }
 
     if (isHovered) {
       // Returnera hover-bilden för varje storlek
       const hoverImages: Record<string, string> = {
-        Small: 'S_Hoover.png',
-        Medium: 'M_Hoover.png',
-        Large: 'L_Hoover.png',
-        XLarge: 'XL_Hoover.png',
+        Small: 'eggsmall-hover.png',
+        Medium: 'eggmedium-hover.png',
+        Large: 'egglarge-hover.png',
+        XLarge: 'eggXl-hover.png'
       };
       return hoverImages[size] || 'smallegg.png';
     }
 
     // Standardbild när inte hover eller selected
     const sizeImages: Record<string, string> = {
-      Small: 'smallegg.png',
-      Medium: 'mediumegg.png',
-      Large: 'largeegg.png',
-      XLarge: 'xlegg.png',
+      Small: 'eggsmall.png',
+      Medium: 'eggmedium.png',
+      Large: 'egglarge.png',
+      XLarge: 'eggXl.png'
     };
     return sizeImages[size] || 'assets/images/default-egg.png';
   }
@@ -118,35 +141,95 @@ export class EggTimerComponent {
     const isSelected = this.selectedOptions['consistency'] === consistency;
 
     if (isSelected) {
-      return `${consistency}_Pushed in.png`;
+      const selectedImages: Record<string, string> = {
+        Löskokt: 'eggboiled-hover.png',
+        Mellankokt: 'eggboiled-medium-hover.png',
+        Hårdkokt: 'eggboiled-hard-hover.png',
+      };
+      return selectedImages[consistency] || 'eggboiled.png';
     }
 
     if (isHovered) {
       // Returnera hover-bilden för varje konsistens
       const hoverImages: Record<string, string> = {
-        Löskokt: 'Lös_Hoover.png',
-        Mellankokt: 'Mellan_Hoover.png',
-        Hårdkokt: 'Hård_Hoover.png',
+        Löskokt: 'eggboiled-hover.png',
+        Mellankokt: 'eggboiled-medium-hover.png',
+        Hårdkokt: 'eggboiled-hard-hover.png',
       };
       return hoverImages[consistency] || 'löskokt.png';
     }
 
     // Standardbild när inte hover eller selected
     const consistencyImages: Record<string, string> = {
-      Löskokt: 'löskokt.png',
-      Mellankokt: 'mellankokt.png',
-      Hårdkokt: 'hårdkokt.png',
+      Löskokt: 'eggboiled.png',
+      Mellankokt: 'eggboiled-medium.png',
+      Hårdkokt: 'eggboiled-hard.png',
     };
     return consistencyImages[consistency] || 'assets/images/default-egg.png';
   }
 
+  getTemperatureImageName(temp: string, isHovered: boolean = false): string {
+    const isSelected = this.selectedOptions['temperature'] === temp;
+
+    if (isSelected) {
+      const selectedImages: Record<string, string> = {
+        Kylskåpskallt: 'tempCold-hover.png',
+        Rumstempererat: 'tempHot-hover.png',
+      };
+      return selectedImages[temp] || 'tempDefault_selected.png';
+    }
+
+    if (isHovered) {
+      const hoverImages: Record<string, string> = {
+        Kylskåpskallt: 'tempCold-hover.png',
+        Rumstempererat: 'tempHot-hover.png',
+      };
+      return hoverImages[temp] || 'tempDefault_hover.png';
+    }
+
+    const defaultImages: Record<string, string> = {
+      Kylskåpskallt: 'tempCold.png',
+      Rumstempererat: 'tempHot.png',
+    };
+    return defaultImages[temp] || 'tempDefault.png';
+  }
+
+  getEggCountImageName(count: number): string {
+    // Check if this count is selected
+    const selected = this.selectedOptions['eggCount'] === `egg${count}.png`;
+    
+    // Check if this count is being hovered over
+    const hovered = this.hoveredCount === count;
+    
+    // If selected or hovered, use the hover version
+    if (selected || hovered) {
+      return `/pictures/egg${count}-hover.png`;
+    } else {
+      return `/pictures/egg${count}.png`;
+    }
+  }
+
+  getEggCountIconSrc(): string {
+    if (!this.selectedOptions['eggCount']) {
+      return '/pictures/eggamount3.png';
+    }
+    
+    // Replace .png with -hover.png to get the hover version
+    return '/pictures/' + this.selectedOptions['eggCount'].replace('.png', '-hover.png');
+  }
+  
+
   startTimer() {
+    if (this.isIOS) {
+      this.playActivationSound();
+    }
     this.preventScreenLock();
     this.calculateCookTime();
     this.timerisRunning = true;
-    
+  
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
-    this.timerService.startTimer(this.targetTime, consistency);
+    // Pass the checkpoints array to the timer service
+    this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
   }
 
   toggleTimer() {
@@ -157,19 +240,12 @@ export class EggTimerComponent {
     }
   }
 
-  pauseTimer() {
-    this.timerService.stopTimer();
-    this.timerisRunning = false;
-    this.allowScreenLock();
-  }
-
   resetTimer() {
     this.timerService.stopTimer();
     this.timerisRunning = false;
     this.currentTimeLeft.set(0);
-    this.statusMessage.set('<br>');
+    this.statusMessage.set('');
     this.allowScreenLock();
-    
   }
 
   formatTime(seconds: number): string {
@@ -237,25 +313,24 @@ export class EggTimerComponent {
       this.selectedOptions['consistency'] || 'Hårdkokt';
     this.checkpoints = [];
 
-    if (this.eggCount > 1) {
-      const extraTime = Math.max(0, this.eggCount - 1) * 0.1;
+    if (this.selectedOptions['eggCount']==='egg2.png') {
 
       switch (selectedConsistency) {
         case 'Hårdkokt':
-          this.targetTime = this.time2 * (1 + extraTime);
+          this.targetTime = this.time2;
           this.checkpoints = [
             { time: this.targetTime - this.time1, message: 'Mellankokt' },
             { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Mellankokt':
-          this.targetTime = this.time1 * (1 + extraTime);
+          this.targetTime = this.time1;
           this.checkpoints = [
             { time: this.targetTime - this.time, message: 'Löskokt' },
           ];
           break;
         case 'Löskokt':
-          this.targetTime = this.time * (1 + extraTime);
+          this.targetTime = this.time;
           break;
       }
     } else {
@@ -274,7 +349,7 @@ export class EggTimerComponent {
 
     this.checkpoints.sort((a, b) => b.time - a.time);
     this.currentTimeLeft.set(this.targetTime);
-    this.statusMessage.set(`<br>${selectedConsistency}`);
+    this.statusMessage.set(selectedConsistency);
 
     return this.targetTime;
   }
@@ -436,5 +511,23 @@ export class EggTimerComponent {
       }
       this.keepAwakeVideo = null;
     }
+  }
+
+  private playActivationSound() {
+    if (this.isIOS) {
+      // Fallback kedja
+      const audio = new Audio('/audio/silent-sound.mp3');
+      audio.volume = 0;
+      audio.play().catch(() => {
+        // Fallback till base64 om MP3 misslyckas
+        const fallbackAudio = new Audio('data:audio/wav;base64,...');
+        fallbackAudio.volume = 0;
+        fallbackAudio.play();
+      });
+    }
+  }
+
+  public hidePopup():void{
+    this.popupVisible=false;
   }
 }
