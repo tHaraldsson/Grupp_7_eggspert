@@ -434,6 +434,8 @@ button {
     background-size: cover;
     height: 100%;
     font-family: "Comfortaa", sans-serif;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
   .container {
     display: none;
