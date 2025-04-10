@@ -49,7 +49,7 @@
     <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
     <button
       *ngIf="screenIsMobile"
-      (click)="eggRecipes1 = toggleRecipe(eggRecipes1)"
+      (click)="toggleRecipe('eggRecipes1')"
       class="toggle-button"
     >
       {{ eggRecipes1 ? "Visa mindre ↑" : "Visa mer ↓" }}
@@ -104,7 +104,7 @@
     <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
     <button
       *ngIf="screenIsMobile"
-      (click)="eggRecipes2 = toggleRecipe(eggRecipes2)"
+      (click)="toggleRecipe('eggRecipes2')"
       class="toggle-button"
     >
       {{ eggRecipes2 ? "Visa mindre ↑" : "Visa mer ↓" }}
@@ -121,7 +121,6 @@
       />
       <!--insert img-->
       <div class="recipe-info">
-        
         <h2 *ngIf="screenIsMobile">Grekisk omelett med sparris och feta</h2>
         <div class="recipe-ingredients">
           <h3>Ingredients:</h3>
@@ -158,7 +157,7 @@
     <!-- Knapp för att visa mer/mindre (visas bara på mobil) -->
     <button
       *ngIf="screenIsMobile"
-      (click)="eggRecipes3 = toggleRecipe(eggRecipes3)"
+      (click)="toggleRecipe('eggRecipes3')"
       class="toggle-button"
     >
       {{ eggRecipes3 ? "Visa mindre ↑" : "Visa mer ↓" }}
