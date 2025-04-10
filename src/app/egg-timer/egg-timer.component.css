@@ -26,6 +26,21 @@ body {
   text-align: center;
   background-color: white; /* Fallback om bakgrundsbilden inte laddas */
 }
+.popup-container {
+  position: fixed;
+  background: rgba(255, 243, 224, 0.98);
+  border: 1px solid black;
+  border-radius: 60px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: smoothAppear 0.5s ease-out;
+  width: 90%;
+  top: 50%;
+  left: 44%;
+  transform: translate(-50%, -50%);
+}
 
 .egg-timer-layout {
   display: none;

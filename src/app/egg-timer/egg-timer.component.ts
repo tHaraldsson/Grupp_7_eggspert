@@ -33,7 +33,7 @@ export class EggTimerComponent {
   hoveredTemp: string | null = null;
   hoveredCount: number | null = null;
 
-  eggCount: number = 1;
+  popupVisible:boolean=false;
   sizes = ['Small', 'Medium', 'Large', 'XLarge'];
   consistencies = ['Löskokt', 'Mellankokt', 'Hårdkokt'];
   temperatures = ['Kylskåpskallt', 'Rumstempererat'];
@@ -56,7 +56,24 @@ export class EggTimerComponent {
     });
 
     this.timerService.statusMessage.subscribe((msg) => {
-      this.statusMessage.set(msg);
+      
+      if(msg==='Löskokt'||msg==='Mellankokt'){
+        if(msg==='Löskokt'){
+          this.statusMessage.set('löskokt.png');
+        }
+        else if(msg==='Mellankokt'){
+          this.statusMessage.set('mellankokt.png');
+        }
+        this.popupVisible=true;
+      }
+      else{
+        this.hidePopup();
+        console.log('hej');
+        
+      }
+      console.log('msg: ' +msg);
+      console.log('popupVisible: '+this.popupVisible);
+
     });
 
     this.timerService.timerCompleted.subscribe(() => {
@@ -74,7 +91,7 @@ export class EggTimerComponent {
     this.calculateCookTime();
     this.wakeLockSupported = 'wakeLock' in navigator;
     this.currentTimeLeft.set(0);
-    this.statusMessage.set('<br>');
+    this.statusMessage.set('');
   }
 
   onEggCountChange() {
@@ -213,7 +230,6 @@ export class EggTimerComponent {
     const consistency = this.selectedOptions['consistency'] || 'Hårdkokt';
     // Pass the checkpoints array to the timer service
     this.timerService.startTimer(this.targetTime, consistency, this.checkpoints);
-    console.log(this.showFinishedTips);
   }
 
   toggleTimer() {
@@ -224,17 +240,11 @@ export class EggTimerComponent {
     }
   }
 
-  pauseTimer() {
-    this.timerService.stopTimer();
-    this.timerisRunning = false;
-    this.allowScreenLock();
-  }
-
   resetTimer() {
     this.timerService.stopTimer();
     this.timerisRunning = false;
     this.currentTimeLeft.set(0);
-    this.statusMessage.set('<br>');
+    this.statusMessage.set('');
     this.allowScreenLock();
   }
 
@@ -339,7 +349,7 @@ export class EggTimerComponent {
 
     this.checkpoints.sort((a, b) => b.time - a.time);
     this.currentTimeLeft.set(this.targetTime);
-    this.statusMessage.set(`<br>${selectedConsistency}`);
+    this.statusMessage.set(selectedConsistency);
 
     return this.targetTime;
   }
@@ -515,5 +525,9 @@ export class EggTimerComponent {
         fallbackAudio.play();
       });
     }
+  }
+
+  public hidePopup():void{
+    this.popupVisible=false;
   }
 }

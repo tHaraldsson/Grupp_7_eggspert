@@ -3,6 +3,8 @@
   (close)="showFinishedTips = false"
 ></app-finished-egg-tips>
 
+<img *ngIf="popupVisible" [src]="'/pictures/'+statusMessage()" class="popup-container " (click)="hidePopup()">
+
 <img class="bakgrund" src="/pictures/bakgrund3.png" />
 <div class="container">
   <h1>Eggspert</h1>

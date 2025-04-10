@@ -124,7 +124,6 @@ export class TimerService implements OnDestroy {
     // Set initial values
     let remaining = duration;
     this.timeLeft.next(remaining);
-    this.statusMessage.next(`Mål:<br>${consistency}`);
 
     // Create timer with 1-second interval
     this.timerInterval = setInterval(() => {
@@ -135,7 +134,12 @@ export class TimerService implements OnDestroy {
       const checkpoint = this.checkpoints.find(cp => cp.time === remaining);
       if (checkpoint) {
         this.playSound();
-        this.statusMessage.next(`Just nu:<br>${checkpoint.message}`);
+        this.statusMessage.next(checkpoint.message);
+      }
+      // Check for end checkpoints
+      const endCheckpoint = this.checkpoints.find(cp => cp.time-5 === remaining);
+      if (endCheckpoint) {
+        this.statusMessage.next('');
       }
 
       // Check if timer completed
@@ -144,6 +148,7 @@ export class TimerService implements OnDestroy {
         this.timerCompleted.next();
         this.showtip.next();
         this.playSound(5); // Spela ljudet 5 gånger
+        this.statusMessage.next('');
       }
     }, 1); // 1 sekund mellan varje uppdatering
   }

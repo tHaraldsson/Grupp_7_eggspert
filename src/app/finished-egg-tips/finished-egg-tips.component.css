@@ -30,17 +30,17 @@
 }
 
 @keyframes smoothAppear {
-    from {
-      transform: translate(-50%, -40%); /* Starta lite högre upp */
-      opacity: 0;
-      scale: 0.95;
-    }
-    to {
-      transform: translate(-50%, -50%); /* Sluta i exakt center */
-      opacity: 1;
-      scale: 1;
-    }
+  from {
+    transform: translate(-50%, -40%); /* Starta lite högre upp */
+    opacity: 0;
+    scale: 0.95;
   }
+  to {
+    transform: translate(-50%, -50%); /* Sluta i exakt center */
+    opacity: 1;
+    scale: 1;
+  }
+}
 
 .tips-header {
   display: flex;
@@ -51,8 +51,8 @@
 }
 
 .tip-content {
-    background-color: #ffe98d;
-    border-radius: 10px;
+  background-color: #ffe98d;
+  border-radius: 10px;
 }
 
 .close-btn {
@@ -106,45 +106,63 @@
   margin-bottom: 35px;
 }
 
+@media (max-width: 375px) {
+  /* iPhone 12/13 standard */
+  .finished-tips-container {
+    top: 45%;
+    width: 85%;
+    animation: smoothAppearMobile 0.5s ease-out;
+  }
+  @keyframes smoothAppearMobile {
+    from {
+      transform: translate(-50%, -35%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+  }
+}
 
-@media (max-width: 375px) { /* iPhone 12/13 standard */
-    .finished-tips-container {
-      top: 45%;
-      width: 85%;
-      animation: smoothAppearMobile 0.5s ease-out;
-    }
-    @keyframes smoothAppearMobile {
-        from {
-          transform: translate(-50%, -35%);
-          opacity: 0;
-        }
-        to {
-          transform: translate(-50%, -50%);
-          opacity: 1;
-        }
-      }
+@media (max-width: 320px) {
+  /* iPhone SE */
+  .finished-tips-container {
+    top: 40%;
+    padding: 15px;
+    animation: smoothAppearMobile 0.5s ease-out;
   }
-  
-  @media (max-width: 320px) { /* iPhone SE */
-    .finished-tips-container {
-      top: 40%;
-      padding: 15px;
-      animation: smoothAppearMobile 0.5s ease-out;
+  @keyframes smoothAppearMobile {
+    from {
+      transform: translate(-50%, -35%);
+      opacity: 0;
     }
-    @keyframes smoothAppearMobile {
-        from {
-          transform: translate(-50%, -35%);
-          opacity: 0;
-        }
-        to {
-          transform: translate(-50%, -50%);
-          opacity: 1;
-        }
-      }
+    to {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
   }
+}
 
 @media (min-width: 768px) {
-    .finished-tips-container {
-      display: none !important;
-    }
+  .tip-content {
+    display: none !important;
   }
+  .nav-btn {
+    display: none !important;
+  }
+  .eggstra-heading {
+    display: none !important;
+  }
+  .nav-buttons {
+    justify-content: center;
+  }
+  .tips-speechBubble {
+    height: 80px;
+    margin-bottom: 35px;
+  }
+  .tips-eggman {
+    height: 140px;
+    margin-left: 50px;
+  }
+}
